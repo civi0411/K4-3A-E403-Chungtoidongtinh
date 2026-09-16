@@ -1,0 +1,222 @@
+[
+  {
+    "id": "GS-01",
+    "turn_id": "T10371",
+    "student": "S0456",
+    "lecture": "Object Detection",
+    "input_question": "(Đang học phần “day02-object-detection-annotation” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “Object Detection”",
+    "selected_text": "Object Detection",
+    "current_issue": "review_concept - 639 ký tự, citation=True",
+    "difficulty_layer": "② Mơ hồ / thiếu thông tin",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: Object Detection"
+  },
+  {
+    "id": "GS-02",
+    "turn_id": "T10372",
+    "student": "S0253",
+    "lecture": "Day01",
+    "input_question": "(Đang học phần “material_mrxpq9zu_t8e6xs” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “https”",
+    "selected_text": "https",
+    "current_issue": "review_concept - 455 ký tự, citation=True",
+    "difficulty_layer": "② Mơ hồ / thiếu thông tin",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: https"
+  },
+  {
+    "id": "GS-03",
+    "turn_id": "T10378",
+    "student": "S0456",
+    "lecture": "Object Detection",
+    "input_question": "(Đang học phần “day02-object-detection-annotation” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “CVAT”",
+    "selected_text": "CVAT",
+    "current_issue": "review_concept - 1069 ký tự, citation=True",
+    "difficulty_layer": "② Mơ hồ / thiếu thông tin",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: CVAT"
+  },
+  {
+    "id": "GS-04",
+    "turn_id": "T10382",
+    "student": "S0378",
+    "lecture": "Day01",
+    "input_question": "(Đang học phần “material_mrxpq9zu_t8e6xs” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “Self-attention Demo on Google Colab”",
+    "selected_text": "Self-attention Demo on Google Colab",
+    "current_issue": "review_concept - 573 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: Self-attention Demo on Google "
+  },
+  {
+    "id": "GS-05",
+    "turn_id": "T10415",
+    "student": "S0971",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “annotation guideline”",
+    "selected_text": "annotation guideline",
+    "current_issue": "review_concept - 611 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: annotation guideline"
+  },
+  {
+    "id": "GS-06",
+    "turn_id": "T10419",
+    "student": "S1335",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “3,6”",
+    "selected_text": "3,6",
+    "current_issue": "review_concept - 871 ký tự, citation=True",
+    "difficulty_layer": "② Mơ hồ / thiếu thông tin",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: 3,6"
+  },
+  {
+    "id": "GS-07",
+    "turn_id": "T10422",
+    "student": "S0315",
+    "lecture": "Day01",
+    "input_question": "(Đang học phần “day01-slide-v2-blue” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “Cỗ máy đoán token\nLLM là gì · xác suất · vòng lặ",
+    "selected_text": "Cỗ máy đoán token\nLLM là gì · xác suất · vòng lặp ·\ntoken · contex",
+    "current_issue": "review_concept - 1191 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: Cỗ máy đoán token\nLLM là gì · "
+  },
+  {
+    "id": "GS-08",
+    "turn_id": "T10437",
+    "student": "S1335",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “LiDAR”",
+    "selected_text": "LiDAR",
+    "current_issue": "review_concept - 919 ký tự, citation=True",
+    "difficulty_layer": "② Mơ hồ / thiếu thông tin",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: LiDAR"
+  },
+  {
+    "id": "GS-09",
+    "turn_id": "T10453",
+    "student": "S1131",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “AI, ML, DL và Data lifecycle”",
+    "selected_text": "AI, ML, DL và Data lifecycle",
+    "current_issue": "review_concept - 1254 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: AI, ML, DL và Data lifecycle"
+  },
+  {
+    "id": "GS-10",
+    "turn_id": "T10457",
+    "student": "S1602",
+    "lecture": "Day01",
+    "input_question": "(Đang học phần “Lịch sử AI từ 1950-nay” của buổi này)\nTóm tắt nội dung chính video",
+    "selected_text": "(Đang học phần “Lịch sử AI từ 1950-nay” của buổi này)\nTóm tắ",
+    "current_issue": "review_concept - 988 ký tự, citation=False",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: (Đang học phần “Lịch sử AI từ "
+  },
+  {
+    "id": "GS-11",
+    "turn_id": "T10475",
+    "student": "S0216",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “annotation guideline”",
+    "selected_text": "annotation guideline",
+    "current_issue": "review_concept - 595 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: annotation guideline"
+  },
+  {
+    "id": "GS-12",
+    "turn_id": "T10476",
+    "student": "S0216",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “Giới hạn: không ai có thể\nviết đủ lu",
+    "selected_text": "Giới hạn: không ai có thể\nviết đủ luật để nhận ra “đây là",
+    "current_issue": "review_concept - 758 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: Giới hạn: không ai có thể\nviết"
+  },
+  {
+    "id": "GS-13",
+    "turn_id": "T10495",
+    "student": "S0216",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “ML”",
+    "selected_text": "ML",
+    "current_issue": "review_concept - 931 ký tự, citation=True",
+    "difficulty_layer": "② Mơ hồ / thiếu thông tin",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: ML"
+  },
+  {
+    "id": "GS-14",
+    "turn_id": "T10503",
+    "student": "S1048",
+    "lecture": "Day01",
+    "input_question": "(Đang học phần “material_mrxpq9zu_t8e6xs” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “ef call_anthropic(\nprompt: str,\nmodel: str ",
+    "selected_text": "ef call_anthropic(\nprompt: str,\nmodel: str = ANTHROPIC_MODEL,\ntemperature: float",
+    "current_issue": "review_concept - 1065 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: ef call_anthropic(\nprompt: str"
+  },
+  {
+    "id": "GS-15",
+    "turn_id": "T10518",
+    "student": "S0378",
+    "lecture": "Day01",
+    "input_question": "(Đang học phần “day01-slide-v2-blue” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “Transformer Explainer”",
+    "selected_text": "Transformer Explainer",
+    "current_issue": "review_concept - 1087 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: Transformer Explainer"
+  },
+  {
+    "id": "GS-16",
+    "turn_id": "T10530",
+    "student": "S0592",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích đoạn này sâu và chi tiết hơn.\n\nĐoạn đang hỏi: ““Xe tự lái nhận ra người đi b",
+    "selected_text": "Xe tự lái nhận ra người đi bộ. Ai đã\ndạy nó “người đi bộ” trông thế nào?",
+    "current_issue": "review_concept - 1220 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: Xe tự lái nhận ra người đi bộ."
+  },
+  {
+    "id": "GS-17",
+    "turn_id": "T10531",
+    "student": "S1413",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “không có”",
+    "selected_text": "không có",
+    "current_issue": "review_concept - 660 ký tự, citation=True",
+    "difficulty_layer": "② Mơ hồ / thiếu thông tin",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: không có"
+  },
+  {
+    "id": "GS-18",
+    "turn_id": "T10532",
+    "student": "S1413",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích đoạn này sâu và chi tiết hơn.\n\nĐoạn đang hỏi: “đáp”",
+    "selected_text": "đáp",
+    "current_issue": "review_concept - 1623 ký tự, citation=True",
+    "difficulty_layer": "② Mơ hồ / thiếu thông tin",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: đáp"
+  },
+  {
+    "id": "GS-19",
+    "turn_id": "T10534",
+    "student": "S0592",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích đoạn này sâu và chi tiết hơn.\n\nĐoạn đang hỏi: “LLM ⊂ DL ⊂ ML ⊂ AI. Nói “AI” ",
+    "selected_text": "LLM ⊂ DL ⊂ ML ⊂ AI. Nói “AI” khi ý là “LLM” sẽ gây nhầm về sau.",
+    "current_issue": "review_concept - 1673 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: LLM ⊂ DL ⊂ ML ⊂ AI. Nói “AI” k"
+  },
+  {
+    "id": "GS-20",
+    "turn_id": "T10550",
+    "student": "S0345",
+    "lecture": "Data",
+    "input_question": "(Đang học phần “day01-ai-ml-dl-va-DataLifecycle” của buổi này)\nGiải thích rõ đoạn này giúp mình.\n\nĐoạn đang hỏi: “Có giám sát\n■ Cần đáp án — tốn công ",
+    "selected_text": "Có giám sát\n■ Cần đáp án — tốn công gán\nnhãn.\n■ Đo được độ chính xác.\n■ Chỉ giỏi",
+    "current_issue": "review_concept - 1274 ký tự, citation=True",
+    "difficulty_layer": "④ Đặc thù domain",
+    "expected_probing": "Hỏi gợi mở ngắn gọn tập trung vào: Có giám sát\n■ Cần đáp án — tốn"
+  }
+]

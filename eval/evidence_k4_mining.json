@@ -1,0 +1,29 @@
+{
+  "dataset_name": "VLearn Tutor Chatlog (K4 Cohort Extract)",
+  "time_range": "2026-09-09 to 2026-09-15",
+  "total_turns_k4": 3097,
+  "unique_students_k4": 448,
+  "preset_questions": {
+    "count": 542,
+    "percentage": 17.5,
+    "description": "Học viên bôi đen bấm câu hỏi mẫu (giải thích đoạn bôi đen, tóm tắt)"
+  },
+  "move_used_distribution": {
+    "review_concept": 2767,
+    "give_direct_answer": 152,
+    "ask_probing_question": 6,
+    "suggest_next_topic": 2,
+    "validate_understanding": 11,
+    "": 20,
+    "give_example": 109,
+    "give_hint": 23,
+    "celebrate_progress": 4,
+    "motivate": 3
+  },
+  "citation_stats": {
+    "with_citation": 2258,
+    "without_citation": 839,
+    "without_citation_percentage": 27.09
+  },
+  "avg_reply_length_chars": 1019
+}
