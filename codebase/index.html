@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VLearn — Khóa K4 · Bài 3 · DAY03</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- TOP NAVBAR (Chuẩn 100% VLearn) -->
+  <header class="vlearn-topbar">
+    <div class="topbar-left">
+      <button class="btn-back" title="Quay lại danh sách bài">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <span class="lesson-breadcrumb">Bài 3 · DAY03</span>
+    </div>
+
+    <div class="topbar-center">
+      <div class="progress-container">
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" style="width: 15%;"></div>
+        </div>
+        <span class="progress-text">0/19 bài</span>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <button id="btn-show-flow" class="topbar-btn btn-ai-flow" title="Sơ đồ chấm điểm Hackathon">
+        <span class="sparkle-icon">🗺️</span> Sơ đồ 4 đường trải nghiệm
+      </button>
+      <button id="btn-toggle-notes" class="topbar-btn" title="Mở sổ ghi chú cá nhân">
+        <span>📒</span> Sổ ghi chú & Highlight <span id="notes-badge" class="notes-count">0</span>
+      </button>
+      <button class="topbar-btn btn-ask-ai" id="btn-topbar-ask-ai">
+        <span class="sparkle-icon">✨</span> Đặt câu hỏi với AI
+      </button>
+      <button class="topbar-btn btn-request">
+        <span>✋</span> Gửi yêu cầu
+      </button>
+      <div class="user-avatar" title="Trần Chí Vĩ (2A202602968)">
+        <span>T</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3-COLUMN MAIN LAYOUT -->
+  <div class="vlearn-layout">
+    
+    <!-- 1. LEFT SIDEBAR: NỘI DUNG BÀI HỌC -->
+    <aside class="vlearn-sidebar" id="sidebar-left">
+      <div class="sidebar-header">
+        <span class="sidebar-title">NỘI DUNG BÀI HỌC</span>
+        <button class="btn-collapse" id="btn-toggle-sidebar" title="Thu gọn menu">✕</button>
+      </div>
+
+      <div class="sidebar-scroll">
+        <!-- Section: Slides -->
+        <div class="sidebar-group">
+          <div class="group-header">
+            <span class="group-title">Slides</span>
+            <span class="chevron">⌵</span>
+          </div>
+          <ul class="lesson-list">
+            <li class="lesson-item completed">
+              <span class="item-icon">📑</span>
+              <span class="item-text" title="day03-tu-chatbot-den-agentic">day03-tu-chatbot-...</span>
+              <span class="badge-done">✓ Đã xong</span>
+            </li>
+            <li class="lesson-item">
+              <span class="item-icon">📑</span>
+              <span class="item-text" title="Day 03_ Chatbot vs ReAct Agent">Day 03_ Chatbot vs ReAct Agent</span>
+            </li>
+            <li class="lesson-item">
+              <span class="item-icon">📑</span>
+              <span class="item-text" title="Day03: Từ chatbot đến agentic age...">Day03: Từ chatbot đến agentic age...</span>
+            </li>
+            <li class="lesson-item">
+              <span class="item-icon">📑</span>
+              <span class="item-text" title="Day03: from-chatbot-to-agentic-...">Day03: from-chatbot-to-agentic-...</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Videos -->
+        <div class="sidebar-group collapsed">
+          <div class="group-header">
+            <span class="group-title">Videos</span>
+            <span class="chevron">›</span>
+          </div>
+        </div>
+
+        <!-- Section: CHATBOT VS REACT AGENT (ACTIVE LAB) -->
+        <div class="sidebar-group">
+          <div class="group-header active-group">
+            <span class="group-icon">🧪</span>
+            <span class="group-title">CHATBOT VS REACT AGENT</span>
+            <span class="chevron">⌵</span>
+          </div>
+          <ul class="lesson-list">
+            <li class="lesson-item active-lesson" data-scroll="#sec-brief" style="cursor: pointer;">
+              <span class="step-num">1</span>
+              <span class="item-text">📋 THÔNG TIN BRIEF &...</span>
+              <span class="badge-current">Đang học</span>
+            </li>
+            <li class="lesson-item" data-scroll="#sec-env" style="cursor: pointer;">
+              <span class="step-num">2</span>
+              <span class="item-text">CHUẨN BỊ MÔI TRƯỜNG & FORK RE...</span>
+            </li>
+            <li class="lesson-item completed" data-scroll="#sec-task-1-1" style="cursor: pointer;">
+              <span class="step-num">3</span>
+              <span class="item-text">TASK 1.1 — ĐÁNH GIÁ...</span>
+              <span class="badge-done">✓ Đã xong</span>
+            </li>
+            <li class="lesson-item" data-scroll="#sec-task-1-2" style="cursor: pointer;">
+              <span class="step-num">4</span>
+              <span class="item-text">TASK 1.2 — KHAI BÁO TOOL SCHEM...</span>
+            </li>
+            <li class="lesson-item" data-scroll="#sec-task-2-1" style="cursor: pointer;">
+              <span class="step-num">5</span>
+              <span class="item-text">TASK 2.1 — LẬP TRÌNH HÀM THỰC T...</span>
+            </li>
+            <li class="lesson-item" data-scroll="#sec-task-2-2" style="cursor: pointer;">
+              <span class="step-num">6</span>
+              <span class="item-text">TASK 2.2 — LẬP TRÌNH REACT LOO...</span>
+            </li>
+            <li class="lesson-item" data-scroll="#sec-task-3-1" style="cursor: pointer;">
+              <span class="step-num">7</span>
+              <span class="item-text">TASK 3.1 — CHẠY TEST SUITE & TR...</span>
+            </li>
+            <li class="lesson-item" data-scroll="#sec-task-3-2" style="cursor: pointer;">
+              <span class="step-num">8</span>
+              <span class="item-text">TASK 3.2 — ĐÓNG GÓI REPO CÁ NH...</span>
+            </li>
+            <li class="lesson-item" data-scroll="#sec-faqs" style="cursor: pointer;">
+              <span class="step-num">9</span>
+              <span class="item-text">🚨 TRẠM CỨU HỘ SỰ CỐ & FAQS</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: Scoring -->
+        <div class="sidebar-group">
+          <div class="group-header" data-scroll="#sec-scoring" style="cursor: pointer;">
+            <span class="group-icon">💯</span>
+            <span class="group-title">9. THANG ĐIỂM ĐÁNH GIÁ</span>
+            <span class="chevron">⌵</span>
+          </div>
+          <ul class="lesson-list">
+            <li class="lesson-item" data-scroll="#sec-scoring" style="cursor: pointer;">
+              <span class="step-num">10</span>
+              <span class="item-text">Bảng Rubric chấm 10 điểm</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section: KC -->
+        <div class="sidebar-group collapsed">
+          <div class="group-header">
+            <span class="group-title">KC & Luyện tập</span>
+            <span class="chevron">›</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 2. MIDDLE COLUMN: LECTURE CONTENT & LAB BRIEF -->
+    <main class="vlearn-content" id="lecture-pane">
+      <div class="content-wrapper" id="lecture-text">
+        <!-- 1. BRIEF & THEORY -->
+        <section id="sec-brief">
+          <div class="task-badge-pill">Mục 1 · Khung lý thuyết 4 cấp độ AI</div>
+          <h1 class="main-title">📋 THÔNG TIN BRIEF & BỐI CẢNH LÝ THUYẾT</h1>
+
+          <!-- Callout Box 1: Về bài lab này -->
+          <div class="callout-card callout-info">
+            <div class="callout-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <div class="callout-body">
+              <div class="callout-title">Về bài lab này</div>
+              <p>
+                Bài thực hành giúp học viên chuyển đổi tư duy từ viết Chatbot đơn thuần (Cấp 2) sang phát triển hệ thống 
+                <mark class="demo-target" data-keyword="react agent">ReAct Agent</mark> thông minh (Cấp 3), ứng dụng 
+                <mark class="demo-target" data-keyword="native tool calling">Native Tool Calling</mark> và trích xuất bằng chứng 
+                <mark class="demo-target" data-keyword="waterfall trace log">Waterfall Trace Log</mark>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Heading 2: BÀI LAB 3 -->
+          <h2 class="section-title">🎓 BÀI LAB 3: CHATBOT VS REACT AGENT — TỪ LÝ THUYẾT ĐẾN THỰC THI</h2>
+          <p class="content-paragraph">
+            Trong kiến trúc AI hiện đại, các mô hình ngôn ngữ lớn (LLM) không chỉ dừng lại ở việc sinh văn bản đóng băng. Mô hình <mark class="demo-target" data-keyword="react agent">ReAct Agent</mark> kết hợp hai năng lực cốt lõi: <strong>Suy luận (Reasoning)</strong> và <strong>Hành động (Acting)</strong>. Khi gặp một yêu cầu phức tạp, Agent sẽ tự động lập luận xem cần làm gì, phát lệnh gọi công cụ ngoại vi qua <mark class="demo-target" data-keyword="native tool calling">Native Tool Calling</mark>, nhận kết quả quan sát và tiếp tục vòng lặp cho đến khi giải xong bài toán.
+          </p>
+
+          <!-- Callout Box 2: Mục tiêu đầu ra -->
+          <div class="callout-card callout-target">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body">
+              <div class="callout-title">Mục tiêu đầu ra của Bài Lab:</div>
+              <p>
+                Sau khi hoàn thành bài Lab 180 phút, học viên sẽ nộp một sản phẩm cá nhân hoàn chỉnh: mã nguồn Agent chạy mượt mà chu trình 
+                <mark class="demo-target" data-keyword="thought action observation">ReAct Loop ( Thought -&gt; Action -&gt; Observation )</mark> qua Native Tool Calling, tự động thực thi công cụ và trích xuất file Waterfall Trace Log chuẩn hóa tại 
+                <code>docs/trace_waterfall.json</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 2. ENVIRONMENT & STARTER REPOS -->
+        <section id="sec-env">
+          <div class="task-badge-pill">Mục 2 · Chuẩn bị môi trường</div>
+          <h2 class="section-title">📦 CHUẨN BỊ MÔI TRƯỜNG & FORK REPO</h2>
+          <p class="content-paragraph">
+            Trước khi bắt đầu code, học viên phải Fork repository chính thức của lớp học về tài khoản GitHub cá nhân để lưu vết lịch sử làm bài và phục vụ chấm điểm tự động.
+          </p>
+
+          <ul class="styled-list">
+            <li><strong>☀️ Lớp Sáng (K4A):</strong> <code>VinUni-AI20k/K4A-Day03-Lab-Chatbot-vs-ReAct-Agent</code></li>
+            <li><strong>🌙 Lớp Chiều (K4B):</strong> <code>VinUni-AI20k/K4B-Day03-Lab-Chatbot-vs-ReAct-Agent</code></li>
+            <li><strong>Link nguồn Starter Repos:</strong>
+              <div class="sub-links">
+                <div>Lớp Sáng (K4A): <mark class="demo-target" data-keyword="https">https</mark>://github.com/VinUni-AI20k/K4A-Day03-Lab-Chatbot-vs-ReAct-Agent</div>
+                <div>Lớp Chiều (K4B): https://github.com/VinUni-AI20k/K4B-Day03-Lab-Chatbot-vs-ReAct-Agent</div>
+              </div>
+            </li>
+            <li><strong>Hình thức:</strong> Cá nhân làm bài 100% ( <code>workMode: "individual"</code> ).</li>
+          </ul>
+
+          <div class="callout-card callout-warning">
+            <div class="callout-icon">🔒</div>
+            <div class="callout-body">
+              <div class="callout-title">Quy tắc bảo mật API Key (HAX G2)</div>
+              <p>
+                Tuyệt đối không commit trực tiếp <mark class="demo-target" data-keyword="anthropic_api_key">ANTHROPIC_API_KEY</mark> lên GitHub! Hãy lưu key vào Colab Secrets hoặc file <code>.env</code> (đã được cấu hình trong <code>.gitignore</code>). Nếu vi phạm lộ key, bài Lab sẽ bị trừ 50% số điểm theo quy chế an toàn thông tin.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 3. TASK 1.1 -->
+        <section id="sec-task-1-1">
+          <div class="task-badge-pill">Mục 3 · Task 1.1 (20 phút)</div>
+          <h2 class="section-title">🧪 TASK 1.1 — ĐÁNH GIÁ CHATBOT THÔNG THƯỜNG (CẤP 2)</h2>
+          <p class="content-paragraph">
+            Trong bài tập này, bạn sẽ chạy thử nghiệm một Chatbot tiêu chuẩn và quan sát các hạn chế cố hữu: hiện tượng ảo giác (Hallucination), tri thức đóng băng tại thời điểm huấn luyện (Knowledge Cutoff), và sự bất lực khi cần tính toán số học chính xác hay tra cứu dữ liệu thời gian thực.
+          </p>
+
+          <div class="code-block-wrapper">
+            <div class="code-block-header">
+              <span>src/chatbot_vanilla.py</span>
+              <span class="code-tag">Task 1.1 Baseline (Chatlog T10503)</span>
+            </div>
+            <pre class="code-snippet"><code><mark class="demo-target" data-keyword="call_anthropic">def call_anthropic(prompt: str, model: str = ANTHROPIC_MODEL, temperature: float = 0.7):
+    # Cấu hình gọi API sinh văn bản cho Chatbot thông thường
+    response = client.messages.create(
+        model=model,
+        temperature=temperature,
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response.content[0].text</mark></code></pre>
+          </div>
+
+          <p class="content-paragraph">
+            Khi bạn đặt câu hỏi: <em>"Giá cổ phiếu VinFast (VFS) hôm nay là bao nhiêu và tính chỉ số P/E?"</em>, Chatbot Cấp 2 chỉ có thể trả lời chung chung dựa trên dữ liệu cũ hoặc từ chối vì không có kết nối internet. Đây chính là lý do chúng ta cần nâng cấp lên ReAct Agent.
+          </p>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 4. TASK 1.2 -->
+        <section id="sec-task-1-2">
+          <div class="task-badge-pill">Mục 4 · Task 1.2 (30 phút)</div>
+          <h2 class="section-title">🛠️ TASK 1.2 — KHAI BÁO TOOL SCHEMA (JSON SCHEMA)</h2>
+          <p class="content-paragraph">
+            Để LLM hiểu được các công cụ nó có quyền sử dụng, ta phải khai báo danh sách <mark class="demo-target" data-keyword="tool schema">Tool Schema</mark> tuân thủ định dạng <strong>JSON Schema</strong> chuẩn. Mỗi công cụ cần có: <code>name</code>, <code>description</code> rõ ràng mục đích, và <code>input_schema</code> quy định kiểu dữ liệu các tham số.
+          </p>
+
+          <div class="code-block-wrapper">
+            <div class="code-block-header">
+              <span>src/tools_schema.py</span>
+              <span class="code-tag">JSON Schema Declaration</span>
+            </div>
+            <pre class="code-snippet"><code>TOOLS = [
+    {
+        "name": "calculator",
+        "description": "Thực thi biểu thức toán học chính xác bằng Python. Dùng khi cần cộng trừ nhân chia số phức tạp.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "expression": {"type": "string", "description": "Biểu thức toán học, ví dụ: (150 * 3.14) / 2"}
+            },
+            "required": ["expression"]
+        }
+    },
+    {
+        "name": "query_database",
+        "description": "Truy vấn dữ liệu học viên và điểm lab từ cơ sở dữ liệu nội bộ khóa K4.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "student_id": {"type": "string", "description": "Mã học viên dạng 2A2026xxxx"}
+            },
+            "required": ["student_id"]
+        }
+    }
+]</code></pre>
+          </div>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 5. TASK 2.1 -->
+        <section id="sec-task-2-1">
+          <div class="task-badge-pill">Mục 5 · Task 2.1 (40 phút)</div>
+          <h2 class="section-title">🐍 TASK 2.1 — LẬP TRÌNH HÀM THỰC THI TOOL (PYTHON)</h2>
+          <p class="content-paragraph">
+            Khi model phát lệnh gọi tool, ứng dụng Python cần ánh xạ từ tên hàm (<code>tool_name</code>) sang hàm thực tế trong hệ điều hành, đồng thời bọc trong khối <code>try...except</code> để áp dụng cơ chế <mark class="demo-target" data-keyword="self-healing">Self-healing loop</mark> nếu có lỗi xảy ra.
+          </p>
+
+          <div class="code-block-wrapper">
+            <div class="code-block-header">
+              <span>src/tool_executor.py</span>
+              <span class="code-tag">Dispatcher & Error Handling</span>
+            </div>
+            <pre class="code-snippet"><code>def execute_tool(tool_name: str, tool_args: dict) -> str:
+    """Hàm thực thi công cụ và bắt lỗi an toàn (Self-healing)"""
+    try:
+        if tool_name == "calculator":
+            return str(eval(tool_args["expression"], {"__builtins__": None}, {}))
+        elif tool_name == "query_database":
+            return query_db_mock(tool_args["student_id"])
+        else:
+            return f"Lỗi: Không tìm thấy công cụ '{tool_name}'"
+    except Exception as e:
+        # Chuyển lỗi thành Observation text để LLM tự sửa sai
+        return f"Lỗi thực thi công cụ: {str(e)}"</code></pre>
+          </div>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 6. TASK 2.2 -->
+        <section id="sec-task-2-2">
+          <div class="task-badge-pill">Mục 6 · Task 2.2 (50 phút)</div>
+          <h2 class="section-title">🔄 TASK 2.2 — LẬP TRÌNH REACT LOOP VÀ ĐIỀU KIỆN DỪNG</h2>
+          <p class="content-paragraph">
+            Đây là linh hồn của toàn bộ bài Lab 3. Vòng lặp <mark class="demo-target" data-keyword="thought action observation">ReAct Loop</mark> chạy tuần tự qua 3 trạng thái:
+          </p>
+          <ul class="styled-list">
+            <li><strong>1. Thought:</strong> LLM suy luận bước giải quyết và quyết định xem có cần gọi Tool hay không.</li>
+            <li><strong>2. Action:</strong> Nếu LLM trả về <code>stop_reason: tool_use</code>, lấy arguments và chạy hàm <code>execute_tool()</code>.</li>
+            <li><strong>3. Observation:</strong> Đóng gói kết quả thành message và gửi lại cho LLM.</li>
+          </ul>
+
+          <div class="callout-card callout-target">
+            <div class="callout-icon">🛑</div>
+            <div class="callout-body">
+              <div class="callout-title">Thiết lập điều kiện dừng (Stop Condition)</div>
+              <p>
+                Để phòng tránh việc Agent rơi vào vòng lặp vô tận tốn credit API, bạn bắt buộc phải cấu hình biến trần 
+                <mark class="demo-target" data-keyword="max_iterations">max_iterations = 5</mark>. Vòng lặp sẽ dừng ngay khi model trả về văn bản thông thường (không còn lệnh gọi tool) hoặc khi chạm ngưỡng 5 lượt.
+              </p>
+            </div>
+          </div>
+
+          <div class="code-block-wrapper">
+            <div class="code-block-header">
+              <span>src/react_agent.py</span>
+              <span class="code-tag">Core ReAct Loop Implementation</span>
+            </div>
+            <pre class="code-snippet"><code>def run_react_agent(user_query: str, max_iterations: int = 5):
+    messages = [{"role": "user", "content": user_query}]
+    iteration = 0
+
+    while iteration < max_iterations:
+        iteration += 1
+        response = client.messages.create(
+            model=ANTHROPIC_MODEL,
+            max_tokens=1024,
+            temperature=0.0, # Nhiệt độ 0.0 để output tất định
+            tools=TOOLS,
+            messages=messages
+        )
+
+        if response.stop_reason == "end_turn":
+            # Model đã suy luận xong và trả lời người dùng
+            return response.content[0].text
+
+        if response.stop_reason == "tool_use":
+            # Model yêu cầu gọi tool: Trích xuất tên tool và tham số
+            tool_call = [b for b in response.content if b.type == "tool_use"][0]
+            obs = execute_tool(tool_call.name, tool_call.input)
+            
+            # Gửi tiếp Observation vào chuỗi hội thoại
+            messages.append({"role": "assistant", "content": response.content})
+            messages.append({
+                "role": "user",
+                "content": [{
+                    "type": "tool_result",
+                    "tool_use_id": tool_call.id,
+                    "content": str(obs)
+                }]
+            })
+
+    return "Đã đạt ngưỡng 5 bước suy luận tối đa mà chưa hoàn tất."</code></pre>
+          </div>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 7. TASK 3.1 -->
+        <section id="sec-task-3-1">
+          <div class="task-badge-pill">Mục 7 · Task 3.1 (30 phút)</div>
+          <h2 class="section-title">📊 TASK 3.1 — CHẠY TEST SUITE & XUẤT WATERFALL TRACE LOG</h2>
+          <p class="content-paragraph">
+            Bài nộp của bạn sẽ được chấm điểm dựa trên file bằng chứng vết thực thi <mark class="demo-target" data-keyword="waterfall trace log">Waterfall Trace Log</mark>. Script tự động sẽ chạy 10 câu hỏi test suite và ghi lại từng mili-giây độ trễ của mô hình vào file <mark class="demo-target" data-keyword="trace_waterfall.json">docs/trace_waterfall.json</mark>.
+          </p>
+
+          <div class="code-block-wrapper">
+            <div class="code-block-header">
+              <span>docs/trace_waterfall.json</span>
+              <span class="code-tag">Trace Output Deliverable</span>
+            </div>
+            <pre class="code-snippet"><code>[
+  {
+    "turn_id": 1,
+    "user_query": "Tính diện tích hình thang có đáy lớn 15, đáy nhỏ 9 và chiều cao 6",
+    "timeline": [
+      {"phase": "Thought", "latency_ms": 340, "action": "Xác định công thức: ((a+b)*h)/2"},
+      {"phase": "Action", "latency_ms": 12, "tool": "calculator", "args": {"expr": "((15+9)*6)/2"}},
+      {"phase": "Observation", "latency_ms": 2, "result": "72.0"},
+      {"phase": "Final_Answer", "latency_ms": 280, "tokens": 48}
+    ],
+    "total_latency_ms": 634,
+    "status": "PASS"
+  }
+]</code></pre>
+          </div>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 8. TASK 3.2 -->
+        <section id="sec-task-3-2">
+          <div class="task-badge-pill">Mục 8 · Task 3.2 (10 phút)</div>
+          <h2 class="section-title">📦 TASK 3.2 — ĐÓNG GÓI REPO CÁ NHÂN VÀ NỘP BÀI</h2>
+          <p class="content-paragraph">
+            Trước khi ấn nút nộp bài trên VLearn, học viên cần kiểm tra kỹ:
+          </p>
+          <ul class="styled-list">
+            <li>Mã nguồn trong thư mục <code>src/</code> chạy không lỗi syntax.</li>
+            <li>File <code>docs/trace_waterfall.json</code> đã ghi nhận đầy đủ các lượt test thực tế.</li>
+            <li>Báo cáo <code>docs/trace_eval.md</code> phân tích ưu nhược điểm giữa Chatbot vs ReAct Agent.</li>
+            <li>Kiểm tra lệnh <code>git status</code> đảm bảo không sót file nào và đã push lên nhánh <code>main</code> trên GitHub cá nhân.</li>
+          </ul>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 9. FAQS & TROUBLESHOOTING -->
+        <section id="sec-faqs">
+          <div class="task-badge-pill">Mục 9 · Trạm cứu hộ sự cố</div>
+          <h2 class="section-title">🚨 TRẠM CỨU HỘ SỰ CỐ & FAQS (4 LỚP CHỖ KHÓ THỰC TẾ)</h2>
+          <p class="content-paragraph">
+            Trong quá trình thực hành, học viên thường gặp các sự cố runtime hoặc nhầm lẫn giữa phạm vi học thuật và vận hành:
+          </p>
+
+          <h3 class="subsection-title">⚠️ Sự cố 1: Tràn bộ nhớ GPU khi load model cục bộ</h3>
+          <div class="error-block-wrapper">
+            <div class="error-block-header">RuntimeError: GPU OutOfMemory</div>
+            <pre class="error-snippet"><code><mark class="demo-target" data-keyword="cuda out of memory">torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.40 GiB (GPU 0; 14.75 GiB total capacity)</mark></code></pre>
+          </div>
+
+          <h3 class="subsection-title">⚠️ Sự cố 2: Vượt hạn ngạch gọi API Anthropic (Rate Limit)</h3>
+          <div class="error-block-wrapper">
+            <div class="error-block-header">anthropic.RateLimitError: 429 Too Many Requests</div>
+            <pre class="error-snippet"><code><mark class="demo-target" data-keyword="ratelimit">anthropic.RateLimitError: Error code: 429 - {'type': 'error', 'error': {'type': 'rate_limit_error', 'message': 'Number of request tokens has exceeded your per-minute rate limit.'}}</mark></code></pre>
+          </div>
+
+          <div class="external-box">
+            <span class="badge-out">Lớp chỗ khó ③: Ngoài phạm vi học thuật (Logistics)</span>
+            <p>
+              <mark class="demo-target out-target" data-keyword="quét mã điểm danh">"Em quét mã QR điểm danh nhưng app MyVinUni không hiện lịch sử thì làm sao?"</mark> <em>(Trích tin nhắn thật Discord M37211 — Test khả năng từ chối đúng mực của AI Tutor).</em>
+            </p>
+          </div>
+
+          <div class="external-box">
+            <span class="badge-out">Kiến thức ngoài bài</span>
+            <p>
+              <mark class="demo-target out-target" data-keyword="quantum">Quantum Computing Qubit Entanglement</mark> <em>(Đoạn text kiến thức ngoài bài để test Đường 4: Failure/Từ chối).</em>
+            </p>
+          </div>
+        </section>
+
+        <hr class="task-divider">
+
+        <!-- 10. SCORING RUBRIC -->
+        <section id="sec-scoring">
+          <div class="task-badge-pill">Mục 10 · Thang điểm chấm</div>
+          <h2 class="section-title">💯 9. THANG ĐIỂM ĐÁNH GIÁ (RUBRIC 10 ĐIỂM)</h2>
+          <p class="content-paragraph">
+            Bài Lab 3 được chấm điểm tự động kết hợp phúc tra của Giảng viên / Lab Coach theo thang điểm 10 như sau:
+          </p>
+
+          <table class="rubric-table">
+            <thead>
+              <tr>
+                <th>Tiêu chí đánh giá</th>
+                <th>Trọng số</th>
+                <th>Yêu cầu chi tiết</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Khai báo Tool Schema</strong></td>
+                <td><span class="badge-pts">2.0 điểm</span></td>
+                <td>Khai báo tối thiểu 2 tools chuẩn JSON Schema, đầy đủ <code>name</code>, <code>description</code> rõ ràng, <code>input_schema</code> chuẩn xác.</td>
+              </tr>
+              <tr>
+                <td><strong>2. Hoàn thiện ReAct Loop</strong></td>
+                <td><span class="badge-pts">3.0 điểm</span></td>
+                <td>Cơ chế Thought -&gt; Action -&gt; Observation hoạt động trơn tru; bọc bắt lỗi ngoại lệ; có điều kiện dừng an toàn <code>max_iterations = 5</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>3. Vết Waterfall Trace Log</strong></td>
+                <td><span class="badge-pts">3.0 điểm</span></td>
+                <td>File <code>docs/trace_waterfall.json</code> ghi nhận đầy đủ độ trễ từng bước (ms), timestamp khớp lịch sử test và không bịa log.</td>
+              </tr>
+              <tr>
+                <td><strong>4. Báo cáo đánh giá Lab</strong></td>
+                <td><span class="badge-pts">2.0 điểm</span></td>
+                <td>File <code>docs/trace_eval.md</code> phân tích rõ ràng sự khác biệt giữa Chatbot và ReAct Agent kèm minh chứng thực tế.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+
+      <!-- FLOATING ACTION TOOLTIP (Chuẩn Prototype v2: Caret chỉ đúng chỗ, 3 action buttons) -->
+      <div id="selection-tooltip" class="selection-floating-bar" style="display: none;">
+        <div class="floating-caret" id="floating-caret"></div>
+        <div class="tooltip-actions">
+          <button id="btn-action-explain" class="btn-tool-v2 btn-explain" data-action="explain" title="Trả lời thẳng khái niệm này">
+            <span class="btn-icon">💡</span>
+            <span class="btn-label">Giải thích</span>
+            <span class="action-tag tag-direct">trả lời ngay</span>
+          </button>
+          <button id="btn-action-socratic" class="btn-tool-v2 btn-socratic" data-action="socratic" title="Kích hoạt luồng gợi mở tư duy Socratic">
+            <span class="btn-icon">🔍</span>
+            <span class="btn-label">Gợi mở</span>
+            <span class="action-tag tag-socratic">Socratic</span>
+          </button>
+          <button id="btn-action-example" class="btn-tool-v2 btn-example" data-action="example" title="Xem ngay ví dụ minh họa">
+            <span class="btn-icon">📌</span>
+            <span class="btn-label">Ví dụ</span>
+            <span class="action-tag tag-direct">trả lời ngay</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- 3. RIGHT SIDEBAR: TRỢ GIẢNG AI (Chuẩn VLearn Prototype v2) -->
+    <aside class="vlearn-ai-sidebar" id="sidebar-right">
+      <!-- Header Trợ giảng AI với State Badge (😴 Sẵn sàng / ⚙️ Đang phân tích / 🔍 Socratic / ✅ Đã trả lời) -->
+      <div class="ai-header">
+        <div class="ai-header-left">
+          <span class="ai-sparkle">✨</span>
+          <span class="ai-title">Trợ giảng AI</span>
+          <span id="state-badge" class="state-pill state-ready">😴 Sẵn sàng</span>
+        </div>
+        <div class="ai-header-right">
+          <button id="btn-new-chat" class="ai-icon-btn btn-new-chat-text" title="Bắt đầu hội thoại mới">+ Chat mới</button>
+          <button class="ai-icon-btn" title="Lịch sử chat">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </button>
+          <button class="ai-icon-btn" id="btn-close-ai" title="Thu gọn AI">✕</button>
+        </div>
+      </div>
+
+      <!-- Context Bar (Xuất hiện phía trên chat khi bôi đen theo spec v2) -->
+      <div id="context-bar" class="context-bar" style="display: none;">
+        <span class="context-pin">📌</span>
+        <span class="context-label">Đang chọn:</span>
+        <span id="context-text" class="context-text">“...”</span>
+        <button id="btn-clear-context" class="btn-clear-ctx" title="Hủy ngữ cảnh này">✕</button>
+      </div>
+
+      <!-- Quick Test Bar for Hackathon Evaluation -->
+      <div class="quick-demo-bar">
+        <span class="quick-title">Thử nhanh 4 đường đi (Rubric R3):</span>
+        <div class="quick-tabs">
+          <button class="q-tab active" data-flow="happy" title="BƯỚC 3B: Bôi đen ReAct Agent -> Socratic Card 3 chips">🟢 1. Socratic Loop</button>
+          <button class="q-tab" data-flow="direct" title="BƯỚC 3A: Bôi đen -> Trả lời trực tiếp">💡 2. Trả lời ngay</button>
+          <button class="q-tab" data-flow="code" title="Quét mã code T10503">💻 3. Quét code</button>
+          <button class="q-tab" data-flow="failure" title="Điểm danh / Ngoài thẩm quyền">🔴 4. Ngoài bài</button>
+          <button class="q-tab" data-flow="bypass" title="Bypass HAX G8">⚡ 5. Bypass</button>
+        </div>
+      </div>
+
+      <!-- AI Chat Body Container -->
+      <div class="ai-chat-body" id="chat-messages">
+        <!-- Initial Empty State (Chuẩn Spec v2: Hướng dẫn 4 bước sử dụng) -->
+        <div class="ai-empty-state" id="ai-empty-state">
+          <h2 class="empty-greeting">Tối nay học gì đây VĨ?</h2>
+          <p class="empty-sub">Đang mở: 📋 THÔNG TIN BRIEF & BỐI CẢNH LÝ THUYẾT</p>
+          
+          <div class="guide-steps-card">
+            <div class="guide-title">🚀 Hướng dẫn 4 bước học tập thông minh:</div>
+            <div class="step-item">
+              <span class="step-badge">1</span>
+              <div><strong>Đọc bài giảng:</strong> Theo dõi tài liệu và code bài Lab bên trái.</div>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">2</span>
+              <div><strong>Bôi đen chỗ khó:</strong> Dùng chuột bôi đen đoạn khái niệm/mã lỗi.</div>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">3</span>
+              <div><strong>Chọn công cụ:</strong> Bấm <strong>💡 Giải thích</strong> để nhận câu trả lời thẳng, hoặc <strong>🔍 Gợi mở</strong> để vào luồng Socratic.</div>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">4</span>
+              <div><strong>Click chip lựa chọn:</strong> Chọn 1 trong 3 chip gợi ý để AI giải thích trúng đích điểm kẹt!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Chat Footer Input (Chuẩn VLearn) -->
+      <div class="ai-chat-footer">
+        <div class="chat-input-pill">
+          <input type="text" id="manual-chat-input" class="vlearn-input" placeholder="Hỏi bất cứ điều gì..." />
+          <button id="btn-send-manual" class="btn-send-circle" title="Gửi câu hỏi">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+          </button>
+        </div>
+        <div class="ai-disclaimer">
+          Trợ giảng AI có thể sai — hãy đối chiếu với bài giảng.
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- NOTE MODAL DIALOG (Thêm Ghi Chú Cá Nhân) -->
+  <div id="note-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card modal-note-card">
+      <div class="modal-header">
+        <h3>📝 Thêm Ghi Chú Cá Nhân</h3>
+        <button id="btn-close-note-modal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="note-quote-box" id="note-quote-preview">“...”</div>
+        <label class="input-label" for="note-text-input">Nội dung ghi chú của bạn:</label>
+        <textarea id="note-text-input" class="note-textarea" rows="4" placeholder="Nhập ghi chú cá nhân của bạn cho đoạn văn bản này..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-cancel-note" class="btn-secondary">Hủy</button>
+        <button id="btn-save-note" class="btn-primary">💾 Lưu vào Sổ Ghi Chú</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES DRAWER (Sổ Ghi Chú & Highlight) -->
+  <div id="notes-drawer" class="notes-drawer" style="display: none;">
+    <div class="drawer-header">
+      <div class="drawer-title">📒 Sổ Ghi Chú & Đoạn Đã Highlight (<span id="drawer-notes-count">0</span>)</div>
+      <button id="btn-close-drawer" class="btn-close">&times;</button>
+    </div>
+    <div class="drawer-body" id="notes-list-container">
+      <div class="empty-notes-hint">Chưa có ghi chú nào. Hãy bôi đen bài giảng để tô màu hoặc ghi chú nhé!</div>
+    </div>
+  </div>
+
+  <!-- FLOW MODAL (Chấm điểm Rubric R3) -->
+  <div id="flow-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🗺️ Sơ đồ 4 đường đi trải nghiệm (Chuẩn Rubric R3 & CP2)</h3>
+        <button id="btn-close-modal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="flow-steps-grid">
+          <div class="flow-card flow-happy">
+            <div class="flow-badge">🟢 Đường 1: Happy Path</div>
+            <h4>Bôi đen khái niệm chuẩn</h4>
+            <p>Học viên bôi đen <code>ReAct Agent</code> → Bấm hỏi AI → AI nhận diện câu mẫu → Đưa ra câu hỏi gợi mở + 2 lựa chọn A/B → Trả lời đúng chỗ kẹt + trích dẫn <code>[Trang 14]</code> + Cho phép lưu ngay vào Note cá nhân.</p>
+          </div>
+          <div class="flow-card flow-lowconf">
+            <div class="flow-badge">🟡 Đường 2: Low-confidence (HAX G10)</div>
+            <h4>Bôi thiếu / Mơ hồ</h4>
+            <p>Học viên bôi nhầm link <code>https</code> hoặc từ tắt → AI không xả lý thuyết dài mà hỏi thu hẹp phạm vi để xác nhận ngữ cảnh.</p>
+          </div>
+          <div class="flow-card flow-code">
+            <div class="flow-badge">💻 Đường 3: Quét mã code (T10503)</div>
+            <h4>Bôi đen đoạn mã API</h4>
+            <p>Bôi đen <code>call_anthropic</code> → AI gợi mở tham số <code>temperature</code> vs bảo mật API Key trong Colab thay vì xả 1.065 ký tự lý thuyết Python.</p>
+          </div>
+          <div class="flow-card flow-failure">
+            <div class="flow-badge">🔴 Đường 4: Từ chối / Ngoài thẩm quyền</div>
+            <h4>Điểm danh / Ngoài bài</h4>
+            <p>Hỏi về quét mã QR điểm danh → AI từ chối đúng mực, giải thích Form độc lập với MyVinUni, hướng dẫn báo Lab Coach phòng E403.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
