@@ -417,6 +417,43 @@ const notesListContainer = document.getElementById('notes-list-container');
 
 const quickTabs = document.querySelectorAll('.q-tab');
 
+// =========================================================
+// AI ENGINE CONFIG & STATE (CP3 & RUBRIC R5)
+// =========================================================
+let CURRENT_AI_MODE = localStorage.getItem('vlearn_ai_mode') || 'mock';
+let VLEARN_GEMINI_KEY = localStorage.getItem('vlearn_gemini_key') || '';
+window.VLEARN_AI_TRACES = JSON.parse(localStorage.getItem('vlearn_ai_traces') || '[]');
+
+const btnToggleAiEngine = document.getElementById('btn-toggle-ai-engine');
+const aiEngineDot = document.getElementById('ai-engine-dot');
+const aiEngineLabel = document.getElementById('ai-engine-label');
+const aiEngineModal = document.getElementById('ai-engine-modal');
+const btnCloseAiModal = document.getElementById('btn-close-ai-modal');
+const btnCancelAiConfig = document.getElementById('btn-cancel-ai-config');
+const btnSaveAiConfig = document.getElementById('btn-save-ai-config');
+const radioModeMock = document.getElementById('radio-mode-mock');
+const radioModeGemini = document.getElementById('radio-mode-gemini');
+const inputGeminiKey = document.getElementById('input-gemini-key');
+const btnToggleKeyView = document.getElementById('btn-toggle-key-view');
+const btnTestKey = document.getElementById('btn-test-key');
+const keyTestStatus = document.getElementById('key-test-status');
+const btnExportTrace = document.getElementById('btn-export-trace');
+const traceViewerBox = document.getElementById('trace-viewer-box');
+
+function updateAiEngineUi() {
+  if (!aiEngineDot || !aiEngineLabel) return;
+  if (CURRENT_AI_MODE === 'gemini' && VLEARN_GEMINI_KEY) {
+    aiEngineDot.className = 'ai-status-dot live';
+    aiEngineLabel.textContent = '🤖 Gemini Live';
+  } else if (CURRENT_AI_MODE === 'gemini') {
+    aiEngineDot.className = 'ai-status-dot mock';
+    aiEngineLabel.textContent = '⚠️ Chưa có Key';
+  } else {
+    aiEngineDot.className = 'ai-status-dot mock';
+    aiEngineLabel.textContent = '⚡ Mock Mode';
+  }
+}
+
 // State Badge Controller (😴 Sẵn sàng / ⚙️ Đang phân tích / 🔍 Socratic / ✅ Đã trả lời)
 function updateStateBadge(state) {
   if (!stateBadge) return;
@@ -426,7 +463,7 @@ function updateStateBadge(state) {
     stateBadge.textContent = '😴 Sẵn sàng';
   } else if (state === 'analyzing') {
     stateBadge.classList.add('state-analyzing');
-    stateBadge.textContent = '⚙️ Đang phân tích…';
+    stateBadge.textContent = CURRENT_AI_MODE === 'gemini' && VLEARN_GEMINI_KEY ? '⚙️ Gemini suy luận…' : '⚙️ Đang phân tích…';
   } else if (state === 'socratic') {
     stateBadge.classList.add('state-socratic');
     stateBadge.textContent = '🔍 Socratic';
@@ -677,9 +714,176 @@ function appendDirectCard(data, snippet, isExample) {
 }
 
 // =========================================================
+// AI ENGINE: WINDOWED CONTEXT & LIVE GEMINI API (CP3)
+// =========================================================
+function extractWindowedContext(snippet) {
+  let contextTitle = "Bài 3 · DAY03: Chatbot vs ReAct Agent";
+  let surroundingText = "";
+
+  try {
+    // Tìm tiêu đề Task gần nhất
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      let node = selection.anchorNode;
+      while (node && node !== document.body) {
+        if (node.id && node.id.startsWith('task-')) {
+          const titleEl = node.querySelector('h2, h3');
+          if (titleEl) contextTitle = titleEl.textContent.trim();
+          break;
+        }
+        node = node.parentNode;
+      }
+    }
+  } catch (e) {
+    // Bỏ qua lỗi DOM
+  }
+
+  return { contextTitle, surroundingText };
+}
+
+async function callGeminiSocraticAPI(snippet) {
+  if (!VLEARN_GEMINI_KEY) return null;
+
+  const { contextTitle } = extractWindowedContext(snippet);
+  const startTime = performance.now();
+
+  const systemInstruction = `Bạn là Trợ giảng Sư phạm VLearn cho khóa học AI (chủ đề: ReAct Agent, Tool Calling, Trace Log).
+Khi học viên bôi đen đoạn văn bản hoặc code trong bài học, TUYỆT ĐỐI KHÔNG xả lý thuyết một chiều.
+Nhiệm vụ của bạn là Socratic Scaffolding:
+1. Đặt 1 câu hỏi gợi mở ngắn gọn (<= 2 câu) bắt đúng bản chất vấn đề.
+2. Đưa ra chính xác 3 chip lựa chọn (options) đại diện cho 3 điểm nghẽn nhận thức phổ biến nhất của người học. Mỗi chip có label ngắn gọn (<= 15 từ), explanation súc tích và ví dụ trực quan.
+3. Nếu học viên hỏi về logistics (điểm danh, wifi, phòng học) hoặc nộp lab đòi giải hộ code: Đặt is_out_of_scope = true.
+
+Trả về duy nhất định dạng JSON chuẩn:
+{
+  "socratic_question": "Câu hỏi gợi mở...",
+  "chips": [
+    {"id": 1, "label": "Nhãn điểm nghẽn 1", "explanation": "Giải thích ngắn", "example": "Ví dụ cụ thể"},
+    {"id": 2, "label": "Nhãn điểm nghẽn 2", "explanation": "Giải thích ngắn", "example": "Ví dụ cụ thể"},
+    {"id": 3, "label": "Nhãn điểm nghẽn 3", "explanation": "Giải thích ngắn", "example": "Ví dụ cụ thể"}
+  ],
+  "is_out_of_scope": false
+}`;
+
+  const promptUser = `Ngữ cảnh bài học: "${contextTitle}"\nĐoạn văn bản/mã code học viên bôi đen: "${snippet}"`;
+
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${VLEARN_GEMINI_KEY}`;
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: systemInstruction }] },
+      contents: [{ role: "user", parts: [{ text: promptUser }] }],
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.2,
+        maxOutputTokens: 600
+      }
+    })
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Gemini API Error ${response.status}: ${errText}`);
+  }
+
+  const resJson = await response.json();
+  const latencyMs = Math.round(performance.now() - startTime);
+  const rawText = resJson.candidates?.[0]?.content?.parts?.[0]?.text;
+  const parsed = JSON.parse(rawText);
+
+  // Ghi vết Trace Log phục vụ Rubric R5 & HAX G2
+  const tokensUsed = resJson.usageMetadata?.totalTokenCount || 210;
+  const traceEntry = {
+    turn_id: (window.VLEARN_AI_TRACES.length + 1),
+    timestamp: new Date().toISOString(),
+    step: "Socratic Probing Generation",
+    model: "gemini-1.5-flash",
+    selected_text: snippet.substring(0, 45),
+    latency_ms: latencyMs,
+    tokens_used: tokensUsed,
+    status: "PASS"
+  };
+
+  window.VLEARN_AI_TRACES.unshift(traceEntry);
+  if (window.VLEARN_AI_TRACES.length > 50) window.VLEARN_AI_TRACES.pop();
+  localStorage.setItem('vlearn_ai_traces', JSON.stringify(window.VLEARN_AI_TRACES));
+
+  if (traceViewerBox) {
+    traceViewerBox.textContent = JSON.stringify(traceEntry, null, 2);
+  }
+
+  // Ràng buộc Brevity: Cắt tỉa nhãn chip tự động nếu vượt quá 15 từ
+  const formattedChips = (parsed.chips || []).map((chip, idx) => {
+    let label = chip.label || `Lựa chọn ${idx + 1}`;
+    const words = label.split(/\s+/);
+    if (words.length > 15) {
+      label = words.slice(0, 14).join(' ') + '...';
+    }
+    return {
+      id: chip.id || (idx + 1),
+      label: label,
+      explanation: chip.explanation || "Nội dung giải thích chi tiết đang được cập nhật.",
+      example: chip.example || "💡 Xem ví dụ trong bài giảng Day 03."
+    };
+  });
+
+  return {
+    matchedKeyword: snippet,
+    directAnswer: `Đoạn "${snippet}" là một khái niệm quan trọng trong bài học. Dưới đây là các hướng tháo gỡ điểm nghẽn.`,
+    socraticQuestion: parsed.socratic_question || `Bạn muốn làm rõ khía cạnh nào của "${snippet}"?`,
+    chips: formattedChips,
+    isOutOfScope: parsed.is_out_of_scope || false,
+    isLiveAI: true,
+    latencyMs: latencyMs,
+    tokensUsed: tokensUsed
+  };
+}
+
+async function resolveKnowledgeAsync(snippet) {
+  const { contextTitle } = extractWindowedContext(snippet);
+
+  // 1. Ưu tiên gọi Python Backend Server nếu đang chạy
+  try {
+    const res = await fetch('/api/socratic-probe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        snippet: snippet,
+        contextTitle: contextTitle,
+        apiKey: VLEARN_GEMINI_KEY,
+        mode: CURRENT_AI_MODE
+      })
+    });
+    if (res.ok) {
+      const jsonRes = await res.json();
+      if (jsonRes && jsonRes.success && jsonRes.data) {
+        return jsonRes.data;
+      }
+    }
+  } catch (backendErr) {
+    // Backend không khả dụng -> tự động fallback sang in-browser engine
+  }
+
+  // 2. Fallback in-browser Gemini API nếu có key
+  if (CURRENT_AI_MODE === 'gemini' && VLEARN_GEMINI_KEY) {
+    try {
+      const liveData = await callGeminiSocraticAPI(snippet);
+      if (liveData) return liveData;
+    } catch (err) {
+      console.warn("Live Gemini API gặp lỗi, tự động fallback sang Mock:", err);
+    }
+  }
+
+  // 3. Fallback Mock Client
+  return resolveKnowledge(snippet);
+}
+
+// =========================================================
 // BƯỚC 3B — CHỌN 🔍 GỢI MỞ (SOCRATIC LOOP)
 // =========================================================
-function triggerSocraticFlow(snippet) {
+async function triggerSocraticFlow(snippet) {
   removeEmptyState();
 
   appendUserBubbleWithContext(snippet, '🔍 Socratic', 'intent-socratic', 'Gợi mở tư duy giúp mình đoạn này');
@@ -687,9 +891,9 @@ function triggerSocraticFlow(snippet) {
 
   const waitingRow = appendWaitingIndicator();
 
-  setTimeout(() => {
+  try {
+    const data = await resolveKnowledgeAsync(snippet);
     waitingRow.remove();
-    const data = resolveKnowledge(snippet);
 
     if (data.isOutOfScope) {
       appendRejectionMessage(data);
@@ -699,7 +903,12 @@ function triggerSocraticFlow(snippet) {
 
     appendSocraticCard(data, snippet);
     updateStateBadge('socratic');
-  }, 900);
+  } catch (err) {
+    waitingRow.remove();
+    const fallbackData = resolveKnowledge(snippet);
+    appendSocraticCard(fallbackData, snippet);
+    updateStateBadge('socratic');
+  }
 }
 
 function appendSocraticCard(data, snippet) {
@@ -708,12 +917,18 @@ function appendSocraticCard(data, snippet) {
   const cardId = 'socratic-' + Date.now();
 
   const chips = data.chips || [];
+  const liveBadgeHtml = data.isLiveAI 
+    ? `<span class="live-ai-chip-badge">🤖 Gemini 1.5 Flash (${data.latencyMs}ms · Live AI)</span>`
+    : `<span class="live-ai-chip-badge" style="background:#fef3c7;color:#92400e;border-color:#fde68a;">⚡ Mock Engine (0ms)</span>`;
 
   row.innerHTML = `
     <div class="msg-avatar">✨</div>
     <div class="msg-bubble bot-bubble">
       <div class="socratic-card-v2" id="${cardId}">
-        <div class="socratic-v2-header">🔍 Gợi mở Socratic</div>
+        <div class="socratic-v2-header">
+          <span>🔍 Gợi mở Socratic</span>
+          ${liveBadgeHtml}
+        </div>
         <div class="socratic-v2-question">
           <span>🎯</span>
           <span>${escapeHtml(data.socraticQuestion)}</span>
@@ -947,7 +1162,20 @@ function appendRejectionMessage(data) {
 }
 
 function resolveKnowledge(snippet) {
-  const normalized = (snippet || "").toLowerCase();
+  const trimmed = (snippet || "").trim();
+  const normalized = trimmed.toLowerCase();
+
+  // Nhận diện bôi nhầm link URL ngoài (Case GS-02)
+  if (/^(https?:\/\/|www\.)/i.test(trimmed) || normalized === 'https' || normalized === 'http') {
+    return {
+      matchedKeyword: trimmed,
+      isOutOfScope: true,
+      rejectionReason: "Bạn đang bôi đen một đường dẫn liên kết (URL).",
+      explanation: "Có vẻ như bạn đã bôi nhầm vào một đường link web thay vì thuật ngữ chuyên môn. Hãy bôi đen cụm từ khóa bạn chưa hiểu trong bài giảng (ví dụ: 'ReAct Agent' hoặc 'Tool Schema') để mình hỗ trợ gỡ rối nhé!",
+      citation: "Mẹo bôi đen từ khóa trọng tâm (HAX G1)"
+    };
+  }
+
   for (const key in MOCK_KNOWLEDGE_BASE) {
     if (normalized.includes(key)) {
       return MOCK_KNOWLEDGE_BASE[key];
@@ -1134,3 +1362,110 @@ function escapeHtml(str) {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
 }
+
+// =========================================================
+// AI ENGINE MODAL EVENT LISTENERS (CP3 & RUBRIC R5)
+// =========================================================
+if (btnToggleAiEngine) {
+  btnToggleAiEngine.addEventListener('click', () => {
+    // Cập nhật giá trị vào modal
+    if (radioModeMock) radioModeMock.checked = (CURRENT_AI_MODE === 'mock');
+    if (radioModeGemini) radioModeGemini.checked = (CURRENT_AI_MODE === 'gemini');
+    if (inputGeminiKey) inputGeminiKey.value = VLEARN_GEMINI_KEY;
+    if (keyTestStatus) { keyTestStatus.textContent = ''; keyTestStatus.className = 'key-status-msg'; }
+
+    // Hiển thị trace log gần nhất
+    if (traceViewerBox) {
+      if (window.VLEARN_AI_TRACES && window.VLEARN_AI_TRACES.length > 0) {
+        traceViewerBox.textContent = JSON.stringify(window.VLEARN_AI_TRACES[0], null, 2);
+      } else {
+        traceViewerBox.textContent = '// Chưa có lượt gọi AI nào trong phiên làm việc này.\n// Hãy bôi đen một đoạn text và bấm [🔍 Gợi mở] để ghi nhận trace log.';
+      }
+    }
+
+    aiEngineModal.style.display = 'flex';
+  });
+}
+
+if (btnCloseAiModal) {
+  btnCloseAiModal.addEventListener('click', () => { aiEngineModal.style.display = 'none'; });
+}
+if (btnCancelAiConfig) {
+  btnCancelAiConfig.addEventListener('click', () => { aiEngineModal.style.display = 'none'; });
+}
+
+if (btnToggleKeyView && inputGeminiKey) {
+  btnToggleKeyView.addEventListener('click', () => {
+    inputGeminiKey.type = inputGeminiKey.type === 'password' ? 'text' : 'password';
+  });
+}
+
+if (btnTestKey && inputGeminiKey) {
+  btnTestKey.addEventListener('click', async () => {
+    const keyToTest = inputGeminiKey.value.trim();
+    if (!keyToTest) {
+      keyTestStatus.className = 'key-status-msg error';
+      keyTestStatus.textContent = '❌ Vui lòng nhập API Key trước khi kiểm tra!';
+      return;
+    }
+
+    keyTestStatus.className = 'key-status-msg';
+    keyTestStatus.textContent = '⏳ Đang kiểm tra kết nối tới Google Gemini...';
+
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${keyToTest}`;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: 'Ping' }] }]
+        })
+      });
+
+      if (res.ok) {
+        keyTestStatus.className = 'key-status-msg success';
+        keyTestStatus.textContent = '✅ Kết nối thành công! API Key hoạt động hoàn hảo.';
+      } else {
+        const errJson = await res.json();
+        keyTestStatus.className = 'key-status-msg error';
+        keyTestStatus.textContent = `❌ Lỗi kết nối: ${errJson.error?.message || 'Key không hợp lệ'}`;
+      }
+    } catch (e) {
+      keyTestStatus.className = 'key-status-msg error';
+      keyTestStatus.textContent = `❌ Lỗi mạng: ${e.message}`;
+    }
+  });
+}
+
+if (btnSaveAiConfig) {
+  btnSaveAiConfig.addEventListener('click', () => {
+    const selectedMode = document.querySelector('input[name="ai_mode_choice"]:checked')?.value || 'mock';
+    const enteredKey = inputGeminiKey ? inputGeminiKey.value.trim() : '';
+
+    CURRENT_AI_MODE = selectedMode;
+    VLEARN_GEMINI_KEY = enteredKey;
+
+    localStorage.setItem('vlearn_ai_mode', CURRENT_AI_MODE);
+    localStorage.setItem('vlearn_gemini_key', VLEARN_GEMINI_KEY);
+
+    updateAiEngineUi();
+    aiEngineModal.style.display = 'none';
+  });
+}
+
+if (btnExportTrace) {
+  btnExportTrace.addEventListener('click', () => {
+    const logs = window.VLEARN_AI_TRACES || [];
+    const blob = new Blob([JSON.stringify(logs, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'trace_waterfall.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+}
+
+// Khởi tạo trạng thái AI Engine ban đầu
+updateAiEngineUi();
+

@@ -13,10 +13,10 @@
 - **Hậu quả gì:** Khiến học viên nản lòng và phải chuyển sang hỏi bạn hoặc bỏ qua.
 
 **2. Bằng chứng (Áp dụng tiêu chuẩn B - Mining data):**
-- **Đếm được:** Mining 35 lượt chatlog K4
-  - 17,5% câu hỏi là câu mẫu bấm sẵn.
-  - 89,3% Tutor chỉ biết xả lý thuyết dài.
-  - Chỉ đúng 6 lượt Tutor biết dùng câu hỏi gợi mở.
+- **Đếm được:** Mining **3.097 lượt chatlog K4** (xem chi tiết `eval/evidence_k4_mining.json`)
+  - **17,5% (542/3.097 lượt)** câu hỏi là câu mẫu bấm sẵn.
+  - **89,3% (2.767/3.097 lượt)** Tutor chỉ biết xả lý thuyết dài.
+  - **Chỉ đúng 6 lượt (0,19%)** Tutor biết dùng câu hỏi gợi mở.
 - **Ví dụ nguyên văn:** Lượt T10372 bôi nhầm link bot xả 455 chữ; T10378 bôi "CVAT" bot xả 1.069 chữ bức tường. Phương pháp đếm: Trích xuất bằng code Python phân loại trực tiếp độ dài và cấu trúc câu trả lời của AI.
 
 **3. Problem statement + Impact:**
@@ -29,7 +29,7 @@
   - Hoàng Minh Tuấn: 4 lớp chỗ khó, testing R6, slide.
 
 **4. Lát cắt prototype được (MỘT CÂU):**
-"Một học viên bôi đen đoạn bài giảng và bấm câu hỏi mẫu, Tutor phản hồi bằng một câu hỏi gợi mở ngắn kèm 2 lựa chọn trọng tâm thay vì xả lý thuyết dài, giúp học viên chỉ rõ được điểm mình chưa hiểu." (Automation: Mức Conditional - Câu chi tiết trả lời ngay; Câu mơ hồ kích hoạt gợi mở Socratic).
+"Một học viên bôi đen đoạn bài giảng và bấm câu hỏi mẫu, Tutor phản hồi bằng một câu hỏi gợi mở ngắn kèm **3 chip lựa chọn trọng tâm** thay vì xả lý thuyết dài, giúp học viên chỉ rõ được điểm mình chưa hiểu." (Automation: Mức Conditional - Câu chi tiết trả lời ngay; Câu mơ hồ kích hoạt gợi mở Socratic 3-Chip).
 
 **5. User sẵn sàng thử (Willing users):**
 Nhóm đã chốt 4 willing users ngoài nhóm sẽ dùng thử prototype trước demo CP5:

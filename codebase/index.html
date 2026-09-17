@@ -29,6 +29,10 @@
     </div>
 
     <div class="topbar-right">
+      <button id="btn-toggle-ai-engine" class="topbar-btn btn-ai-engine" title="Cấu hình AI Engine (Live Gemini vs Mock)">
+        <span class="ai-status-dot mock" id="ai-engine-dot"></span>
+        <span id="ai-engine-label">⚡ Mock Mode</span>
+      </button>
       <button id="btn-show-flow" class="topbar-btn btn-ai-flow" title="Sơ đồ chấm điểm Hackathon">
         <span class="sparkle-icon">🗺️</span> Sơ đồ 4 đường trải nghiệm
       </button>
@@ -710,6 +714,66 @@
             <p>Hỏi về quét mã QR điểm danh → AI từ chối đúng mực, giải thích Form độc lập với MyVinUni, hướng dẫn báo Lab Coach phòng E403.</p>
           </div>
         </div>
+      </div>
+    </div>
+  <!-- AI SETTINGS & TRACE LOG MODAL (CP3 & Rubric R5) -->
+  <div id="ai-engine-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card ai-settings-card">
+      <div class="modal-header">
+        <h3>⚙️ Cấu hình AI Socratic Engine (Live vs Mock)</h3>
+        <button id="btn-close-ai-modal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="ai-config-group">
+          <label class="config-title">Chế độ vận hành:</label>
+          <div class="mode-options-grid">
+            <label class="mode-card" id="card-mode-mock">
+              <input type="radio" name="ai_mode_choice" value="mock" checked id="radio-mode-mock">
+              <div class="mode-card-content">
+                <div class="mode-card-header">
+                  <span class="mode-icon">⚡</span>
+                  <strong>Offline Mock (Dự phòng Pitching)</strong>
+                </div>
+                <p class="mode-desc">Phản hồi 0ms từ bộ tri thức Day 03 chuẩn bị sẵn. Cực kỳ an toàn khi mạng yếu.</p>
+              </div>
+            </label>
+
+            <label class="mode-card" id="card-mode-gemini">
+              <input type="radio" name="ai_mode_choice" value="gemini" id="radio-mode-gemini">
+              <div class="mode-card-content">
+                <div class="mode-card-header">
+                  <span class="mode-icon">🤖</span>
+                  <strong>Live Gemini AI (Gọi API thật - CP3)</strong>
+                </div>
+                <p class="mode-desc">Gọi Google Gemini 1.5 Flash sinh động câu hỏi Socratic và 3 chip theo đúng bối cảnh đoạn bôi đen.</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="ai-config-group" id="api-key-group">
+          <label class="config-title" for="input-gemini-key">Google Gemini API Key (Bảo mật Client-side):</label>
+          <div class="key-input-row">
+            <input type="password" id="input-gemini-key" class="key-input" placeholder="Dán Gemini API Key (AIzaSy...)" autocomplete="off">
+            <button id="btn-toggle-key-view" class="btn-key-action" title="Hiện/ẩn key">👁️</button>
+            <button id="btn-test-key" class="btn-key-action btn-test-conn">Kiểm tra kết nối</button>
+          </div>
+          <div id="key-test-status" class="key-status-msg"></div>
+          <p class="config-note">🔒 <em>Key chỉ lưu an toàn trong <code>localStorage</code> trình duyệt của bạn, không bao giờ gửi ra server ngoài hay commit lên Git.</em></p>
+        </div>
+
+        <div class="ai-config-group">
+          <div class="trace-group-header">
+            <label class="config-title">Vết thực thi AI gần nhất (Trace Log - Rubric R5 & HAX G2):</label>
+            <button id="btn-export-trace" class="btn-export-log">📥 Tải trace_waterfall.json</button>
+          </div>
+          <pre id="trace-viewer-box" class="trace-code-box">// Chưa có lượt gọi AI nào trong phiên làm việc này.
+// Hãy bôi đen một đoạn text và bấm [🔍 Gợi mở] để ghi nhận trace log.</pre>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-cancel-ai-config" class="btn-modal-cancel">Hủy</button>
+        <button id="btn-save-ai-config" class="btn-modal-save">✓ Lưu & Kích hoạt</button>
       </div>
     </div>
   </div>

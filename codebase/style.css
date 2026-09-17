@@ -1683,3 +1683,254 @@ mark.out-target {
   font-weight: 700;
   text-transform: uppercase;
 }
+
+/* =========================================================
+   AI ENGINE & LIVE GEMINI CONFIG (CP3 & RUBRIC R5)
+   ========================================================= */
+.btn-ai-engine {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--card-bg);
+  border: 1.5px solid #d1d5db;
+  color: var(--text-title);
+  font-weight: 600;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-ai-engine:hover {
+  border-color: #8b5cf6;
+  background-color: #f5f3ff;
+}
+
+.ai-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ai-status-dot.mock {
+  background-color: #f59e0b; /* Amber */
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.ai-status-dot.live {
+  background-color: #10b981; /* Emerald */
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+  animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Modal Settings Card */
+.ai-settings-card {
+  max-width: 580px;
+}
+
+.ai-config-group {
+  margin-bottom: 18px;
+}
+
+.config-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-title);
+  margin-bottom: 8px;
+}
+
+.mode-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mode-card {
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background-color: #fafafa;
+  transition: all 0.2s ease;
+}
+
+.mode-card:hover {
+  border-color: #8b5cf6;
+  background-color: #f5f3ff;
+}
+
+.mode-card input[type="radio"]:checked + .mode-card-content {
+  color: #5b21b6;
+}
+
+.mode-card:has(input[type="radio"]:checked) {
+  border-color: #7c3aed;
+  background-color: #f5f3ff;
+}
+
+.mode-card-content {
+  font-size: 12px;
+}
+
+.mode-card-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.mode-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.key-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.key-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  outline: none;
+}
+
+.key-input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.15);
+}
+
+.btn-key-action {
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  background-color: #ffffff;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.btn-test-conn {
+  background-color: #ede9fe;
+  color: #6d28d9;
+  border-color: #ddd6fe;
+}
+
+.btn-test-conn:hover {
+  background-color: #ddd6fe;
+}
+
+.key-status-msg {
+  font-size: 11px;
+  margin-top: 6px;
+  min-height: 16px;
+}
+
+.key-status-msg.success { color: #059669; font-weight: 600; }
+.key-status-msg.error { color: #dc2626; font-weight: 600; }
+
+.config-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.trace-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.btn-export-log {
+  font-size: 11px;
+  padding: 4px 8px;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #334155;
+  font-weight: 600;
+}
+
+.btn-export-log:hover {
+  background-color: #e2e8f0;
+}
+
+.trace-code-box {
+  background-color: #0f172a;
+  color: #38bdf8;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  max-height: 120px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border: 1px solid #1e293b;
+}
+
+/* Modal Footer Buttons */
+.btn-modal-cancel {
+  padding: 8px 16px;
+  border: 1px solid var(--border-subtle);
+  background-color: #f8fafc;
+  color: #475569;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-modal-save {
+  padding: 8px 18px;
+  border: none;
+  background-color: #7c3aed;
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
+}
+
+.btn-modal-save:hover {
+  background-color: #6d28d9;
+}
+
+/* Live AI Badge in Chat Header */
+.live-ai-chip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 8px;
+  letter-spacing: 0.2px;
+}

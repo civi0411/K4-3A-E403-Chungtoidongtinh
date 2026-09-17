@@ -1,0 +1,12 @@
+[
+  {
+    "turn_id": 1789618194692,
+    "timestamp": "2026-09-17T04:09:54Z",
+    "step": "Socratic Probing Generation (Mock Mode: ReAct Agent)",
+    "model": "rule-based-mock",
+    "selected_text": "ReAct Agent",
+    "latency_ms": 15,
+    "tokens_used": 0,
+    "status": "PASS"
+  }
+]

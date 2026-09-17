@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VLearn Socratic Tutor — Slide Thuyết trình 6 Trang (Hackathon Batch 04)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    :root {
+      --primary: #7c3aed;
+      --primary-dark: #5b21b6;
+      --primary-light: #ede9fe;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --bg-slide: #ffffff;
+      --border-color: #e2e8f0;
+      --accent-green: #059669;
+      --accent-red: #dc2626;
+      --accent-amber: #d97706;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      gap: 32px;
+    }
+
+    .slide {
+      width: 1120px;
+      height: 630px; /* 16:9 aspect ratio */
+      background: var(--bg-slide);
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      padding: 44px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+        gap: 0;
+      }
+      .slide {
+        box-shadow: none;
+        border-radius: 0;
+        width: 100vw;
+        height: 100vh;
+        page-break-after: always;
+      }
+      .print-btn-bar {
+        display: none !important;
+      }
+    }
+
+    /* Print toolbar */
+    .print-btn-bar {
+      position: sticky;
+      top: 16px;
+      z-index: 1000;
+      background: rgba(30, 41, 59, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 10px 24px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .print-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .print-btn:hover { background: var(--primary-dark); }
+    .print-hint { color: #94a3b8; font-size: 12px; }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 14px;
+    }
+    .slide-num-badge {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .slide-team-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .slide-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 6px;
+      letter-spacing: -0.5px;
+    }
+    .slide-subtitle {
+      font-size: 14px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Slide Content Layouts */
+    .slide-content {
+      flex: 1;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+    .card-primary {
+      background: #faf5ff;
+      border-color: #d8b4fe;
+    }
+    .card-accent {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+    }
+
+    .stat-number {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-top: 6px;
+    }
+    .stat-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .quote-box {
+      border-left: 4px solid var(--primary);
+      background: #faf5ff;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: #334155;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .quote-author {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--primary);
+      margin-top: 6px;
+      display: block;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table.data-table th {
+      background: #f1f5f9;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border-color);
+    }
+    table.data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+      line-height: 1.4;
+    }
+    table.data-table tr.selected {
+      background: #faf5ff;
+      font-weight: 600;
+    }
+
+    .flow-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-pass { background: #dcfce7; color: #15803d; }
+    .badge-fail { background: #fee2e2; color: #b91c1c; }
+    .badge-select { background: #ede9fe; color: #6d28d9; }
+
+    /* Slide Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .footer-rule {
+      color: var(--primary);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FLOATING PRINT BAR -->
+  <div class="print-btn-bar">
+    <button class="print-btn" onclick="window.print()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-12 0v4h12v-4M6 14h12"/></svg>
+      Xuất Slide PDF (6 Trang)
+    </button>
+    <span class="print-hint">Mẹo: Chọn "Save as PDF", Đặt Destination là "Save as PDF", Layout "Landscape"</span>
+  </div>
+
+  <!-- =========================================================
+       SLIDE 1 · USER & JOB (45 GIÂY)
+       ========================================================= -->
+  <div class="slide" id="slide-1">
+    <div class="slide-header">
+      <div>
+        <span class="slide-num-badge">SLIDE 1/6 · USER & JOB</span>
+        <h1 class="slide-title">Học viên K4 đang phải nhận "Văn bản rác" khi gặp chỗ khó</h1>
+        <p class="slide-subtitle">Track A: VLearn Tutor (Đề A1: Tối ưu AI Tutor hiện có)</p>
+      </div>
+      <div class="slide-team-meta">Nhóm: Chungtoidongtinh · Phòng E403 · Lớp 3A</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card card-primary" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <span style="font-size: 11px; font-weight: 800; color: var(--primary-dark); text-transform: uppercase;">Mục tiêu cốt lõi (Core JTBD)</span>
+            <p style="font-size: 16px; font-weight: 700; line-height: 1.4; margin-top: 8px; color: #1e1b4b;">
+              "Khi gặp khái niệm hoặc mã lỗi khó hiểu trong bài giảng, tôi muốn được gỡ rối trúng ngay điểm kẹt, để tiếp tục hoàn thành bài lab đúng hạn mà không bị ngắt mạch tự học."
+            </p>
+          </div>
+          <div style="border-top: 1px dashed #d8b4fe; padding-top: 12px; margin-top: 12px;">
+            <p style="font-size: 12px; color: #475569;"><strong>Job Executor:</strong> 1.617 học viên K4 đang tự học và làm bài lab trên hệ thống VLearn.</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="gap: 12px;">
+          <div class="card">
+            <div class="stat-number">17.5%</div>
+            <div class="stat-label">Bấm câu mẫu có sẵn</div>
+            <div class="stat-desc">542 / 3.097 lượt hỏi của K4 dùng câu mẫu ("Giải thích rõ đoạn này...")</div>
+          </div>
+          <div class="card" style="background: #fef2f2; border-color: #fecaca;">
+            <div class="stat-number" style="color: var(--accent-red);">89.3%</div>
+            <div class="stat-label">Xả lý thuyết 1 chiều</div>
+            <div class="stat-desc">2.767 lượt Tutor cũ chỉ độc thoại dài từ 800 - 1.200 ký tự lặp lại slide</div>
+          </div>
+          <div class="card" style="background: #fffbeb; border-color: #fde68a;">
+            <div class="stat-number" style="color: var(--accent-amber);">0.19%</div>
+            <div class="stat-label">Hỏi gợi mở (6 lượt)</div>
+            <div class="stat-desc">Cả khóa K4 bot gần như không bao giờ biết hỏi ngược người học</div>
+          </div>
+          <div class="card">
+            <div class="stat-number" style="color: #64748b;">27.1%</div>
+            <div class="stat-label">Không trích dẫn nguồn</div>
+            <div class="stat-desc">839 lượt trả lời không trích dẫn trang bài giảng gây mất tin cậy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Nguồn dữ liệu: <code>data/vlearn-pack/chatlog/tutor_turns.csv</code> (3.097 dòng chatlog K4)</span>
+      <span class="footer-rule">Luật: Không có bằng chứng thì không có slide</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SLIDE 2 · VÌ SAO CHỌN TÍNH NĂNG NÀY (45 GIÂY)
+       ========================================================= -->
+  <div class="slide" id="slide-2">
+    <div class="slide-header">
+      <div>
+        <span class="slide-num-badge">SLIDE 2/6 · IMPACT & DECISION</span>
+        <h1 class="slide-title">Chọn lát cắt có tần suất cao nhất và chi phí lỗi vừa vặn</h1>
+        <p class="slide-subtitle">Bảng định lượng 3 ứng viên tính năng theo chuẩn Rubric R1</p>
+      </div>
+      <div class="slide-team-meta">Nhóm: Chungtoidongtinh · Phòng E403 · Lớp 3A</div>
+    </div>
+
+    <div class="slide-content">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Ứng viên tính năng</th>
+            <th>Quy mô đối tượng</th>
+            <th>Tần suất gặp</th>
+            <th>Chi phí lỗi (Cost-of-Error)</th>
+            <th>Khả thi trong sự kiện</th>
+            <th>Quyết định</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="selected">
+            <td><strong>1. Socratic Probing khi bấm câu mẫu (Track A1)</strong></td>
+            <td>1.617 học viên K4 (542 lượt hỏi mẫu)</td>
+            <td><strong>Rất cao</strong> (Xảy ra liên tục mỗi buổi học)</td>
+            <td><strong>Trung bình:</strong> Bấm nhầm chip thì chọn lại, không mất điểm.</td>
+            <td><strong>Rất cao:</strong> Can thiệp vào Prompt + UI 3-Chip</td>
+            <td><span class="flow-badge badge-select">✅ CHỌN</span></td>
+          </tr>
+          <tr>
+            <td><strong>2. Tự động tóm tắt Video bài giảng (Track A2)</strong></td>
+            <td>~120 học viên nghỉ buổi học</td>
+            <td>Thấp (1 lần/tuần sau buổi)</td>
+            <td><strong>Cao:</strong> Tóm tắt sót ý chính khiến học viên trượt quiz</td>
+            <td>Thấp: Xử lý video nặng, tốn token</td>
+            <td><span class="flow-badge badge-fail">❌ LOẠI</span></td>
+          </tr>
+          <tr>
+            <td><strong>3. Trợ lý Discord nhắc deadline Lab (Track B)</strong></td>
+            <td>~230 học viên lớp 3A</td>
+            <td>Trung bình (1 lần/deadline)</td>
+            <td><strong>Rất cao:</strong> Nhắc sai giờ làm học viên bị 0 điểm muộn bài</td>
+            <td>Trung bình: Đã có bot thông báo lớp</td>
+            <td><span class="flow-badge badge-fail">❌ LOẠI</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="card" style="padding: 12px 16px;">
+          <strong style="color: var(--primary); font-size: 13px;">Vì sao LOẠI ứng viên 2 & 3?</strong>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+            Ứng viên 2 ít người dùng thường xuyên; Ứng viên 3 rủi ro sai sót rất đắt và không can thiệp trực tiếp vào trải nghiệm học tập trong trang VLearn.
+          </p>
+        </div>
+        <div class="card card-accent" style="padding: 12px 16px;">
+          <strong style="color: var(--accent-green); font-size: 13px;">Vì sao CHỌN Socratic Probing (Số liệu nói)?</strong>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+            Giải quyết thẳng điểm chạm gây ức chế nhất của <strong>17,5% lượt hỏi toàn khóa</strong>; có sẵn data 3.097 dòng để đo lường trước/sau một cách trung thực.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Rubric R1: Bằng chứng & Impact (15 điểm) — Có bảng 3 ứng viên + loại bằng số</span>
+      <span class="footer-rule">Quyết định dựa trên con số, không dựa trên cảm tính</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SLIDE 3 · GIẢI PHÁP & DEMO LIVE (2 PHÚT)
+       ========================================================= -->
+  <div class="slide" id="slide-3">
+    <div class="slide-header">
+      <div>
+        <span class="slide-num-badge">SLIDE 3/6 · SOLUTION & LIVE DEMO</span>
+        <h1 class="slide-title">Kiến trúc Socratic 3-Chip — Chẩn đoán trước khi kê đơn</h1>
+        <p class="slide-subtitle">Trực tiếp trên sân khấu: 1 Case Chuẩn + 1 Case Chỗ Khó (HAX G1/G2/G8/G10)</p>
+      </div>
+      <div class="slide-team-meta">Nhóm: Chungtoidongtinh · Phòng E403 · Lớp 3A</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="card card-primary" style="padding: 12px 18px; margin-bottom: 16px;">
+        <span style="font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase;">Lát cắt sản phẩm (Format 1 câu):</span>
+        <p style="font-size: 14px; font-weight: 700; color: #1e1b4b; margin-top: 2px;">
+          "Một học viên bôi đen đoạn bài giảng và bấm câu hỏi mẫu, Tutor phản hồi bằng một câu hỏi gợi mở ngắn kèm 3 chip lựa chọn trọng tâm thay vì xả lý thuyết dài, giúp học viên chỉ rõ được điểm mình chưa hiểu."
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" style="border-left: 4px solid var(--accent-green);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--accent-green); font-size: 14px;">CASE 1: HAPPY PATH (LIVE DEMO)</strong>
+            <span class="flow-badge badge-pass">Chuẩn sư phạm</span>
+          </div>
+          <p style="font-size: 12px; margin-top: 8px; line-height: 1.5;">
+            <strong>Thao tác:</strong> Bôi đen <code>ReAct Agent</code> → Chọn <code>🔍 Gợi mở</code>.<br>
+            <strong>AI phản hồi:</strong> Hỏi lại câu hỏi màu tím kèm <strong>3 chip điểm nghẽn</strong> (Vòng lặp 3 pha / Khác biệt Chatbot Cấp 2 / Cú pháp Python).<br>
+            <strong>Chốt hạ:</strong> Click Chip 1 → Ra <strong>Resolve Card 3 dòng</strong> kèm ví dụ → Bấm <code>✓ Hiểu rồi</code> reset State Badge.
+          </p>
+        </div>
+
+        <div class="card" style="border-left: 4px solid var(--accent-red);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--accent-red); font-size: 14px;">CASE 2: CHỖ KHÓ / GUARDRAIL</strong>
+            <span class="flow-badge badge-fail">Từ chối thẩm quyền</span>
+          </div>
+          <p style="font-size: 12px; margin-top: 8px; line-height: 1.5;">
+            <strong>Thao tác:</strong> Bôi đen hỏi về <code>Quét mã QR điểm danh E403</code>.<br>
+            <strong>Cơ chế Guardrail (HAX G1):</strong> AI nhận diện câu hỏi Logistics, <strong>từ chối giải thích bài giảng</strong>.<br>
+            <strong>Chỉ dẫn đúng kênh:</strong> Hướng dẫn Form Microsoft độc lập với App MyVinUni, chụp màn hình nộp báo Lab Coach phòng E403.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Prototype v3: Chế độ kép Live Gemini 1.5 Flash API + Offline Mock Fallback</span>
+      <span class="footer-rule">Demo trực tiếp trên web — Không dùng video thay thế khi live chạy được</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SLIDE 4 · KẾT QUẢ ĐO LƯỜNG THỰC TẾ (45 GIÂY)
+       ========================================================= -->
+  <div class="slide" id="slide-4">
+    <div class="slide-header">
+      <div>
+        <span class="slide-num-badge">SLIDE 4/6 · EVALUATION & FAILURE</span>
+        <h1 class="slide-title">Đạt 80.0% trên 20 case thật K4 và bài học từ ca thất bại</h1>
+        <p class="slide-subtitle">Chạy tự động bằng eval/eval_runner.py đối chiếu Quality Bar cam kết tại CP4</p>
+      </div>
+      <div class="slide-team-meta">Nhóm: Chungtoidongtinh · Phòng E403 · Lớp 3A</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3" style="margin-bottom: 16px;">
+        <div class="card card-accent" style="text-align: center;">
+          <div class="stat-number" style="color: var(--accent-green);">80.0%</div>
+          <div class="stat-label">Tỷ lệ Đạt (PASS)</div>
+          <div class="stat-desc">16 / 20 case đạt chuẩn 3 chiều (Accuracy, Brevity, Grounding)</div>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div class="stat-number" style="color: var(--primary);">&ge; 80.0%</div>
+          <div class="stat-label">Quality Bar Cam kết</div>
+          <div class="stat-desc">Đã khóa cố định trong spec.md tại mốc CP4, giữ nguyên sau đó</div>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div class="stat-number" style="color: #0284c7;">100%</div>
+          <div class="stat-label">Grounding (Không bịa)</div>
+          <div class="stat-desc">100% câu hỏi và trả lời bám sát nội dung bài học Day 03</div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--accent-red); background: #fef2f2;">
+        <strong style="color: var(--accent-red); font-size: 13px;">MỔ XẺ CA THẤT BẠI ĐẮT GIÁ NHẤT: Case GS-02 ("https")</strong>
+        <p style="font-size: 12px; color: #334155; margin-top: 4px; line-height: 1.5;">
+          <strong>Hiện tượng:</strong> Học viên bôi nhầm chữ "https" trong link Slido → AI tưởng hỏi về an ninh mạng và đặt câu hỏi về chứng chỉ SSL/TLS.<br>
+          <strong>Nguyên nhân gốc rễ:</strong> Frontend thiếu tầng regex kiểm tra chuỗi URL trước khi gửi context tới LLM.<br>
+          <strong>Bài học rút ra:</strong> <em>"Đừng vội gửi mọi thứ người dùng bôi đen cho AI; cần có tiền xử lý biên chọn (Selection Boundary Guard) để bảo vệ ngữ cảnh."</em>
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Rubric R4: Kiểm thử (15 điểm) — Bảng đủ 20 case + mổ xẻ nguyên nhân thất bại trung thực</span>
+      <span class="footer-rule">Số xấu phân tích sâu được điểm cao hơn số đẹp ngụy tạo</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SLIDE 5 · NGƯỜI DÙNG THẬT NÓI GÌ (45 GIÂY)
+       ========================================================= -->
+  <div class="slide" id="slide-5">
+    <div class="slide-header">
+      <div>
+        <span class="slide-num-badge">SLIDE 5/6 · USER VALIDATION (R6)</span>
+        <h1 class="slide-title">Học viên K4 xác nhận: "Bấm 3 dòng hiểu ngay thay vì đọc rác"</h1>
+        <p class="slide-subtitle">Thử nghiệm trực tiếp với 4 Willing Users tại phòng lab E403 (Bonus +8 Điểm R6)</p>
+      </div>
+      <div class="slide-team-meta">Nhóm: Chungtoidongtinh · Phòng E403 · Lớp 3A</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="quote-box">
+          “Bình thường bôi đen bấm câu mẫu bot xả một đống lý thuyết lười đọc lắm. Cái này hiện 3 cái lựa chọn đúng cái mình đang kẹt, bấm vào đọc 3 dòng là hiểu luôn.”
+          <span class="quote-author">— Đặng Quốc Cường (MSSV: 2A202602466, Học viên K4)</span>
+        </div>
+
+        <div class="quote-box" style="border-color: var(--accent-amber); background: #fffbeb;">
+          “Mình đọc xong hiểu rồi nhưng muốn quay lại đọc tiếp bài giảng thì cái khung chat che mất màn hình, không biết bấm nút nào để nó biết là mình xong rồi.”
+          <span class="quote-author">— Trần Thị Thu Hiền (MSSV: 2A202602737, Học viên K4)</span>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="card card-primary" style="padding: 14px 18px;">
+          <strong style="color: var(--primary); font-size: 13px;">Thay đổi sản phẩm đã làm ngay (Spec §9):</strong>
+          <p style="font-size: 12px; color: var(--text-main); margin-top: 4px; line-height: 1.4;">
+            Bổ sung nút <strong>`✓ Hiểu rồi, tiếp tục đọc`</strong> dưới thẻ Resolve Card để học viên đóng thẻ và tự động reset State Badge về `😴 Sẵn sàng`.
+          </p>
+        </div>
+
+        <div class="card card-accent" style="padding: 14px 18px; text-align: center;">
+          <div style="font-size: 28px; font-weight: 800; color: var(--accent-green); font-family: 'JetBrains Mono', monospace;">75.0%</div>
+          <div style="font-size: 12px; font-weight: 700; color: #065f46; margin-top: 2px;">Chỉ số Sean Ellis (Rất tiếc nếu mất tính năng)</div>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">3/4 bạn chọn "Rất tiếc" (Vượt xa ngưỡng chuẩn 40%)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Rubric R6: Validation với người ngoài (Bonus +8 điểm) — Đầy đủ log quan sát & quote thật</span>
+      <span class="footer-rule">Phản hồi chê là cơ hội để chứng minh chuỗi lặp sản phẩm</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SLIDE 6 · NẾU CÓ THÊM 1 TUẦN (30 GIÂY)
+       ========================================================= -->
+  <div class="slide" id="slide-6">
+    <div class="slide-header">
+      <div>
+        <span class="slide-num-badge">SLIDE 6/6 · ROADMAP & LESSONS</span>
+        <h1 class="slide-title">Từ Trợ giảng Gợi mở đến Bản đồ Tri thức Cá nhân</h1>
+        <p class="slide-subtitle">Backlog kỹ thuật 3 việc ưu tiên & Bài học lớn nhất của cả nhóm</p>
+      </div>
+      <div class="slide-team-meta">Nhóm: Chungtoidongtinh · Phòng E403 · Lớp 3A</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3" style="margin-bottom: 20px;">
+        <div class="card" style="padding: 16px;">
+          <span style="font-size: 20px;">🗺️</span>
+          <strong style="display: block; font-size: 13px; margin-top: 6px;">1. Personal Knowledge Graph</strong>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+            Tự động tích lũy các chip đã chọn thành bản đồ lỗ hổng kiến thức để học viên ôn tập trước kỳ thi cuối khóa.
+          </p>
+        </div>
+        <div class="card" style="padding: 16px;">
+          <span style="font-size: 20px;">🛡️</span>
+          <strong style="display: block; font-size: 13px; margin-top: 6px;">2. Noise & URL Guardrail</strong>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+            Xây dựng bộ lọc regex tiền xử lý để phát hiện bôi nhầm link web và ký tự rác trước khi gọi API (từ case GS-02).
+          </p>
+        </div>
+        <div class="card" style="padding: 16px;">
+          <span style="font-size: 20px;">📈</span>
+          <strong style="display: block; font-size: 13px; margin-top: 6px;">3. Adaptive Probing</strong>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+            Tự động nâng cao độ khó của câu hỏi Socratic đối với những học viên hiểu bài nhanh dựa trên lịch sử tương tác.
+          </p>
+        </div>
+      </div>
+
+      <div class="card card-primary" style="padding: 16px 20px; text-align: center;">
+        <span style="font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">BÀI HỌC LỚN NHẤT CỦA CẢ NHÓM (AI PRODUCT THINKING):</span>
+        <p style="font-size: 16px; font-weight: 700; color: #1e1b4b; margin-top: 6px; font-style: italic;">
+          "AI sư phạm tốt nhất không phải là con AI nói nhiều nhất hay xả văn bản dài nhất, mà là con AI biết dừng lại để hỏi đúng câu hỏi kích thích người học tự tư duy!"
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Hoàn thành trọn vẹn 6 Checkpoint Mini Hackathon AI Batch 04</span>
+      <span class="footer-rule">Chungtoidongtinh · Phòng E403 · Lớp 3A</span>
+    </div>
+  </div>
+
+</body>
+</html>
