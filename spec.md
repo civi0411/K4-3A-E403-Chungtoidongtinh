@@ -75,6 +75,7 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
   - **Phần AI chạy thật (Real LLM Call - Rubric R5):** Quyết định trung tâm tại nút `🔍 Gợi mở`. Python Backend Server (`codebase/server.py` qua route `POST /api/socratic-probe`) gọi trực tiếp Google Gemini 1.5 Flash với Windowed Context và Structured Output JSON để sinh động câu hỏi Socratic và 3 chip lựa chọn theo thời gian thực. Toàn bộ vết thực thi (latency ms, tokens, timestamp) được lưu tự động vào `trace_waterfall.json` trên server và `window.VLEARN_AI_TRACES` ở client chuẩn HAX G2.
   - **Phần Mock (Dữ liệu nền):** Giao diện khung đọc bài giảng VLearn, 10 mục nội dung Day 03, thanh cuộn tài liệu, và bộ tri thức fallback tĩnh (phục vụ pitch offline khi rớt mạng).
 - **Automation:** [x] Conditional (Có điều kiện) — Phân loại input: Nếu câu hỏi chi tiết có ngữ cảnh $\rightarrow$ Trả lời ngay có trích dẫn `[trang N]`; Nếu câu mẫu hoặc bôi đen cụt $\rightarrow$ Kích hoạt probing question ngắn.
+  - *Lý do theo cost-of-error:* Hậu quả của việc đoán sai ý đồ ở các đoạn bôi đen ngắn (cost-of-error cao) là AI xả lý thuyết rác làm loãng màn hình. Do đó, buộc phải dùng Socratic Probing để thu hẹp vùng tìm kiếm, giảm thiểu rủi ro sinh rác (Hallucination).
 
 - **§4b. Nguyên tắc áp dụng (HAX/PAIR):**
   | Nguyên tắc | Áp cụ thể vào đâu trong prototype |
