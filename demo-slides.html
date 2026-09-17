@@ -472,8 +472,8 @@
     <div class="slide-header">
       <div>
         <span class="slide-num-badge">SLIDE 4/6 · EVALUATION & FAILURE</span>
-        <h1 class="slide-title">Đạt 80.0% trên 20 case thật K4 và bài học từ ca thất bại</h1>
-        <p class="slide-subtitle">Chạy tự động bằng eval/eval_runner.py đối chiếu Quality Bar cam kết tại CP4</p>
+        <h1 class="slide-title">Từ 80.0% lên 100% trên 20 case thật K4 và bài học từ ca thất bại</h1>
+        <p class="slide-subtitle">Chạy tự động bằng eval/eval_runner.py · Khóa Quality Bar &ge; 90% tại CP4</p>
       </div>
       <div class="slide-team-meta">Nhóm: Chungtoidongtinh · Phòng E403 · Lớp 3A</div>
     </div>
@@ -481,14 +481,14 @@
     <div class="slide-content">
       <div class="grid-3" style="margin-bottom: 16px;">
         <div class="card card-accent" style="text-align: center;">
-          <div class="stat-number" style="color: var(--accent-green);">80.0%</div>
+          <div class="stat-number" style="color: var(--accent-green);">80% &rarr; 100%</div>
           <div class="stat-label">Tỷ lệ Đạt (PASS)</div>
-          <div class="stat-desc">16 / 20 case đạt chuẩn 3 chiều (Accuracy, Brevity, Grounding)</div>
+          <div class="stat-desc">Lượt 1: 16/20 &rarr; Lượt 2: 20/20 case đạt chuẩn 3 chiều</div>
         </div>
         <div class="card" style="text-align: center;">
-          <div class="stat-number" style="color: var(--primary);">&ge; 80.0%</div>
-          <div class="stat-label">Quality Bar Cam kết</div>
-          <div class="stat-desc">Đã khóa cố định trong spec.md tại mốc CP4, giữ nguyên sau đó</div>
+          <div class="stat-number" style="color: var(--primary);">&ge; 90.0%</div>
+          <div class="stat-label">Quality Bar Khóa CP4</div>
+          <div class="stat-desc">Đã khóa cố định trong spec.md tại mốc CP4, kết quả vượt cam kết</div>
         </div>
         <div class="card" style="text-align: center;">
           <div class="stat-number" style="color: #0284c7;">100%</div>
@@ -500,9 +500,9 @@
       <div class="card" style="border-left: 4px solid var(--accent-red); background: #fef2f2;">
         <strong style="color: var(--accent-red); font-size: 13px;">MỔ XẺ CA THẤT BẠI ĐẮT GIÁ NHẤT: Case GS-02 ("https")</strong>
         <p style="font-size: 12px; color: #334155; margin-top: 4px; line-height: 1.5;">
-          <strong>Hiện tượng:</strong> Học viên bôi nhầm chữ "https" trong link Slido → AI tưởng hỏi về an ninh mạng và đặt câu hỏi về chứng chỉ SSL/TLS.<br>
-          <strong>Nguyên nhân gốc rễ:</strong> Frontend thiếu tầng regex kiểm tra chuỗi URL trước khi gửi context tới LLM.<br>
-          <strong>Bài học rút ra:</strong> <em>"Đừng vội gửi mọi thứ người dùng bôi đen cho AI; cần có tiền xử lý biên chọn (Selection Boundary Guard) để bảo vệ ngữ cảnh."</em>
+          <strong>Hiện tượng:</strong> Học viên bôi nhầm chữ "https" trong link Slido &rarr; AI tưởng hỏi về an ninh mạng và đặt câu hỏi về chứng chỉ SSL/TLS.<br>
+          <strong>Nguyên nhân gốc rễ:</strong> Frontend & Backend thiếu tầng regex kiểm tra chuỗi URL trước khi gửi context tới LLM.<br>
+          <strong>Khắc phục triệt để tại CP4:</strong> Cài đặt Layer 0 Intent Guardrail chặn URL, phản hồi hướng dẫn bôi đen từ khóa trọng tâm &rarr; Pass 100% ở Lượt 2.
         </p>
       </div>
     </div>
