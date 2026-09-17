@@ -914,9 +914,12 @@ function appendSocraticCard(data, snippet) {
   const cardId = 'socratic-' + Date.now();
 
   const chips = data.chips || [];
-  const liveBadgeHtml = data.isLiveAI 
-    ? `<span class="live-ai-chip-badge">🤖 Gemini 1.5 Flash (${data.latencyMs}ms · Live AI)</span>`
-    : `<span class="live-ai-chip-badge" style="background:#fef3c7;color:#92400e;border-color:#fde68a;">⚡ Mock Engine (0ms)</span>`;
+  let liveBadgeHtml = `<span class="live-ai-chip-badge" style="background:#fef3c7;color:#92400e;border-color:#fde68a;">⚡ Mock Engine (0ms)</span>`;
+  if (data.isLiveAI) {
+    liveBadgeHtml = `<span class="live-ai-chip-badge">🤖 Live AI (${data.latencyMs}ms)</span>`;
+  } else if (data.layerUsed === 'RAG-hit') {
+    liveBadgeHtml = `<span class="live-ai-chip-badge" style="background:#ecfdf5;color:#065f46;border-color:#a7f3d0;">⚡ VLearn RAG KB (${data.latencyMs || 12}ms · Tiết kiệm Token)</span>`;
+  }
 
   row.innerHTML = `
     <div class="msg-avatar">✨</div>
@@ -994,8 +997,11 @@ function appendResolveCard(selectedChip, snippet) {
         <div class="resolve-header">🎯 Giải thích đúng trọng tâm</div>
         <div class="resolve-content">${selectedChip.explanation}</div>
         <div class="resolve-example-box">${selectedChip.example}</div>
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px;">
-          <button class="btn-resolve-done">✓ Hiểu rồi, tiếp tục đọc</button>
+        <div class="resolve-actions-bar" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <button class="btn-resolve-done">✓ Hiểu rồi, tiếp tục đọc</button>
+            <button class="btn-still-confused" title="Kích hoạt Socratic vòng 2: Đào sâu ẩn dụ và các bước kiểm chứng">🤔 Vẫn chưa rõ →</button>
+          </div>
           <button class="btn-save-to-note">📌 Lưu vào Ghi chú</button>
         </div>
       </div>
@@ -1006,19 +1012,120 @@ function appendResolveCard(selectedChip, snippet) {
 
   const cardEl = document.getElementById(resolveId);
   const btnDone = cardEl.querySelector('.btn-resolve-done');
+  const btnConfused = cardEl.querySelector('.btn-still-confused');
   const btnSave = cardEl.querySelector('.btn-save-to-note');
 
-  // Nút tương tác: ✓ Hiểu rồi, tiếp tục đọc — bấm vào sẽ reset state badge về trạng thái 😴 Sẵn sàng
+  // Nút tương tác: ✓ Hiểu rồi, tiếp tục đọc
   btnDone.addEventListener('click', () => {
     btnDone.disabled = true;
     btnDone.textContent = '✓ Đã ghi nhận, tiếp tục đọc';
     btnDone.style.opacity = '0.7';
+    if (btnConfused) btnConfused.style.display = 'none';
     updateStateBadge('ready');
   });
 
   btnSave.addEventListener('click', () => {
     saveAIExplanationToNote(snippet, selectedChip.explanation + "\n\n" + selectedChip.example);
   });
+
+  // Nút tương tác: 🤔 Vẫn chưa rõ → (Kích hoạt Multi-turn Socratic Vòng 2)
+  btnConfused.addEventListener('click', async () => {
+    btnConfused.disabled = true;
+    btnConfused.textContent = '⏳ Đang đào sâu…';
+    btnConfused.style.opacity = '0.7';
+    btnDone.disabled = true;
+
+    // Khung chat: User bubble thể hiện sự băn khoăn vòng 2
+    appendSimpleUserBubble(`Mình vẫn chưa thực sự thông suốt về: "${selectedChip.label}". Hãy đào sâu thêm giúp mình!`);
+    updateStateBadge('analyzing');
+    const waitingRow = appendWaitingIndicator();
+
+    try {
+      const res = await fetch('/api/socratic-followup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          snippet: snippet,
+          selectedChip: selectedChip,
+          mode: CURRENT_AI_MODE,
+          apiKey: VLEARN_GEMINI_KEY
+        })
+      });
+      const resJson = await res.json();
+      waitingRow.remove();
+
+      if (resJson && resJson.success && resJson.data) {
+        appendDeepResolveCard(resJson.data, selectedChip, snippet);
+      } else {
+        appendDeepResolveFallback(selectedChip, snippet);
+      }
+      updateStateBadge('answered');
+    } catch (err) {
+      waitingRow.remove();
+      appendDeepResolveFallback(selectedChip, snippet);
+      updateStateBadge('answered');
+    }
+  });
+}
+
+function appendDeepResolveCard(data, selectedChip, snippet) {
+  const row = document.createElement('div');
+  row.className = 'msg-row';
+  const deepId = 'deep-resolve-' + Date.now();
+
+  row.innerHTML = `
+    <div class="msg-avatar">🎯</div>
+    <div class="msg-bubble bot-bubble">
+      <div class="deep-resolve-card-v2" id="${deepId}">
+        <div class="deep-resolve-header">
+          <span>🔍 Socratic Vòng 2 · Đào Sâu Bản Chất</span>
+          <span class="deep-resolve-badge">${escapeHtml(data.badge || 'Vòng 2')}</span>
+        </div>
+        <div class="deep-resolve-content">
+          ${escapeHtml(data.deeperExplanation)}
+        </div>
+        <div class="deep-analogy-box">
+          <div class="deep-analogy-title">💡 Ẩn dụ đời thường trực quan:</div>
+          <div>${escapeHtml(data.everydayAnalogy)}</div>
+        </div>
+        <div class="deep-action-box">
+          <div class="deep-action-title">⚡ Bước thực hành kiểm chứng:</div>
+          <code>${escapeHtml(data.actionStep)}</code>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; flex-wrap: wrap; gap: 8px;">
+          <button class="btn-deep-done">✓ Đã thông suốt, quay lại bài học</button>
+          <button class="btn-save-deep-note">📌 Lưu cả 2 vòng vào Ghi chú</button>
+        </div>
+      </div>
+    </div>
+  `;
+  chatMessagesEl.appendChild(row);
+  scrollToBottom();
+
+  const cardEl = document.getElementById(deepId);
+  const btnDone = cardEl.querySelector('.btn-deep-done');
+  const btnSave = cardEl.querySelector('.btn-save-deep-note');
+
+  btnDone.addEventListener('click', () => {
+    btnDone.disabled = true;
+    btnDone.textContent = '✓ Hoàn tất chu trình Socratic';
+    btnDone.style.opacity = '0.7';
+    updateStateBadge('ready');
+  });
+
+  btnSave.addEventListener('click', () => {
+    const combined = `[Vòng 1]: ${selectedChip.explanation}\n\n[Vòng 2 Đào Sâu]: ${data.deeperExplanation}\n\nẨn dụ: ${data.everydayAnalogy}\nKiểm chứng: ${data.actionStep}`;
+    saveAIExplanationToNote(snippet, combined);
+  });
+}
+
+function appendDeepResolveFallback(selectedChip, snippet) {
+  appendDeepResolveCard({
+    deeperExplanation: `Để hiểu sâu hơn về '${selectedChip.label}': Khi máy tính hoặc LLM xử lý, việc phân tách các pha nhận thức riêng biệt cho phép hệ thống kiểm soát trạng thái trung gian, tự sửa lỗi thay vì đoán mò một bước duy nhất.`,
+    everydayAnalogy: "Tưởng tượng bạn giải toán hình: Viết giả thiết ra nháp (Thought) -> Dùng thước kẻ đường phụ (Action) -> Quan sát thấy hai góc bằng nhau (Observation) -> Lúc đó mới chốt lời giải!",
+    actionStep: "Mở file bài Lab và in log ra console trước và sau khi gọi hàm công cụ.",
+    badge: "⚡ VLearn RAG (Vòng 2)"
+  }, selectedChip, snippet);
 }
 
 // =========================================================

@@ -1298,6 +1298,132 @@ mark.out-target {
   background-color: #15803d;
 }
 
+.btn-still-confused {
+  background-color: #f5f3ff;
+  color: #7c3aed;
+  border: 1px solid #ddd6fe;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-still-confused:hover {
+  background-color: #ede9fe;
+  border-color: #c4b5fd;
+  transform: translateY(-1px);
+}
+
+/* Deep Resolve Card v2 (Multi-turn Socratic Vòng 2) */
+.deep-resolve-card-v2 {
+  border-left: 3px solid #7c3aed;
+  background: #faf5ff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 4px;
+}
+
+.deep-resolve-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #7c3aed;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.deep-resolve-badge {
+  font-size: 11px;
+  background: #ede9fe;
+  color: #6d28d9;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: 1px solid #ddd6fe;
+}
+
+.deep-resolve-content {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #1e1b4b;
+  margin-bottom: 10px;
+}
+
+.deep-analogy-box {
+  background: #ffffff;
+  border: 1px solid #e9d5ff;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #581c87;
+}
+
+.deep-analogy-title {
+  font-weight: 700;
+  color: #6b21a8;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.deep-action-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.deep-action-title {
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.btn-deep-done {
+  background-color: #7c3aed;
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-deep-done:hover {
+  background-color: #6d28d9;
+}
+
+.btn-save-deep-note {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-save-deep-note:hover {
+  background-color: #e2e8f0;
+}
+
 .analyzing-container {
   display: flex;
   align-items: center;

@@ -1,5 +1,103 @@
 [
   {
+    "turn_id": 1789626550293,
+    "timestamp": "2026-09-17T06:29:10Z",
+    "step": "RAG Knowledge Retrieval (Key: Self-attention · Score: 1.0)",
+    "model": "vlearn-rag-lite-kb",
+    "selected_text": "Self-attention",
+    "latency_ms": 12,
+    "tokens_used": 0,
+    "layer_used": "RAG-hit",
+    "rag_confidence": 1.0,
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789626536685,
+    "timestamp": "2026-09-17T06:28:56Z",
+    "step": "RAG Knowledge Retrieval (Key: Self-attention · Score: 1.0)",
+    "model": "vlearn-rag-lite-kb",
+    "selected_text": "Self-attention",
+    "latency_ms": 12,
+    "tokens_used": 0,
+    "layer_used": "RAG-hit",
+    "rag_confidence": 1.0,
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789625746256,
+    "timestamp": "2026-09-17T06:15:46Z",
+    "step": "Multi-Turn Socratic Follow-up (Round 2 Live AI: 1. Cơ chế vòng lặp Thought -> )",
+    "model": "multi-turn-live-ai",
+    "selected_text": "ReAct Agent",
+    "latency_ms": 4710,
+    "tokens_used": 180,
+    "layer_used": "MultiTurn-Live",
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789625729919,
+    "timestamp": "2026-09-17T06:15:29Z",
+    "step": "Multi-Turn Socratic Follow-up (Round 2 RAG KB: 1. Cơ chế vòng lặp Thought -> )",
+    "model": "multi-turn-curated-kb",
+    "selected_text": "ReAct Agent",
+    "latency_ms": 8,
+    "tokens_used": 0,
+    "layer_used": "MultiTurn-RAG",
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789625723241,
+    "timestamp": "2026-09-17T06:15:23Z",
+    "step": "RAG Knowledge Retrieval (Key: Object Detection · Score: 1.0)",
+    "model": "vlearn-rag-lite-kb",
+    "selected_text": "Object Detection",
+    "latency_ms": 12,
+    "tokens_used": 0,
+    "layer_used": "RAG-hit",
+    "rag_confidence": 1.0,
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789624760030,
+    "timestamp": "2026-09-17T05:59:20Z",
+    "step": "Socratic Probing Generation (OpenRouter: liquid/lfm-2.5-2.6b:free)",
+    "model": "liquid/lfm-2.5-2.6b:free",
+    "selected_text": "iải xong bài to",
+    "latency_ms": 9321,
+    "tokens_used": 1571,
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789624648288,
+    "timestamp": "2026-09-17T05:57:28Z",
+    "step": "Socratic Probing Generation (OpenRouter: liquid/lfm-2.5-2.6b:free)",
+    "model": "liquid/lfm-2.5-2.6b:free",
+    "selected_text": "ReAct Agent",
+    "latency_ms": 5306,
+    "tokens_used": 1511,
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789624616276,
+    "timestamp": "2026-09-17T05:56:56Z",
+    "step": "Socratic Probing Generation (Generic Fallback: )",
+    "model": "rule-based-fallback",
+    "selected_text": "",
+    "latency_ms": 10,
+    "tokens_used": 0,
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789624486747,
+    "timestamp": "2026-09-17T05:54:46Z",
+    "step": "Socratic Probing Generation (Generic Fallback: )",
+    "model": "rule-based-fallback",
+    "selected_text": "",
+    "latency_ms": 10,
+    "tokens_used": 0,
+    "status": "PASS"
+  },
+  {
     "turn_id": 1789623383436,
     "timestamp": "2026-09-17T05:36:23Z",
     "step": "Socratic Probing Generation (OpenRouter: liquid/lfm-2.5-2.6b:free)",
