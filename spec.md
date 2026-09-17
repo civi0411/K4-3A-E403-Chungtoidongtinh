@@ -173,14 +173,17 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
   > [!IMPORTANT]
   > **Quy định Hackathon CP4:** *"Khai thiếu không bị trừ điểm — Giấu mới bị."* Dưới đây là các phần nhóm chủ động tự khai báo chưa hoàn thiện tại mốc 21:00 ngày 17/9:
   
-  **A. Danh mục các phần CHƯA LÀM XONG (Chính thức tự khai báo):**
-  1. **Lưu trữ dữ liệu đồng bộ lên Database đám mây VLearn (Chưa xong):** Hiện tại toàn bộ trace log và ghi chú được lưu trữ cục bộ tại `localStorage` và file `codebase/trace_waterfall.json`, chưa kết nối trực tiếp qua API đồng bộ tài khoản học viên chính khóa VLearn.
-  2. **Form thu thập phản hồi chi tiết 1-click (HAX G15 — Chưa xong):** Mới có nút đóng luồng `✓ Hiểu rồi, tiếp tục đọc`, chưa làm popup chi tiết *"Gợi ý này chưa đúng chỗ nào?"* khi học viên bấm nút không hài lòng để gửi phản hồi cho TA.
-  3. **Cơ chế Cooldown / Chống Spam gọi API dồn dập (Chưa xong):** Chưa cài đặt rate-limit chặn người dùng cố tình click liên tục >10 lần/phút để spam request tới backend, hiện tại mới chặn ở mức debounce cơ bản phía frontend.
+  **A. Danh mục các phần CHƯA LÀM XONG (Chính thức tự khai báo theo đề tài):**
+  1. **Lưu trữ dữ liệu đồng bộ lên Database đám mây VLearn:** Hiện tại toàn bộ trace log và ghi chú được lưu trữ cục bộ tại `localStorage` và file `codebase/trace_waterfall.json`, chưa kết nối trực tiếp qua API đồng bộ tài khoản học viên chính khóa VLearn.
+  2. **Phạm vi tài liệu bài giảng:** Hiện tại hệ thống mới nạp và phục vụ chuyên sâu cho bài Lab Day 03 (ReAct Agent vs Chatbot) và các khái niệm mẫu của Day 01/Day 02; chưa tự động ingest toàn bộ giáo trình 10 buổi học còn lại của khóa K4.
+  3. **Cơ chế Micro-Quiz kiểm tra hiểu thật (Comprehension Check):** Sau khi học viên đọc Resolve Card và bấm "Hiểu rồi", hệ thống mới tin tưởng người học luôn chứ chưa có 1 câu hỏi trắc nghiệm nhanh 10 giây để kiểm tra xem học viên có thực sự nắm bài hay không.
+  4. **Form thu thập phản hồi chi tiết 1-click (HAX G15):** Mới có nút đóng luồng `✓ Hiểu rồi, tiếp tục đọc`, chưa làm popup chi tiết *"Gợi ý này chưa đúng chỗ nào?"* khi học viên bấm nút không hài lòng để gửi phản hồi cho TA.
+  5. **Cơ chế Cooldown / Rate-limit cứng trên Backend:** Chưa cài đặt rate-limit chặn người dùng cố tình click liên tục >10 lần/phút để spam request tới backend, hiện tại mới chặn ở mức debounce cơ bản phía frontend.
 
   **B. Danh mục các phần ĐÃ HOÀN THÀNH VƯỢT TIẾN ĐỘ tại CP4:**
   1. **Bộ lọc Layer 0 Intent Guardrail Regex (✔️ Đã hoàn thành):** Bắt và chặn triệt để URL `https` (GS-02), câu hỏi logistics điểm danh (KB-05b), và prompt injection làm thơ (KB-06).
   2. **Bộ cắt tỉa tự động nhãn chip $\le 15$ từ (✔️ Đã hoàn thành):** Triển khai validator tự động cắt nhãn chip vượt quá 15 từ trên UI và siết prompt (pass case GS-20).
+  3. **Bộ kiểm thử tự động 20 case thật K4 (✔️ Đã hoàn thành):** Đo 2 lượt, đạt 100% Pass Rate ở Lượt 2, vượt xa Quality Bar cam kết $\ge 90\%$.
 
 ## §9. Changelog
 | Thời điểm | Đổi gì | Vì sao (trỏ về feedback / case kiểm thử) |
