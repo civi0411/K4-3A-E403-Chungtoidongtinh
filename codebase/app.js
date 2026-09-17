@@ -420,7 +420,7 @@ const quickTabs = document.querySelectorAll('.q-tab');
 // =========================================================
 // AI ENGINE CONFIG & STATE (CP3 & RUBRIC R5)
 // =========================================================
-let CURRENT_AI_MODE = localStorage.getItem('vlearn_ai_mode') || 'mock';
+let CURRENT_AI_MODE = localStorage.getItem('vlearn_ai_mode') || 'gemini';
 let VLEARN_GEMINI_KEY = localStorage.getItem('vlearn_gemini_key') || '';
 window.VLEARN_AI_TRACES = JSON.parse(localStorage.getItem('vlearn_ai_traces') || '[]');
 
@@ -442,12 +442,9 @@ const traceViewerBox = document.getElementById('trace-viewer-box');
 
 function updateAiEngineUi() {
   if (!aiEngineDot || !aiEngineLabel) return;
-  if (CURRENT_AI_MODE === 'gemini' && VLEARN_GEMINI_KEY) {
+  if (CURRENT_AI_MODE === 'gemini') {
     aiEngineDot.className = 'ai-status-dot live';
-    aiEngineLabel.textContent = '🤖 Gemini Live';
-  } else if (CURRENT_AI_MODE === 'gemini') {
-    aiEngineDot.className = 'ai-status-dot mock';
-    aiEngineLabel.textContent = '⚠️ Chưa có Key';
+    aiEngineLabel.textContent = '🤖 Live AI (Connected)';
   } else {
     aiEngineDot.className = 'ai-status-dot mock';
     aiEngineLabel.textContent = '⚡ Mock Mode';

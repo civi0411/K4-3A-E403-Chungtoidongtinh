@@ -1,5 +1,35 @@
 [
   {
+    "turn_id": 1789623383436,
+    "timestamp": "2026-09-17T05:36:23Z",
+    "step": "Socratic Probing Generation (OpenRouter: liquid/lfm-2.5-2.6b:free)",
+    "model": "liquid/lfm-2.5-2.6b:free",
+    "selected_text": "ReAct Agent",
+    "latency_ms": 6266,
+    "tokens_used": 1241,
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789623118740,
+    "timestamp": "2026-09-17T05:31:58Z",
+    "step": "Socratic Probing Generation (Mock Mode: ReAct Agent)",
+    "model": "rule-based-mock",
+    "selected_text": "ReAct Agent",
+    "latency_ms": 15,
+    "tokens_used": 0,
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789623101269,
+    "timestamp": "2026-09-17T05:31:41Z",
+    "step": "Socratic Probing Generation (Mock Mode: ReAct Agent)",
+    "model": "rule-based-mock",
+    "selected_text": "ReAct Agent",
+    "latency_ms": 15,
+    "tokens_used": 0,
+    "status": "PASS"
+  },
+  {
     "turn_id": 1789618194692,
     "timestamp": "2026-09-17T04:09:54Z",
     "step": "Socratic Probing Generation (Mock Mode: ReAct Agent)",

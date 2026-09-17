@@ -239,8 +239,8 @@ def call_gemini_api(snippet, context_title, api_key):
         "tokensUsed": tokens_used
     }
 
-def call_openrouter_api(snippet, context_title, api_key, model="google/gemini-2.5-flash"):
-    """Gọi OpenRouter API hỗ trợ key sk-or-v1-..."""
+def call_openrouter_api(snippet, context_title, api_key, model="liquid/lfm-2.5-2.6b:free"):
+    """Gọi OpenRouter API hỗ trợ key sk-or-v1-... với fallback tự động sang model free."""
     start_time = time.perf_counter()
     endpoint = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -252,7 +252,7 @@ def call_openrouter_api(snippet, context_title, api_key, model="google/gemini-2.
         "2. Đưa ra chính xác 3 chip lựa chọn (options) đại diện cho 3 điểm nghẽn nhận thức phổ biến nhất. "
         "Mỗi chip có label ngắn gọn (<= 15 từ), explanation súc tích và ví dụ trực quan.\n"
         "3. Nếu học viên hỏi về logistics (điểm danh, wifi, phòng học) hoặc đòi viết code giải lab hộ: Đặt is_out_of_scope = true.\n\n"
-        "Trả về DUY NHẤT định dạng JSON chuẩn không kèm markdown thừa:\n"
+        "Trả về DUY NHẤT định dạng JSON chuẩn không kèm văn bản thừa:\n"
         "{\n"
         '  "socratic_question": "Câu hỏi gợi mở...",\n'
         '  "chips": [\n'
@@ -266,37 +266,64 @@ def call_openrouter_api(snippet, context_title, api_key, model="google/gemini-2.
 
     prompt_user = f"Bối cảnh bài học: {context_title}\nĐoạn văn bản/mã code học viên đang bôi đen: \"{snippet}\"\nHãy sinh câu hỏi Socratic và 3 chip tháo gỡ điểm nghẽn nhận thức."
 
-    payload = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": system_instruction},
-            {"role": "user", "content": prompt_user}
-        ],
-        "temperature": 0.2,
-        "response_format": {"type": "json_object"}
-    }
+    models_to_try = [model]
+    if ":free" not in model:
+        models_to_try.extend(["liquid/lfm-2.5-2.6b:free", "nvidia/nemotron-3.5-lightning:free"])
 
-    req = urllib.request.Request(
-        endpoint,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {api_key}"
-        },
-        method="POST"
-    )
+    res_data = None
+    used_model = model
+    last_err = None
 
-    with urllib.request.urlopen(req, timeout=12) as res:
-        res_data = json.loads(res.read().decode("utf-8"))
+    for m in models_to_try:
+        try:
+            payload = {
+                "model": m,
+                "messages": [
+                    {"role": "system", "content": system_instruction},
+                    {"role": "user", "content": prompt_user}
+                ],
+                "temperature": 0.2
+            }
+            if ":free" not in m:
+                payload["response_format"] = {"type": "json_object"}
+
+            req = urllib.request.Request(
+                endpoint,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {api_key}"
+                },
+                method="POST"
+            )
+
+            with urllib.request.urlopen(req, timeout=12) as res:
+                res_data = json.loads(res.read().decode("utf-8"))
+                used_model = m
+                break
+        except Exception as e:
+            last_err = e
+            continue
+
+    if not res_data:
+        raise last_err or RuntimeError("All OpenRouter models failed")
 
     latency_ms = round((time.perf_counter() - start_time) * 1000)
     raw_text = res_data["choices"][0]["message"]["content"]
     
+    clean_text = raw_text.strip()
+    if clean_text.startswith("```"):
+        clean_text = re.sub(r"^```(?:json)?\s*", "", clean_text)
+        clean_text = re.sub(r"\s*```$", "", clean_text)
+
     try:
-        parsed = json.loads(raw_text)
-    except Exception:
-        clean_text = re.sub(r"^```(json)?|```$", "", raw_text.strip(), flags=re.MULTILINE)
         parsed = json.loads(clean_text)
+    except Exception:
+        m = re.search(r"\{.*\}", clean_text, re.DOTALL)
+        if m:
+            parsed = json.loads(m.group(0))
+        else:
+            raise
 
     tokens_used = res_data.get("usage", {}).get("total_tokens", 220)
 
@@ -316,8 +343,8 @@ def call_openrouter_api(snippet, context_title, api_key, model="google/gemini-2.
     trace_entry = {
         "turn_id": int(time.time() * 1000),
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "step": f"Socratic Probing Generation (OpenRouter: {model})",
-        "model": model,
+        "step": f"Socratic Probing Generation (OpenRouter: {used_model})",
+        "model": used_model,
         "selected_text": snippet[:45],
         "latency_ms": latency_ms,
         "tokens_used": tokens_used,
