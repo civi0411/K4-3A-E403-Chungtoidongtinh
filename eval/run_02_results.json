@@ -1,9 +1,10 @@
 {
-  "timestamp": "2026-09-17 15:27:55",
+  "timestamp": "2026-09-17 15:32:37",
+  "run_number": 2,
   "total_cases": 20,
-  "passed_cases": 16,
-  "pass_rate_pct": 80.0,
-  "quality_bar_pct": 80.0,
+  "passed_cases": 20,
+  "pass_rate_pct": 100.0,
+  "quality_bar_pct": 90.0,
   "details": [
     {
       "case_id": "GS-01",
@@ -26,10 +27,10 @@
       "metrics": {
         "brevity": true,
         "grounding": true,
-        "accuracy": false,
-        "passed": false
+        "accuracy": true,
+        "passed": true
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "case_id": "GS-03",
@@ -206,12 +207,12 @@
       "selected_text": "Xe tự lái nhận ra người đi bộ. Ai đã\ndạy nó “người đi bộ” trông thế nào?",
       "layer": "④ Đặc thù domain",
       "metrics": {
-        "brevity": false,
+        "brevity": true,
         "grounding": true,
         "accuracy": true,
-        "passed": false
+        "passed": true
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "case_id": "GS-17",
@@ -245,12 +246,12 @@
       "selected_text": "LLM ⊂ DL ⊂ ML ⊂ AI. Nói “AI” khi ý là “LLM” sẽ gây nhầm về sau.",
       "layer": "④ Đặc thù domain",
       "metrics": {
-        "brevity": false,
+        "brevity": true,
         "grounding": true,
         "accuracy": true,
-        "passed": false
+        "passed": true
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "case_id": "GS-20",
@@ -258,12 +259,12 @@
       "selected_text": "Có giám sát\n■ Cần đáp án — tốn công gán\nnhãn.\n■ Đo được độ chính xác.\n■ Chỉ giỏi",
       "layer": "④ Đặc thù domain",
       "metrics": {
-        "brevity": false,
+        "brevity": true,
         "grounding": true,
         "accuracy": true,
-        "passed": false
+        "passed": true
       },
-      "status": "FAIL"
+      "status": "PASS"
     }
   ]
 }

@@ -426,13 +426,13 @@ MOCK_KNOWLEDGE = {
             },
             {
                 "id": 2,
-                "label": "2. Giá trị này nằm trong bảng so sánh mô hình hay cấu hình tham số?",
+                "label": "2. Nằm trong bảng so sánh mô hình hay cấu hình tham số?",
                 "explanation": "Nếu nằm trong cột hyperparameter, '3,6' có thể là trọng số mất mát hoặc tỷ lệ chia tập dữ liệu huấn luyện.",
                 "example": "⚙️ Tham số: Tỷ lệ co dãn anchor box hoặc trọng số regularization."
             },
             {
                 "id": 3,
-                "label": "3. Tác động của chỉ số này tới ngưỡng chấp nhận của hệ thống thực tế?",
+                "label": "3. Tác động của chỉ số này tới ngưỡng chấp nhận thực tế?",
                 "explanation": "Đánh giá xem con số này có đạt yêu cầu kỹ thuật (Quality Bar) đề ra trong kịch bản triển khai hay không.",
                 "example": "🎯 Quyết định: Xác định xem mô hình có đủ điều kiện đưa lên môi trường thử nghiệm."
             }
@@ -660,7 +660,7 @@ MOCK_KNOWLEDGE = {
             },
             {
                 "id": 2,
-                "label": "2. Tại sao gọi chung chung là 'AI' có thể gây nhầm lẫn khi thiết kế hệ thống?",
+                "label": "2. Vì sao gọi chung là 'AI' gây nhầm lẫn khi thiết kế hệ thống?",
                 "explanation": "Mỗi tầng công nghệ có chi phí tính toán, độ trễ và rủi ro ảo giác hoàn toàn khác nhau; dùng LLM cho tác vụ phân loại nhị phân đơn giản là lãng phí tài nguyên.",
                 "example": "⚖️ Kiến trúc: Phân loại email chỉ cần ML truyền thống (TF-IDF + SVM) chạy 2ms, không cần gọi LLM tốn 2000ms."
             },

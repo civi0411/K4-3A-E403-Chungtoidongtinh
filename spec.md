@@ -116,11 +116,16 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
 - **Báo cáo kết quả Lượt 1 (Chạy bằng `eval/eval_runner.py` lưu tại `eval/run_01_results.md`):**
   - **Tổng số case kiểm thử:** 20 / 20 case thật K4.
   - **Số case đạt (PASS):** 16 / 20 case.
-  - **Tỷ lệ đạt thực tế:** **80.0%** (Đạt trúng ngưỡng Quality Bar cam kết).
+  - **Tỷ lệ đạt thực tế:** **80.0%** (Đạt trúng ngưỡng Quality Bar cam kết CP3).
   - **Tỷ lệ không bịa nguồn (Grounding):** **100%**.
-  - **Mổ xẻ 4 case fail:** GS-02 (bôi nhầm URL "https" — ĐÃ FIX), GS-16 (câu hỏi tu từ), GS-19 (nhầm ranh giới LLM vs AI), GS-20 (nhãn chip dài quá 15 từ — ĐÃ FIX). Toàn bộ nguyên nhân gốc rễ và giải pháp khắc phục được ghi chép đầy đủ tại `eval/run_01_results.md`.
-- **Quality bar cam kết (chốt tại CP4, giữ nguyên sau đó):** 
-  > *"Đạt khi $\ge 80\%$ case câu hỏi mẫu được phản hồi bằng câu hỏi gợi mở phù hợp; $100\%$ không bịa đặt kiến thức ngoài trang tài liệu."*
+  - **Mổ xẻ 4 case fail:** GS-02 (bôi nhầm URL "https"), GS-16 (câu hỏi tu từ), GS-19 (nhầm ranh giới LLM vs AI), GS-20 (nhãn chip dài quá 15 từ).
+- **Báo cáo kết quả Lượt 2 (Chạy bằng `eval/eval_runner.py --run 2` lưu tại `eval/run_02_results.md` — KHÓA TẠI CP4):**
+  - **Tổng số case kiểm thử:** 20 / 20 case thật K4.
+  - **Số case đạt (PASS):** **20 / 20 case (100.0%)**.
+  - **Tỷ lệ không bịa nguồn (Grounding):** **100%**.
+  - **Tiến bộ kỹ thuật:** Khắc phục triệt để 4/4 ca lỗi từ Lượt 1 nhờ kích hoạt Intent Guardrail (Layer 0), chuẩn hóa 3-Layer Router và cắt tỉa nhãn chip tự động $\le 15$ từ.
+- **Quality bar cam kết (Chính thức khóa tại CP4, giữ nguyên cho CP5 & CP6):** 
+  > *"Khóa chính thức: $\ge 90\%$ case câu hỏi mẫu được phản hồi bằng câu hỏi gợi mở phù hợp; $100\%$ không bịa đặt kiến thức ngoài bài học; Độ trễ phản hồi (latency) trung bình $\le 1.500$ms."*
 
 ## §8. Phân công & Kế hoạch
 - **Phân công có tên cụ thể:**
@@ -154,4 +159,5 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
 | **17/9 · 01:30 (CP2 → CP3)** | Tinh chỉnh tag nhãn trên Toolbar: `💡 Giải thích (trả lời ngay)` và `🔍 Gợi mở (Socratic)` | Phản hồi từ user test bạn Nguyễn Trần Bảo Tâm (`2A202602408`): Người dùng do dự 2 giây giữa 2 nút vì chưa rõ mức độ tương tác. |
 | **17/9 · 02:00 (CP3)** | Tích hợp Live Gemini 1.5 Flash API (Windowed Context + Structured JSON) song song Mock Fallback | Đáp ứng yêu cầu nghiệm thu CP3 & Rubric R5: Có $\ge 1$ lời gọi AI thật ở quyết định trung tâm và lưu trace log. |
 | **17/9 · 02:30 (CP3 → CP4)** | Bổ sung kế hoạch lọc URL regex và ràng buộc nhãn chip $\le 15$ từ cho Lượt 2 | Phát hiện lỗi ở case `GS-02` (bôi nhầm "https") và case `GS-20` (nhãn chip quá dài) trong đợt đo Lượt 1 (`eval/run_01_results.md`). |
+| **17/9 · 15:30 (CP4 - Quality Lock)** | Đạt 100% Pass rate trên Golden Set 20 case (`run_02_results.md`); Khóa chính thức ngưỡng chất lượng $\ge 90\%$; Khóa phạm vi kịch bản Demo Socratic | Hoàn tất mục tiêu cốt lõi của Checkpoint 4 (Lock Demo Scope & Official Quality Bar). |
 | **17/9 · 09:30 (CP4 → CP5)** | Thêm chỉ báo giới hạn ngữ cảnh (Context Token Boundary, HAX G2) | Phản hồi từ user test bạn Lê Hoàng Khang (`2A202602315`): Tránh học viên bôi đen cả đoạn dài gây quá tải token và loãng trọng tâm. |
