@@ -165,7 +165,7 @@ def run_evaluation(run_number=2):
     print("=" * 70)
 
     if not os.path.exists(GOLDEN_SET_PATH):
-        print(f"❌ Không tìm thấy file: {GOLDEN_SET_PATH}")
+        print(f"[ERROR] Khong tim thay file: {GOLDEN_SET_PATH}")
         sys.exit(1)
 
     with open(GOLDEN_SET_PATH, "r", encoding="utf-8") as f:
@@ -190,9 +190,9 @@ def run_evaluation(run_number=2):
         eval_res = evaluate_metrics(case, response)
         if eval_res["passed"]:
             passed_count += 1
-            status_icon = "✅ PASS"
+            status_icon = "[PASS]"
         else:
-            status_icon = "❌ FAIL"
+            status_icon = "[FAIL]"
 
         results.append({
             "case_id": cid,

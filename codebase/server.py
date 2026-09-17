@@ -23,6 +23,11 @@ import urllib.request
 import urllib.error
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
+
 # Cấu hình thư mục
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TRACE_LOG_PATH = os.path.join(BASE_DIR, "trace_waterfall.json")
@@ -49,196 +54,196 @@ MOCK_KNOWLEDGE = {
     "react agent": {
         "keyword": "ReAct Agent",
         "direct_answer": "ReAct Agent (Reasoning + Acting) là mô hình AI kết hợp giữa suy luận và hành động. Thay vì chỉ sinh văn bản đóng băng, Agent tự lập luận (Thought), quyết định gọi công cụ ngoài (Action) và đọc kết quả trả về (Observation) để xử lý tác vụ đa bước phức tạp.",
-        "extra_example": "📌 Ví dụ thực tế: Khi hỏi 'Thời tiết Hà Nội hôm nay và gợi ý trang phục', ReAct Agent sẽ gọi API OpenWeather lấy nhiệt độ 28°C rồi lập luận đưa ra gợi ý mặc áo thun thoáng mát.",
+        "extra_example": "Ví dụ thực tế: Khi hỏi 'Thời tiết Hà Nội hôm nay và gợi ý trang phục', ReAct Agent sẽ gọi API OpenWeather lấy nhiệt độ 28°C rồi lập luận đưa ra gợi ý mặc áo thun thoáng mát.",
         "socratic_question": "Bạn đang bôi đen 'ReAct Agent'. Điểm nào dưới đây là phần bạn đang cảm thấy kẹt nhất?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Cơ chế vòng lặp Thought -> Action -> Observation hoạt động ra sao?",
                 "explanation": "ReAct Agent không sinh ngay câu trả lời cuối cùng mà lặp qua 3 nhịp: (1) Thought (LLM tự suy ngẫm bước cần làm); (2) Action (LLM phát lệnh gọi Tool); (3) Observation (Mô hình nhận kết quả trả về từ môi trường để tư duy tiếp hoặc xuất kết quả).",
-                "example": "💡 Ví dụ trực quan: Giống như lập trình viên sửa bug: Đọc mã lỗi (Thought) ➔ Chạy test (Action) ➔ Đọc kết quả terminal (Observation) ➔ Fix code."
+                "example": "Ví dụ trực quan: Giống như lập trình viên sửa bug: Đọc mã lỗi (Thought) ➔ Chạy test (Action) ➔ Đọc kết quả terminal (Observation) ➔ Fix code."
             },
             {
                 "id": 2,
                 "label": "2. Sự khác biệt cốt lõi giữa Chatbot (Cấp 2) và ReAct Agent (Cấp 3)?",
                 "explanation": "Chatbot thông thường chỉ dựa vào tri thức đóng băng trong trọng số mô hình và không thể tương tác thế giới thực. ReAct Agent được gắn 'tay chân' là các Tool (hàm API, database, calculator), cho phép truy vấn dữ liệu thời gian thực và tự sửa lỗi.",
-                "example": "💡 Ví dụ so sánh: Hỏi Chatbot Cấp 2: 'Bitcoin giá bao nhiêu?' ➔ Trả lời dữ liệu cũ 2023. Hỏi ReAct Agent Cấp 3 ➔ Tự gọi get_crypto_price('BTC') trả về giá chính xác lúc này."
+                "example": "Ví dụ so sánh: Hỏi Chatbot Cấp 2: 'Bitcoin giá bao nhiêu?' ➔ Trả lời dữ liệu cũ 2023. Hỏi ReAct Agent Cấp 3 ➔ Tự gọi get_crypto_price('BTC') trả về giá chính xác lúc này."
             },
             {
                 "id": 3,
                 "label": "3. Cách viết vòng lặp While và điều kiện ngắt trong Python?",
                 "explanation": "Trong file src/react_agent.py, vòng lặp while iteration < max_iterations: sẽ chạy liên tục. Điều kiện dừng là khi phản hồi của LLM không còn yêu cầu gọi công cụ, hoặc khi đạt trần an toàn max_iterations = 5 để chống lặp vô tận.",
-                "example": "💻 Code mẫu: if not response.tool_calls: return response.content ➔ ngắt vòng lặp và gửi câu trả lời cuối cùng."
+                "example": "Code mẫu: if not response.tool_calls: return response.content ➔ ngắt vòng lặp và gửi câu trả lời cuối cùng."
             }
         ]
     },
     "native tool calling": {
         "keyword": "Native Tool Calling",
         "direct_answer": "Native Tool Calling là cơ chế được huấn luyện trực tiếp vào model. Khi cần dùng công cụ, model dừng sinh text và trả về đối tượng JSON chuẩn (tên hàm + arguments) thay vì phải dùng regex tách chuỗi tự do.",
-        "extra_example": "📌 Ví dụ: Thay vì text 'Hãy gọi search_db với id=10', Claude/OpenAI trả về cấu trúc { name: 'search_db', arguments: { id: 10 } }.",
+        "extra_example": "Ví dụ: Thay vì text 'Hãy gọi search_db với id=10', Claude/OpenAI trả về cấu trúc { name: 'search_db', arguments: { id: 10 } }.",
         "socratic_question": "Khi tìm hiểu Native Tool Calling, bạn muốn tháo gỡ điểm nào?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Cú pháp khai báo JSON Schema cho tham số?",
                 "explanation": "Tool Schema được định nghĩa theo chuẩn JSON Schema gồm 3 trường: name (tên hàm), description (hướng dẫn cho LLM hiểu khi nào dùng), và input_schema (kiểu dữ liệu các tham số bắt buộc).",
-                "example": "💻 Mẫu khai báo: { 'name': 'calculator', 'description': 'Tính toán số học', 'input_schema': {...} }."
+                "example": "Mẫu khai báo: { 'name': 'calculator', 'description': 'Tính toán số học', 'input_schema': {...} }."
             },
             {
                 "id": 2,
                 "label": "2. Cơ chế model phát hiện khi nào cần gọi Tool hay trả lời thẳng?",
                 "explanation": "LLM dựa vào description của từng tool trong prompt hệ thống. Nếu câu hỏi cần thông tin tool hỗ trợ, LLM trả về stop_reason: tool_use. Nếu là câu chào hỏi thông thường, nó trả lời bằng text bình thường.",
-                "example": "💡 Ví dụ: Hỏi 'Chào bạn' ➔ Text thường. Hỏi '153 * 289' ➔ Kích hoạt tool calculator."
+                "example": "Ví dụ: Hỏi 'Chào bạn' ➔ Text thường. Hỏi '153 * 289' ➔ Kích hoạt tool calculator."
             },
             {
                 "id": 3,
                 "label": "3. Xử lý lỗi khi model sinh tham số JSON sai schema?",
                 "explanation": "Khi parse arguments bị lỗi JSONDecodeError hoặc thiếu tham số bắt buộc, ta bắt exception trong code Python, đóng gói thông báo lỗi thành tool_result và gửi ngược lại cho LLM để nó tự sửa sai (Self-healing loop).",
-                "example": "🔄 Kịch bản tự sửa: Gửi lại message { role: 'tool', content: 'Lỗi: tham số thiếu dấu đóng ngoặc' } để model tự sinh lại JSON hợp lệ."
+                "example": "Kịch bản tự sửa: Gửi lại message { role: 'tool', content: 'Lỗi: tham số thiếu dấu đóng ngoặc' } để model tự sinh lại JSON hợp lệ."
             }
         ]
     },
     "waterfall trace log": {
         "keyword": "Waterfall Trace Log",
         "direct_answer": "Waterfall Trace Log là bản ghi vết thực thi trực quan ghi lại từng mắt xích hoạt động của Agent: thời điểm bắt đầu, thời lượng chạy từng nhịp suy luận, thời gian gọi tool thực tế và mức tiêu thụ token.",
-        "extra_example": "📌 Ví dụ cấu trúc: Turn 1: Thought 320ms ➔ Tool execute 150ms ➔ Observation ➔ Final answer 210ms (Tổng độ trễ: 680ms).",
+        "extra_example": "Ví dụ cấu trúc: Turn 1: Thought 320ms ➔ Tool execute 150ms ➔ Observation ➔ Final answer 210ms (Tổng độ trễ: 680ms).",
         "socratic_question": "Vết Waterfall Trace Log là yêu cầu bắt buộc của bài Lab. Bạn đang băn khoăn ở phần nào?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Cấu trúc chuẩn file docs/trace_waterfall.json gồm những trường gì?",
                 "explanation": "File log gồm mảng các lượt gọi (turns). Mỗi item cần có: timestamp, step (Thought / Action / Observation), tool_name, latency_ms và tokens_used.",
-                "example": "📄 Mẫu JSON: [{ 'step': 'Action', 'tool': 'fetch_stock', 'latency_ms': 142, 'status': 'success' }]."
+                "example": "Mẫu JSON: [{ 'step': 'Action', 'tool': 'fetch_stock', 'latency_ms': 142, 'status': 'success' }]."
             },
             {
                 "id": 2,
                 "label": "2. Đo độ trễ (latency) từng bước trong Python bằng cách nào?",
                 "explanation": "Sử dụng module time.perf_counter() trước và sau khi gọi API LLM hoặc thực thi hàm công cụ, sau đó lấy hiệu số nhân 1000 để ra mili-giây (ms).",
-                "example": "💻 Code mẫu: t0 = time.perf_counter(); res = run_tool(); latency = (time.perf_counter() - t0) * 1000."
+                "example": "Code mẫu: t0 = time.perf_counter(); res = run_tool(); latency = (time.perf_counter() - t0) * 1000."
             },
             {
                 "id": 3,
                 "label": "3. Cách dùng file trace này để chấm điểm rubric bài Lab?",
                 "explanation": "Giảng viên và bot chấm điểm sẽ đọc file trace_waterfall.json để xác minh Agent của bạn thực sự tương tác với Tool hay chỉ hardcode giả lập câu trả lời.",
-                "example": "🎯 Tiêu chí chấm: File trace phải có timestamp khớp thời gian chạy test suite và có log gọi hàm thực tế."
+                "example": "Tiêu chí chấm: File trace phải có timestamp khớp thời gian chạy test suite và có log gọi hàm thực tế."
             }
         ]
     },
     "tool schema": {
         "keyword": "Tool Schema",
         "direct_answer": "Tool Schema là bản đặc tả cấu trúc dữ liệu theo chuẩn JSON Schema mô tả tên hàm, mô tả chức năng và định dạng các tham số đầu vào để LLM sinh lời gọi hàm chuẩn xác.",
-        "extra_example": "📌 Ví dụ: Định nghĩa kiểu dữ liệu 'number', 'string' và danh sách tham số 'required'.",
+        "extra_example": "Ví dụ: Định nghĩa kiểu dữ liệu 'number', 'string' và danh sách tham số 'required'.",
         "socratic_question": "Bạn muốn làm rõ khía cạnh nào khi khai báo Tool Schema?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Cách viết description để LLM không gọi nhầm công cụ?",
                 "explanation": "Description cần nêu rõ khi nào nên gọi tool và ví dụ cụ thể, tránh mô tả mơ hồ khiến model gọi lung tung.",
-                "example": "💡 Viết chuẩn: 'Dùng khi cần tra cứu giá cổ phiếu thời gian thực theo mã ticker'."
+                "example": "Viết chuẩn: 'Dùng khi cần tra cứu giá cổ phiếu thời gian thực theo mã ticker'."
             },
             {
                 "id": 2,
                 "label": "2. Khai báo tham số bắt buộc (required) vs tùy chọn (optional)?",
                 "explanation": "Đặt tên trường trong mảng 'required': ['ticker'] để model bắt buộc phải truyền giá trị, nếu không model có thể bỏ sót.",
-                "example": "💻 JSON: { 'type': 'object', 'properties': {...}, 'required': ['ticker'] }."
+                "example": "JSON: { 'type': 'object', 'properties': {...}, 'required': ['ticker'] }."
             },
             {
                 "id": 3,
                 "label": "3. Cấu trúc kiểu dữ liệu phức tạp: Array hoặc Object lồng nhau?",
                 "explanation": "Dùng type: 'array' kèm trường 'items': {'type': 'string'} khi một tham số nhận danh sách nhiều giá trị.",
-                "example": "💻 JSON: { 'type': 'array', 'items': { 'type': 'string' } }."
+                "example": "JSON: { 'type': 'array', 'items': { 'type': 'string' } }."
             }
         ]
     },
     "self-healing": {
         "keyword": "Self-healing",
         "direct_answer": "Self-healing Loop là cơ chế cho phép Agent tự phục hồi khi gặp lỗi runtime: thay vì crash chương trình, exception được bắt lại, chuyển thành chuỗi Observation gửi cho LLM tự sửa mã hoặc tham số.",
-        "extra_example": "📌 Ví dụ: Model sinh thiếu dấu ngoặc JSON -> Try/Catch bắt lỗi -> Gửi thông báo 'Lỗi cú pháp' -> Model sinh lại JSON đúng.",
+        "extra_example": "Ví dụ: Model sinh thiếu dấu ngoặc JSON -> Try/Catch bắt lỗi -> Gửi thông báo 'Lỗi cú pháp' -> Model sinh lại JSON đúng.",
         "socratic_question": "Bạn đang vướng ở khâu nào của cơ chế Self-healing?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Cấu trúc khối try/except bắt lỗi runtime trong Python?",
                 "explanation": "Bọc lệnh thực thi tool trong try: res = func(**args) except Exception as e: res = f'Lỗi: {str(e)}' để biến lỗi thành text.",
-                "example": "💻 Code: except Exception as err: return {'status': 'error', 'message': str(err)}."
+                "example": "Code: except Exception as err: return {'status': 'error', 'message': str(err)}."
             },
             {
                 "id": 2,
                 "label": "2. Định dạng error prompt gửi ngược lại cho LLM sửa sai?",
                 "explanation": "Gửi tin nhắn có role là 'tool' chứa thông báo lỗi rõ ràng để model hiểu chính xác tham số nào đang bị sai.",
-                "example": "🔄 Mẫu: { 'role': 'tool', 'content': 'Tham số date không đúng định dạng YYYY-MM-DD' }."
+                "example": "Mẫu: { 'role': 'tool', 'content': 'Tham số date không đúng định dạng YYYY-MM-DD' }."
             },
             {
                 "id": 3,
                 "label": "3. Thiết lập trần max_retries để tránh vòng lặp sửa lỗi vô tận?",
                 "explanation": "Cần đặt biến đếm retry_count. Nếu sau 3 lần sửa vẫn lỗi thì thoát vòng lặp và thông báo cho người dùng.",
-                "example": "🛡️ Code: if retries >= 3: return 'Không thể hoàn thành tác vụ do lỗi liên tục'."
+                "example": "Code: if retries >= 3: return 'Không thể hoàn thành tác vụ do lỗi liên tục'."
             }
         ]
     },
     "max_iterations": {
         "keyword": "max_iterations",
         "direct_answer": "max_iterations là ngưỡng chặn an toàn số vòng lặp tối đa của vòng lặp While trong Agent, ngăn ngừa tình huống LLM bị kẹt trong vòng lặp vô tận gây tốn token và treo hệ thống.",
-        "extra_example": "📌 Ví dụ: Đặt max_iterations = 5. Nếu sau 5 bước mà Agent vẫn chưa đưa ra Final Answer thì chủ động dừng.",
+        "extra_example": "Ví dụ: Đặt max_iterations = 5. Nếu sau 5 bước mà Agent vẫn chưa đưa ra Final Answer thì chủ động dừng.",
         "socratic_question": "Khi thiết lập max_iterations, bạn đang băn khoăn điều gì?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Chọn giá trị max_iterations bao nhiêu là hợp lý?",
                 "explanation": "Thông thường với bài Lab Agent, giá trị từ 3 đến 5 là tối ưu, đủ cho các bài toán tra cứu 2-3 công cụ liên tiếp.",
-                "example": "💡 Khuyến nghị: max_iterations = 5 để cân bằng giữa hoàn thành bài tập và an toàn ngân sách."
+                "example": "Khuyến nghị: max_iterations = 5 để cân bằng giữa hoàn thành bài tập và an toàn ngân sách."
             },
             {
                 "id": 2,
                 "label": "2. Xử lý thông báo trả về khi chạm ngưỡng dừng an toàn?",
                 "explanation": "Khi iteration >= max_iterations, cần trả về thông báo giải thích Agent đã dùng hết lượt thử kèm kết quả quan sát gần nhất.",
-                "example": "⚠️ Output: 'Đã đạt giới hạn 5 bước suy luận nhưng chưa thể kết luận dứt điểm'."
+                "example": "Output: 'Đã đạt giới hạn 5 bước suy luận nhưng chưa thể kết luận dứt điểm'."
             },
             {
                 "id": 3,
                 "label": "3. Cơ chế kiểm tra điều kiện thoát sớm (early stop)?",
                 "explanation": "Kiểm tra nếu response không còn yêu cầu gọi tool (len(tool_calls) == 0) thì ngắt vòng lặp ngay lập tức.",
-                "example": "💻 Code: if not response.tool_calls: break."
+                "example": "Code: if not response.tool_calls: break."
             }
         ]
     },
     "call_anthropic": {
         "keyword": "call_anthropic",
         "direct_answer": "Hàm call_anthropic là hàm wrapper chuẩn trong bài Lab để gửi request đến Anthropic Claude API với các tham số cốt lõi như model, prompt, temperature và max_tokens.",
-        "extra_example": "📌 Ví dụ: def call_anthropic(prompt: str, model: str = 'claude-3-5-sonnet', temperature: float = 0.0).",
+        "extra_example": "Ví dụ: def call_anthropic(prompt: str, model: str = 'claude-3-5-sonnet', temperature: float = 0.0).",
         "socratic_question": "Bạn muốn làm rõ khía cạnh kỹ thuật nào của hàm call_anthropic?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Ý nghĩa của tham số temperature trong hàm?",
                 "explanation": "Temperature = 0.0 giúp model phản hồi logic, nhất quán và gọi tool chuẩn xác nhất; giá trị cao hơn sẽ làm tăng tính ngẫu nhiên.",
-                "example": "🎯 Với Agentic AI: Luôn đặt temperature = 0.0 để tránh model hallucinate cú pháp JSON."
+                "example": "Với Agentic AI: Luôn đặt temperature = 0.0 để tránh model hallucinate cú pháp JSON."
             },
             {
                 "id": 2,
                 "label": "2. Cách quản lý API Key an toàn qua file .env?",
                 "explanation": "Tuyệt đối không hardcode API key vào mã nguồn; đọc key qua os.environ.get('ANTHROPIC_API_KEY') và thêm .env vào .gitignore.",
-                "example": "🔒 Code: api_key = os.environ.get('ANTHROPIC_API_KEY')."
+                "example": "Code: api_key = os.environ.get('ANTHROPIC_API_KEY')."
             },
             {
                 "id": 3,
                 "label": "3. Bọc ngoại lệ bắt lỗi kết nối và RateLimitError?",
                 "explanation": "Sử dụng try/except bọc lời gọi API để bắt các mã lỗi HTTP 429 hoặc timeout và kích hoạt cơ chế retry backoff.",
-                "example": "⏳ Code: except anthropic.RateLimitError: time.sleep(2); retry()."
+                "example": "Code: except anthropic.RateLimitError: time.sleep(2); retry()."
             }
         ]
     },
     "ratelimiterror": {
         "keyword": "RateLimitError",
         "direct_answer": "RateLimitError (HTTP 429) xảy ra khi số lượng request (RPM) hoặc số lượng token tiêu thụ (TPM) vượt quá hạn mức được nhà cung cấp API cho phép trong một đơn vị thời gian.",
-        "extra_example": "📌 Ví dụ: Gửi 15 request liên tiếp trong 1 phút trên gói Free Tier dẫn đến lỗi HTTP 429 Too Many Requests.",
+        "extra_example": "Ví dụ: Gửi 15 request liên tiếp trong 1 phút trên gói Free Tier dẫn đến lỗi HTTP 429 Too Many Requests.",
         "socratic_question": "Khi xử lý lỗi RateLimitError, giải pháp nào bạn muốn tìm hiểu?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Thuật toán Exponential Backoff kèm Jitter hoạt động ra sao?",
                 "explanation": "Tăng gấp đôi thời gian chờ sau mỗi lần lỗi (1s -> 2s -> 4s) cộng thêm một khoảng ngẫu nhiên nhỏ để tránh xung đột request.",
-                "example": "⏱️ Công thức: wait_time = base_delay * (2 ** retry) + random_jitter."
+                "example": "Công thức: wait_time = base_delay * (2 ** retry) + random_jitter."
             },
             {
                 "id": 2,
@@ -250,40 +255,40 @@ MOCK_KNOWLEDGE = {
                 "id": 3,
                 "label": "3. Chuyển đổi sang API Key dự phòng hoặc nhà cung cấp khác?",
                 "explanation": "Khi gặp mã 429 liên tục, hệ thống tự động chuyển sang key thứ hai hoặc chuyển từ Claude sang OpenAI/Gemini.",
-                "example": "🔄 Fallback: if err.status_code == 429: switch_to_backup_provider()."
+                "example": "Fallback: if err.status_code == 429: switch_to_backup_provider()."
             }
         ]
     },
     "temperature": {
         "keyword": "Temperature",
         "direct_answer": "Temperature là siêu tham số kiểm soát độ ngẫu nhiên của phân phối xác suất token. Giá trị thấp (0.0-0.2) cho câu trả lời nhất quán và logic; giá trị cao (0.7-1.0) tăng tính đa dạng và sáng tạo.",
-        "extra_example": "📌 Ví dụ: Khi trích xuất JSON hoặc gọi Tool, dùng temperature = 0. Khi viết thơ hoặc brainstorm ý tưởng, dùng temperature = 0.8.",
+        "extra_example": "Ví dụ: Khi trích xuất JSON hoặc gọi Tool, dùng temperature = 0. Khi viết thơ hoặc brainstorm ý tưởng, dùng temperature = 0.8.",
         "socratic_question": "Bạn muốn làm rõ tác động của Temperature trong bài Lab nào?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Tại sao xây dựng ReAct Agent luôn để temperature = 0?",
                 "explanation": "Agent cần gọi tool chính xác và phân tích dữ liệu khách quan. Temperature > 0 có thể làm sai lệch schema JSON hoặc tên tham số.",
-                "example": "🎯 Kinh nghiệm: Luôn cố định temperature = 0 cho mọi tác vụ Agentic suy luận."
+                "example": "Kinh nghiệm: Luôn cố định temperature = 0 cho mọi tác vụ Agentic suy luận."
             },
             {
                 "id": 2,
                 "label": "2. Mối quan hệ giữa Temperature và Top-p (Nucleus Sampling)?",
                 "explanation": "Temperature làm phẳng hoặc làm nhọn phân phối xác suất; trong khi Top-p cắt đuôi các token có xác suất cộng dồn thấp.",
-                "example": "📊 Thông số chuẩn: Thông thường chỉ điều chỉnh một trong hai, giữ thông số còn lại ở mặc định."
+                "example": "Thông số chuẩn: Thông thường chỉ điều chỉnh một trong hai, giữ thông số còn lại ở mặc định."
             },
             {
                 "id": 3,
                 "label": "3. Nguy cơ ảo giác (Hallucination) khi tăng temperature?",
                 "explanation": "Khi nhiệt độ cao, model sẵn sàng chọn các token có xác suất xuất hiện rất thấp, dễ dẫn đến việc bịa đặt thông tin không có thật.",
-                "example": "⚠️ Cảnh báo: Temperature 1.0 có thể khiến bot bịa ra tên tham số tool không hề tồn tại."
+                "example": "Cảnh báo: Temperature 1.0 có thể khiến bot bịa ra tên tham số tool không hề tồn tại."
             }
         ]
     },
     "cuda out of memory": {
         "keyword": "CUDA out of memory",
         "direct_answer": "CUDA Out of Memory (OOM) là lỗi xảy ra khi bộ nhớ VRAM của GPU không đủ để chứa trọng số mô hình (weights), trạng thái kích hoạt (activations) hoặc kích thước batch dữ liệu đầu vào.",
-        "extra_example": "📌 Ví dụ: Tải mô hình Llama 7B (cần ~14GB VRAM) lên card RTX 3060 (12GB VRAM) dẫn đến RuntimeError: CUDA out of memory.",
+        "extra_example": "Ví dụ: Tải mô hình Llama 7B (cần ~14GB VRAM) lên card RTX 3060 (12GB VRAM) dẫn đến RuntimeError: CUDA out of memory.",
         "socratic_question": "Bạn muốn tháo gỡ lỗi CUDA Out of Memory theo hướng nào?",
         "chips": [
             {
@@ -311,14 +316,14 @@ MOCK_KNOWLEDGE = {
     "object detection": {
         "keyword": "Object Detection",
         "direct_answer": "Object Detection (Nhận diện vật thể) là bài toán thị giác máy tính kết hợp giữa Phân loại (vật thể là gì) và Xác định vị trí (vật thể nằm ở đâu qua tọa độ hộp bao Bounding Box x, y, w, h).",
-        "extra_example": "📌 Ví dụ: Phát hiện xe ô tô và người đi bộ trên camera giao thông kèm khung chữ nhật bao quanh từng đối tượng.",
+        "extra_example": "Ví dụ: Phát hiện xe ô tô và người đi bộ trên camera giao thông kèm khung chữ nhật bao quanh từng đối tượng.",
         "socratic_question": "Khi tìm hiểu về Object Detection, bạn đang kẹt ở khái niệm nào?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Phân biệt Classification, Object Detection và Segmentation?",
                 "explanation": "Classification chỉ đoán nhãn cả ảnh; Detection đóng khung từng vật thể; Segmentation tô màu chính xác từng điểm ảnh (pixel).",
-                "example": "🖼️ So sánh: Phân loại: 'ảnh có mèo' -> Detection: 'mèo ở ô chữ nhật A' -> Segmentation: 'viền mép lông mèo'."
+                "example": "So sánh: Phân loại: 'ảnh có mèo' -> Detection: 'mèo ở ô chữ nhật A' -> Segmentation: 'viền mép lông mèo'."
             },
             {
                 "id": 2,
@@ -330,21 +335,21 @@ MOCK_KNOWLEDGE = {
                 "id": 3,
                 "label": "3. Độ đo đánh giá mAP (Mean Average Precision) và ngưỡng IoU?",
                 "explanation": "IoU đo mức độ đè lấn giữa hộp dự đoán và hộp nhãn thật; mAP là diện tích dưới đường cong Precision-Recall trung bình trên các lớp.",
-                "example": "🎯 Tiêu chuẩn: mAP@0.5 yêu cầu độ trùng khớp IoU từ 50% trở lên mới tính là đoán đúng."
+                "example": "Tiêu chuẩn: mAP@0.5 yêu cầu độ trùng khớp IoU từ 50% trở lên mới tính là đoán đúng."
             }
         ]
     },
     "cvat": {
         "keyword": "CVAT",
         "direct_answer": "CVAT (Computer Vision Annotation Tool) là phần mềm mã nguồn mở chuẩn công nghiệp chuyên dùng để gán nhãn dữ liệu hình ảnh và video cho các mô hình AI/ML.",
-        "extra_example": "📌 Ví dụ: Vẽ bounding box quanh các biển báo giao thông hoặc gắn nhãn hành động trong video tự lái.",
+        "extra_example": "Ví dụ: Vẽ bounding box quanh các biển báo giao thông hoặc gắn nhãn hành động trong video tự lái.",
         "socratic_question": "Bạn muốn làm rõ quy trình nào khi thực hành trên CVAT?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Cách tạo Annotation Task và thiết lập nhãn (labels)?",
                 "explanation": "Tải tập ảnh lên CVAT, định nghĩa danh sách lớp cần gán nhãn (Car, Pedestrian, Cyclist) kèm màu sắc nhận diện.",
-                "example": "🏷️ Thiết lập: Tạo task 'Traffic-Sign-Batch-01' với 4 label và gán phân quyền cho thành viên."
+                "example": "Thiết lập: Tạo task 'Traffic-Sign-Batch-01' với 4 label và gán phân quyền cho thành viên."
             },
             {
                 "id": 2,
@@ -356,27 +361,27 @@ MOCK_KNOWLEDGE = {
                 "id": 3,
                 "label": "3. Kiểm soát chất lượng (QA) và độ đồng thuận giữa nhãn thủ?",
                 "explanation": "Sử dụng tính năng Review/Quality trong CVAT để kiểm tra tỷ lệ trùng khớp (Consensus) giữa hai người cùng gán nhãn một ảnh.",
-                "example": "🔍 Đánh giá: Người giám sát duyệt các nhãn nghi ngờ trước khi đưa vào tập Train chính thức."
+                "example": "Đánh giá: Người giám sát duyệt các nhãn nghi ngờ trước khi đưa vào tập Train chính thức."
             }
         ]
     },
     "self-attention": {
         "keyword": "Self-attention",
         "direct_answer": "Self-Attention (Cơ chế tự chú ý) là trái tim của kiến trúc Transformer, cho phép mô hình tính toán mối quan hệ liên kết và trọng số ngữ cảnh giữa tất cả các từ trong câu đồng thời.",
-        "extra_example": "📌 Ví dụ: Trong câu 'Con chó qua đường vì nó mệt', Self-Attention giúp từ 'nó' liên kết mạnh nhất với 'con chó' thay vì 'con đường'.",
+        "extra_example": "Ví dụ: Trong câu 'Con chó qua đường vì nó mệt', Self-Attention giúp từ 'nó' liên kết mạnh nhất với 'con chó' thay vì 'con đường'.",
         "socratic_question": "Khi tìm hiểu Self-Attention, bạn muốn tháo gỡ điểm nào?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Ma trận Query (Q), Key (K), Value (V) được tính ra sao?",
                 "explanation": "Từ vector nhúng từ ban đầu, nhân với 3 ma trận trọng số W_q, W_k, W_v để tạo thành 3 vai trò: Hỏi (Q), Khóa tìm kiếm (K) và Giá trị (V).",
-                "example": "🔑 Phép tính: Attention(Q, K, V) = softmax(Q * K.T / sqrt(d_k)) * V."
+                "example": "Phép tính: Attention(Q, K, V) = softmax(Q * K.T / sqrt(d_k)) * V."
             },
             {
                 "id": 2,
                 "label": "2. Tại sao cần chia cho căn bậc hai của d_k (Scaled Dot-Product)?",
                 "explanation": "Khi số chiều d_k lớn, tích vô hướng Q*K có giá trị cực lớn, đẩy hàm Softmax vào vùng bão hòa gradient (vanishing gradient).",
-                "example": "⚖️ Ổn định: Phép chia giúp phương sai của tích vô hướng luôn ổn định ở mức 1."
+                "example": "Ổn định: Phép chia giúp phương sai của tích vô hướng luôn ổn định ở mức 1."
             },
             {
                 "id": 3,
@@ -389,7 +394,7 @@ MOCK_KNOWLEDGE = {
     "annotation guideline": {
         "keyword": "Annotation Guideline",
         "direct_answer": "Annotation Guideline (Tài liệu hướng dẫn gán nhãn) là bộ quy chuẩn chi tiết quy định cách thức gán nhãn, phân định các trường hợp biên mập mờ để đảm bảo dữ liệu huấn luyện đạt độ nhất quán cao.",
-        "extra_example": "📌 Ví dụ: Quy định rõ: Người ngồi trên xe máy tính là nhãn 'Cyclist/Motorcyclist' chứ không được gán nhãn 'Pedestrian'.",
+        "extra_example": "Ví dụ: Quy định rõ: Người ngồi trên xe máy tính là nhãn 'Cyclist/Motorcyclist' chứ không được gán nhãn 'Pedestrian'.",
         "socratic_question": "Bạn muốn làm rõ khía cạnh nào của Annotation Guideline?",
         "chips": [
             {
@@ -402,46 +407,46 @@ MOCK_KNOWLEDGE = {
                 "id": 2,
                 "label": "2. Đo chỉ số đồng thuận gán nhãn (Inter-Annotator Agreement)?",
                 "explanation": "Sử dụng chỉ số Cohen's Kappa hoặc Fleiss' Kappa để đo lường mức độ đồng thuận giữa các nhãn thủ độc lập trên cùng tập mẫu.",
-                "example": "📊 Tiêu chuẩn: Kappa > 0.8 biểu thị bộ guideline rõ ràng và dữ liệu có độ tin cậy cao."
+                "example": "Tiêu chuẩn: Kappa > 0.8 biểu thị bộ guideline rõ ràng và dữ liệu có độ tin cậy cao."
             },
             {
                 "id": 3,
                 "label": "3. Quy trình cập nhật guideline khi phát hiện phân bố dữ liệu mới?",
                 "explanation": "Khi gặp các ca khó chưa có trong quy chuẩn, nhãn thủ báo cáo lên QA Lead để bổ sung ví dụ minh họa vào guideline phiên bản mới.",
-                "example": "🔄 Vòng lặp: Guideline v1.0 -> Họp tháo gỡ edge case -> Cập nhật Guideline v1.1."
+                "example": "Vòng lặp: Guideline v1.0 -> Họp tháo gỡ edge case -> Cập nhật Guideline v1.1."
             }
         ]
     },
     "3,6": {
         "keyword": "3,6",
         "direct_answer": "Giá trị '3,6' là một đại lượng số trong tài liệu bài học, thường xuất hiện trong bảng phân tích độ đo hiệu năng (ví dụ: tỷ lệ lỗi, độ trễ xử lý) hoặc giá trị tham số cấu hình.",
-        "extra_example": "📌 Ví dụ: Metric mAP@0.5 đạt 3,6 điểm tăng thêm sau khi tối ưu hóa dữ liệu gán nhãn.",
+        "extra_example": "Ví dụ: Metric mAP@0.5 đạt 3,6 điểm tăng thêm sau khi tối ưu hóa dữ liệu gán nhãn.",
         "socratic_question": "Bạn đang băn khoăn về ý nghĩa của con số '3,6' trong bối cảnh nào?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Đây là độ đo mất mát (Loss) hay thời gian trễ xử lý (Latency)?",
                 "explanation": "Cần đối chiếu hàng và cột trong bảng dữ liệu bài giảng để xác định đơn vị tính (phần trăm %, giây, hay giá trị hàm mất mát).",
-                "example": "📊 Xem lại: Kiểm tra tiêu đề bảng tại mục đánh giá mô hình của slide."
+                "example": "Xem lại: Kiểm tra tiêu đề bảng tại mục đánh giá mô hình của slide."
             },
             {
                 "id": 2,
                 "label": "2. Nằm trong bảng so sánh mô hình hay cấu hình tham số?",
                 "explanation": "Nếu nằm trong cột hyperparameter, '3,6' có thể là trọng số mất mát hoặc tỷ lệ chia tập dữ liệu huấn luyện.",
-                "example": "⚙️ Tham số: Tỷ lệ co dãn anchor box hoặc trọng số regularization."
+                "example": "Tham số: Tỷ lệ co dãn anchor box hoặc trọng số regularization."
             },
             {
                 "id": 3,
                 "label": "3. Tác động của chỉ số này tới ngưỡng chấp nhận thực tế?",
                 "explanation": "Đánh giá xem con số này có đạt yêu cầu kỹ thuật (Quality Bar) đề ra trong kịch bản triển khai hay không.",
-                "example": "🎯 Quyết định: Xác định xem mô hình có đủ điều kiện đưa lên môi trường thử nghiệm."
+                "example": "Quyết định: Xác định xem mô hình có đủ điều kiện đưa lên môi trường thử nghiệm."
             }
         ]
     },
     "đoán token": {
         "keyword": "Cỗ máy đoán token (LLM)",
         "direct_answer": "Về bản chất toán học, LLM là cỗ máy tự hồi quy (Autoregressive Token Predictor) liên tục tính phân phối xác suất để đoán token tiếp theo có khả năng xuất hiện cao nhất dựa trên ngữ cảnh trước đó.",
-        "extra_example": "📌 Ví dụ: Với câu 'Hà Nội là thủ đô của...', model tính xác suất cao nhất cho token ' Việt' (98%) rồi tới ' Nam'.",
+        "extra_example": "Ví dụ: Với câu 'Hà Nội là thủ đô của...', model tính xác suất cao nhất cho token ' Việt' (98%) rồi tới ' Nam'.",
         "socratic_question": "Khi tìm hiểu về cơ chế đoán token của LLM, bạn muốn làm rõ điều gì?",
         "chips": [
             {
@@ -460,14 +465,14 @@ MOCK_KNOWLEDGE = {
                 "id": 3,
                 "label": "3. Ảo giác (Hallucination) bắt nguồn từ bản chất đoán xác suất?",
                 "explanation": "Vì chỉ tối ưu hóa sự trôi chảy của từ ngữ dựa trên xác suất thống kê, model có thể ghép các từ nghe rất thuyết phục nhưng sai sự thật.",
-                "example": "⚠️ Bản chất: LLM không có nhận thức chân lý, nó chỉ ghép từ theo quy luật phân phối."
+                "example": "Bản chất: LLM không có nhận thức chân lý, nó chỉ ghép từ theo quy luật phân phối."
             }
         ]
     },
     "lidar": {
         "keyword": "LiDAR",
         "direct_answer": "LiDAR (Light Detection and Ranging) là cảm biến quang học sử dụng tia laser xung để đo khoảng cách và tạo đám mây điểm 3D (Point Cloud) độ chính xác cao cho môi trường xung quanh xe tự lái.",
-        "extra_example": "📌 Ví dụ: Phát xung laser 100.000 lần mỗi giây để tái tạo bản đồ không gian 3D xung quanh xe trong bán kính 100m.",
+        "extra_example": "Ví dụ: Phát xung laser 100.000 lần mỗi giây để tái tạo bản đồ không gian 3D xung quanh xe trong bán kính 100m.",
         "socratic_question": "Bạn muốn làm rõ khía cạnh kỹ thuật nào của cảm biến LiDAR?",
         "chips": [
             {
@@ -493,14 +498,14 @@ MOCK_KNOWLEDGE = {
     "ai, ml, dl": {
         "keyword": "AI, ML, DL và Data Lifecycle",
         "direct_answer": "Data Lifecycle (Vòng đời dữ liệu) là quy trình toàn diện từ Thu thập -> Làm sạch -> Gán nhãn -> Huấn luyện -> Đánh giá -> Triển khai và Giám sát trong các dự án AI/ML/DL.",
-        "extra_example": "📌 Ví dụ: 80% thời gian của dự án AI dành cho việc chuẩn bị, làm sạch và gán nhãn dữ liệu chất lượng cao.",
+        "extra_example": "Ví dụ: 80% thời gian của dự án AI dành cho việc chuẩn bị, làm sạch và gán nhãn dữ liệu chất lượng cao.",
         "socratic_question": "Bạn đang vướng ở giai đoạn nào trong vòng đời dữ liệu AI?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Giai đoạn nào tốn nhiều chi phí và nhân lực nhất?",
                 "explanation": "Khâu thu thập và gán nhãn dữ liệu (Data Labeling) chiếm phần lớn chi phí và quyết định trực tiếp trần chất lượng của mô hình (Garbage In, Garbage Out).",
-                "example": "💡 Nguyên tắc: Dữ liệu chất lượng cao với model đơn giản luôn thắng model khủng với dữ liệu rác."
+                "example": "Nguyên tắc: Dữ liệu chất lượng cao với model đơn giản luôn thắng model khủng với dữ liệu rác."
             },
             {
                 "id": 2,
@@ -512,14 +517,14 @@ MOCK_KNOWLEDGE = {
                 "id": 3,
                 "label": "3. Xử lý hiện tượng trôi dạt dữ liệu (Data Drift / Concept Drift)?",
                 "explanation": "Sau khi triển khai, phân bố dữ liệu thực tế thay đổi so với dữ liệu huấn luyện đòi hỏi phải liên tục thu thập mẫu mới và re-train định kỳ.",
-                "example": "🔄 Giám sát: Model nhận diện khẩu trang mùa dịch bị giảm độ chính xác khi hết dịch."
+                "example": "Giám sát: Model nhận diện khẩu trang mùa dịch bị giảm độ chính xác khi hết dịch."
             }
         ]
     },
     "lịch sử ai": {
         "keyword": "Lịch sử AI",
         "direct_answer": "Lịch sử AI phát triển qua nhiều thăng trầm: từ Hội nghị Dartmouth 1956, các Mùa đông AI (AI Winters), sự bùng nổ của Học sâu (Deep Learning 2012) cho đến kỷ nguyên Mô hình ngôn ngữ lớn (LLM 2020-nay).",
-        "extra_example": "📌 Ví dụ: Năm 2012 mạng AlexNet giành chiến thắng áp đảo tại ImageNet mở ra kỷ nguyên bùng nổ của Deep Learning dựa trên GPU.",
+        "extra_example": "Ví dụ: Năm 2012 mạng AlexNet giành chiến thắng áp đảo tại ImageNet mở ra kỷ nguyên bùng nổ của Deep Learning dựa trên GPU.",
         "socratic_question": "Khi tìm hiểu lịch sử AI, bạn muốn làm rõ giai đoạn bước ngoặt nào?",
         "chips": [
             {
@@ -532,7 +537,7 @@ MOCK_KNOWLEDGE = {
                 "id": 2,
                 "label": "2. Bước ngoặt AlexNet 2012 và GPU computing làm thay đổi ngành ra sao?",
                 "explanation": "Sự kết hợp giữa tập dữ liệu khổng lồ ImageNet, kiến trúc mạng tích chập sâu (CNN) và sức mạnh tính toán song song của card đồ họa GPU.",
-                "example": "🚀 Đột phá: Giảm tỷ lệ lỗi nhận diện ảnh từ 26% xuống 16% chỉ trong 1 năm."
+                "example": "Đột phá: Giảm tỷ lệ lỗi nhận diện ảnh từ 26% xuống 16% chỉ trong 1 năm."
             },
             {
                 "id": 3,
@@ -545,33 +550,33 @@ MOCK_KNOWLEDGE = {
     "viết đủ luật": {
         "keyword": "Giới hạn của hệ thống dựa trên luật (Rule-based)",
         "direct_answer": "Nhận định chỉ ra giới hạn cốt lõi của AI dựa trên luật (Rule-based): thế giới thực quá phức tạp và đa dạng, con người không thể viết tay đủ các câu lệnh if/else để bao quát mọi trường hợp biên.",
-        "extra_example": "📌 Ví dụ: Để nhận ra chữ viết tay số '8', không thể viết đủ tập luật hình học vì mỗi người uốn nét theo một góc nghiêng khác nhau.",
+        "extra_example": "Ví dụ: Để nhận ra chữ viết tay số '8', không thể viết đủ tập luật hình học vì mỗi người uốn nét theo một góc nghiêng khác nhau.",
         "socratic_question": "Bạn muốn làm rõ sự chuyển dịch từ Rule-based sang Machine Learning ở điểm nào?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Tại sao Machine Learning vượt trội hơn hẳn hệ thống viết luật tay?",
                 "explanation": "ML đảo ngược quy trình: thay vì người lập trình đưa ra Quy luật + Dữ liệu -> Đáp án; ML nhận Dữ liệu + Đáp án -> Tự học ra Quy luật.",
-                "example": "🔄 Đổi chiều tư duy: Để máy tính tự tìm ra trọng số tối ưu từ hàng triệu bức ảnh mẫu."
+                "example": "Đổi chiều tư duy: Để máy tính tự tìm ra trọng số tối ưu từ hàng triệu bức ảnh mẫu."
             },
             {
                 "id": 2,
                 "label": "2. Khái niệm Biểu diễn học (Representation Learning) trong Deep Learning?",
                 "explanation": "Mô hình tự động học các đặc trưng từ mức thấp (cạnh, góc) đến mức cao (bánh xe, mắt, mũi) mà không cần con người trích xuất tay.",
-                "example": "🔍 Tự động hóa: Không cần kỹ sư ngồi đo đạc tỷ lệ khoảng cách giữa hai mắt thủ công."
+                "example": "Tự động hóa: Không cần kỹ sư ngồi đo đạc tỷ lệ khoảng cách giữa hai mắt thủ công."
             },
             {
                 "id": 3,
                 "label": "3. Khi nào trong thực tế vẫn nên kết hợp Rule-based với ML/LLM?",
                 "explanation": "Dùng Rule-based làm lớp Guardrails bảo mật và kiểm tra điều kiện cứng (Hard constraints) để đảm bảo an toàn tuyệt đối.",
-                "example": "🛡️ Kết hợp: LLM tạo câu trả lời sáng tạo, nhưng Regex Rule chặn lộ mã số thẻ ngân hàng."
+                "example": "Kết hợp: LLM tạo câu trả lời sáng tạo, nhưng Regex Rule chặn lộ mã số thẻ ngân hàng."
             }
         ]
     },
     "machine learning": {
         "keyword": "Machine Learning",
         "direct_answer": "Machine Learning (Học máy) là phân ngành của AI cho phép máy tính tự học các quy luật và mẫu hình từ dữ liệu thay vì phải lập trình tường minh từng dòng lệnh xử lý.",
-        "extra_example": "📌 Ví dụ: Huấn luyện thuật toán phân loại email spam dựa trên 100.000 email mẫu trong quá khứ.",
+        "extra_example": "Ví dụ: Huấn luyện thuật toán phân loại email spam dựa trên 100.000 email mẫu trong quá khứ.",
         "socratic_question": "Khi tìm hiểu về Machine Learning, bạn muốn tháo gỡ điểm nào?",
         "chips": [
             {
@@ -584,20 +589,20 @@ MOCK_KNOWLEDGE = {
                 "id": 2,
                 "label": "2. Quy trình chia tập Train, Validation và Test set?",
                 "explanation": "Train set để học trọng số, Validation set để tinh chỉnh siêu tham số và chống Overfitting, Test set để đánh giá khách quan lần cuối.",
-                "example": "📊 Tỷ lệ thông dụng: 70% Train - 15% Validation - 15% Test."
+                "example": "Tỷ lệ thông dụng: 70% Train - 15% Validation - 15% Test."
             },
             {
                 "id": 3,
                 "label": "3. Hiện tượng Overfitting và cách phòng ngừa?",
                 "explanation": "Mô hình học vẹt quá mức dữ liệu huấn luyện dẫn đến điểm cao trên tập Train nhưng đoán sai khi gặp dữ liệu thực tế mới.",
-                "example": "⚠️ Giải pháp: Bổ sung thêm dữ liệu, giảm độ phức tạp mô hình hoặc dùng Regularization (L1/L2, Dropout)."
+                "example": "Giải pháp: Bổ sung thêm dữ liệu, giảm độ phức tạp mô hình hoặc dùng Regularization (L1/L2, Dropout)."
             }
         ]
     },
     "transformer explainer": {
         "keyword": "Transformer Explainer",
         "direct_answer": "Transformer Explainer là công cụ trực quan hóa tương tác giúp người học quan sát trực tiếp luồng dữ liệu, attention weights và biểu diễn vector bên trong mô hình Transformer.",
-        "extra_example": "📌 Ví dụ: Di chuột qua từ 'bank' để thấy attention hướng về 'river' hay 'money' nhằm giải nghĩa từ theo ngữ cảnh.",
+        "extra_example": "Ví dụ: Di chuột qua từ 'bank' để thấy attention hướng về 'river' hay 'money' nhằm giải nghĩa từ theo ngữ cảnh.",
         "socratic_question": "Khi khám phá công cụ Transformer Explainer, bạn muốn hiểu sâu thành phần nào?",
         "chips": [
             {
@@ -610,7 +615,7 @@ MOCK_KNOWLEDGE = {
                 "id": 2,
                 "label": "2. Ý nghĩa của Residual Connection và Layer Normalization?",
                 "explanation": "Đường tắt Residual giúp luồng gradient truyền trực tiếp qua hàng chục tầng mạng sâu mà không bị suy hao (triệt tiêu gradient).",
-                "example": "⚡ Công thức: Output = LayerNorm(x + Sublayer(x))."
+                "example": "Công thức: Output = LayerNorm(x + Sublayer(x))."
             },
             {
                 "id": 3,
@@ -623,7 +628,7 @@ MOCK_KNOWLEDGE = {
     "xe tự lái": {
         "keyword": "Xe tự lái nhận diện người đi bộ",
         "direct_answer": "Mô hình nhận diện người đi bộ trên xe tự lái học được hình dáng con người thông qua hàng triệu bức ảnh được gắn nhãn bounding box từ camera và cảm biến LiDAR trong quá trình thu thập dữ liệu.",
-        "extra_example": "📌 Ví dụ: Huấn luyện mạng nơ-ron nhận diện cả người lớn, trẻ em, người đi xe lăn ở các góc nghiêng và điều kiện ánh sáng khác nhau.",
+        "extra_example": "Ví dụ: Huấn luyện mạng nơ-ron nhận diện cả người lớn, trẻ em, người đi xe lăn ở các góc nghiêng và điều kiện ánh sáng khác nhau.",
         "socratic_question": "Bạn muốn làm rõ bài toán nhận diện người đi bộ ở khía cạnh nào?",
         "chips": [
             {
@@ -642,47 +647,47 @@ MOCK_KNOWLEDGE = {
                 "id": 3,
                 "label": "3. Hậu quả của lỗi False Negative (bỏ sót người đi bộ)?",
                 "explanation": "Trong xe tự lái, False Negative (có người nhưng tưởng không có) có cái giá sai sót (cost of error) cực cao vì đe dọa trực tiếp tính mạng con người.",
-                "example": "⚠️ Tiêu chuẩn an toàn: Hệ thống phanh khẩn cấp tự động (AEB) luôn ưu tiên độ bao phủ Recall gần tuyệt đối."
+                "example": "Tiêu chuẩn an toàn: Hệ thống phanh khẩn cấp tự động (AEB) luôn ưu tiên độ bao phủ Recall gần tuyệt đối."
             }
         ]
     },
     "llm ⊂ dl ⊂ ml ⊂ ai": {
         "keyword": "Quan hệ phân cấp AI - ML - DL - LLM",
         "direct_answer": "Biểu đồ tập hợp con thể hiện quan hệ bao hàm: AI là vòng tròn lớn nhất (Trí tuệ nhân tạo tổng quát) ⊃ ML (Học máy) ⊃ DL (Học sâu với mạng nơ-ron nhiều tầng) ⊃ LLM (Mô hình ngôn ngữ lớn).",
-        "extra_example": "📌 Ví dụ: Mọi LLM đều là Deep Learning, nhưng không phải mô hình AI nào cũng là LLM (ví dụ thuật toán cây quyết định Decision Tree thuộc ML nhưng không thuộc DL).",
+        "extra_example": "Ví dụ: Mọi LLM đều là Deep Learning, nhưng không phải mô hình AI nào cũng là LLM (ví dụ thuật toán cây quyết định Decision Tree thuộc ML nhưng không thuộc DL).",
         "socratic_question": "Bạn muốn làm rõ ranh giới kỹ thuật nào trong biểu đồ phân cấp này?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Sự khác biệt then chốt giữa Deep Learning truyền thống và LLM?",
                 "explanation": "DL truyền thống thường giải bài toán chuyên biệt (nhận diện khuôn mặt, phân loại ảnh); LLM là mô hình nền tảng tổng quát đa tác vụ xử lý ngôn ngữ.",
-                "example": "🔍 So sánh: ResNet (DL chuyên ảnh) vs GPT-4 (LLM đa năng đọc hiểu, viết lách, lập luận)."
+                "example": "So sánh: ResNet (DL chuyên ảnh) vs GPT-4 (LLM đa năng đọc hiểu, viết lách, lập luận)."
             },
             {
                 "id": 2,
                 "label": "2. Vì sao gọi chung là 'AI' gây nhầm lẫn khi thiết kế hệ thống?",
                 "explanation": "Mỗi tầng công nghệ có chi phí tính toán, độ trễ và rủi ro ảo giác hoàn toàn khác nhau; dùng LLM cho tác vụ phân loại nhị phân đơn giản là lãng phí tài nguyên.",
-                "example": "⚖️ Kiến trúc: Phân loại email chỉ cần ML truyền thống (TF-IDF + SVM) chạy 2ms, không cần gọi LLM tốn 2000ms."
+                "example": "Kiến trúc: Phân loại email chỉ cần ML truyền thống (TF-IDF + SVM) chạy 2ms, không cần gọi LLM tốn 2000ms."
             },
             {
                 "id": 3,
                 "label": "3. Phạm vi ứng dụng tối ưu của từng tầng công nghệ?",
                 "explanation": "Chọn đúng công cụ: Thuật toán Rule/ML cho dữ liệu dạng bảng số liệu; Deep Learning cho xử lý ảnh/âm thanh; LLM cho giao tiếp ngôn ngữ tự nhiên.",
-                "example": "🎯 Lựa chọn: Bảng dữ liệu Excel dùng XGBoost; nhận diện khuôn mặt dùng CNN; chatbot tư vấn dùng LLM."
+                "example": "Lựa chọn: Bảng dữ liệu Excel dùng XGBoost; nhận diện khuôn mặt dùng CNN; chatbot tư vấn dùng LLM."
             }
         ]
     },
     "có giám sát": {
         "keyword": "Supervised Learning (Học có giám sát)",
         "direct_answer": "Supervised Learning (Học có giám sát) là phương pháp huấn luyện mô hình dựa trên cặp dữ liệu có sẵn đáp án chuẩn (Features X, Labels Y). Mô hình học cách ánh xạ từ đầu vào sang đầu ra chuẩn xác.",
-        "extra_example": "📌 Ví dụ: Cung cấp 10.000 ảnh chụp X-quang phổi kèm nhãn của bác sĩ 'Viêm phổi' hoặc 'Bình thường' để mô hình học cách chẩn đoán.",
+        "extra_example": "Ví dụ: Cung cấp 10.000 ảnh chụp X-quang phổi kèm nhãn của bác sĩ 'Viêm phổi' hoặc 'Bình thường' để mô hình học cách chẩn đoán.",
         "socratic_question": "Bạn muốn tìm hiểu sâu hơn khía cạnh nào của Học có giám sát?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Chi phí và thách thức lớn nhất của việc gán nhãn dữ liệu?",
                 "explanation": "Cần nhân lực chuyên gia gán nhãn thủ công từng mẫu dữ liệu; tốn kém thời gian và dễ xảy ra sai lệch chủ quan giữa các nhãn thủ.",
-                "example": "💰 Thách thức: Gán nhãn dữ liệu y tế đòi hỏi bác sĩ chuyên khoa đọc từng phim chụp với chi phí rất cao."
+                "example": "Thách thức: Gán nhãn dữ liệu y tế đòi hỏi bác sĩ chuyên khoa đọc từng phim chụp với chi phí rất cao."
             },
             {
                 "id": 2,
@@ -694,27 +699,27 @@ MOCK_KNOWLEDGE = {
                 "id": 3,
                 "label": "3. Bộ chỉ số đánh giá: Accuracy, Precision, Recall và F1-Score?",
                 "explanation": "Với dữ liệu mất cân bằng (ví dụ bệnh hiếm 1%), Accuracy không có ý nghĩa; cần dùng Precision (độ chuẩn xác) và Recall (độ bao phủ).",
-                "example": "🎯 Đánh giá: Bài toán phát hiện gian lận thẻ tín dụng luôn tối ưu hóa chỉ số Recall để không bỏ lọt tội phạm."
+                "example": "Đánh giá: Bài toán phát hiện gian lận thẻ tín dụng luôn tối ưu hóa chỉ số Recall để không bỏ lọt tội phạm."
             }
         ]
     },
     "không giám sát": {
         "keyword": "Unsupervised Learning (Học không giám sát)",
         "direct_answer": "Unsupervised Learning (Học không giám sát) huấn luyện mô hình trên dữ liệu không có nhãn (unlabeled data) nhằm tự động tìm kiếm các cấu trúc ẩn, phân cụm dữ liệu (Clustering) hoặc giảm số chiều (Dimensionality Reduction).",
-        "extra_example": "📌 Ví dụ: Phân cụm 1 triệu khách hàng siêu thị thành 5 nhóm có hành vi mua sắm tương đồng mà không cần ai dán nhãn trước.",
+        "extra_example": "Ví dụ: Phân cụm 1 triệu khách hàng siêu thị thành 5 nhóm có hành vi mua sắm tương đồng mà không cần ai dán nhãn trước.",
         "socratic_question": "Khi tìm hiểu về Học không giám sát, bạn muốn làm rõ điều gì?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Các thuật toán phổ biến: K-Means, DBSCAN và PCA?",
                 "explanation": "K-Means chia dữ liệu thành K cụm theo khoảng cách tâm; DBSCAN gom cụm theo mật độ; PCA nén dữ liệu nhiều chiều xuống 2D/3D trực quan.",
-                "example": "📊 Trực quan hóa: Dùng PCA nén 50 thuộc tính người dùng xuống biểu đồ 2D để xem cụm phân bố."
+                "example": "Trực quan hóa: Dùng PCA nén 50 thuộc tính người dùng xuống biểu đồ 2D để xem cụm phân bố."
             },
             {
                 "id": 2,
                 "label": "2. Khi nào nên dùng học không giám sát thay vì học có giám sát?",
                 "explanation": "Khi dữ liệu hoàn toàn chưa có nhãn và chi phí gán nhãn quá đắt đỏ, hoặc khi muốn khám phá các mẫu hình bất thường mới lạ.",
-                "example": "💡 Ứng dụng: Phát hiện tấn công mạng mới lạ chưa từng có trong lịch sử (Anomaly Detection)."
+                "example": "Ứng dụng: Phát hiện tấn công mạng mới lạ chưa từng có trong lịch sử (Anomaly Detection)."
             },
             {
                 "id": 3,
@@ -727,7 +732,7 @@ MOCK_KNOWLEDGE = {
     "bounding box": {
         "keyword": "Bounding Box (Hộp bao)",
         "direct_answer": "Bounding Box (Hộp bao) là hình chữ nhật bao quanh vật thể trong bài toán Object Detection, được xác định bởi tọa độ 4 điểm hoặc tọa độ tâm và kích thước (x, y, w, h).",
-        "extra_example": "📌 Ví dụ: [x_center=0.45, y_center=0.60, width=0.20, height=0.35] biểu diễn hộp bao người đi bộ trong ảnh 1920x1080.",
+        "extra_example": "Ví dụ: [x_center=0.45, y_center=0.60, width=0.20, height=0.35] biểu diễn hộp bao người đi bộ trong ảnh 1920x1080.",
         "socratic_question": "Bạn muốn làm rõ khía cạnh kỹ thuật nào của Bounding Box?",
         "chips": [
             {
@@ -746,59 +751,59 @@ MOCK_KNOWLEDGE = {
                 "id": 3,
                 "label": "3. Thuật toán Non-Maximum Suppression (NMS) loại bỏ hộp trùng lặp?",
                 "explanation": "Mô hình sinh ra hàng chục hộp bao xung quanh cùng một vật thể; NMS giữ lại hộp có độ tự tin cao nhất và xóa các hộp có IoU trùng lấn cao.",
-                "example": "✂️ Lọc nhiễu: 5 hộp bao quanh 1 con mèo -> NMS gộp lại thành đúng 1 hộp chuẩn xác nhất."
+                "example": "Lọc nhiễu: 5 hộp bao quanh 1 con mèo -> NMS gộp lại thành đúng 1 hộp chuẩn xác nhất."
             }
         ]
     },
     "không có": {
         "keyword": "Đoạn bôi đen ngắn ('không có')",
         "direct_answer": "Đoạn bạn bôi đen quá ngắn ('không có') và thiếu ngữ cảnh câu hoàn chỉnh. AI Tutor cần thêm bối cảnh để tháo gỡ chính xác điểm vướng của bạn.",
-        "extra_example": "📌 Lời khuyên: Hãy bôi đen trọn vẹn cả câu hoặc cụm từ chuyên môn trong bài giảng để nhận hỗ trợ tốt nhất.",
+        "extra_example": "Lời khuyên: Hãy bôi đen trọn vẹn cả câu hoặc cụm từ chuyên môn trong bài giảng để nhận hỗ trợ tốt nhất.",
         "socratic_question": "Bạn đang gặp khó khăn ở khía cạnh nào của nội dung này?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Khái niệm lý thuyết trong câu chứa từ này?",
                 "explanation": "Bạn đang băn khoăn về thuật ngữ hoặc định nghĩa xuất hiện quanh đoạn này trong slide.",
-                "example": "📖 Gợi ý: Bôi đen cả câu chứa từ 'không có' để mình giải thích trọn vẹn."
+                "example": "Gợi ý: Bôi đen cả câu chứa từ 'không có' để mình giải thích trọn vẹn."
             },
             {
                 "id": 2,
                 "label": "2. Logic câu hỏi trắc nghiệm hoặc bài tập Lab?",
                 "explanation": "Bạn đang đối chiếu đáp án đúng/sai của một câu hỏi tự lượng giá trong bài học.",
-                "example": "❓ Đối chiếu: Xem lại đề bài tại mục kiểm tra kiến thức cuối bài."
+                "example": "Đối chiếu: Xem lại đề bài tại mục kiểm tra kiến thức cuối bài."
             },
             {
                 "id": 3,
                 "label": "3. Vị trí và ý nghĩa của mục này trong giáo trình?",
                 "explanation": "Bạn muốn biết nội dung này nằm ở bài giảng nào và liên hệ với các buổi học khác ra sao.",
-                "example": "🧭 Định hướng: Xem mục lục bài học ở thanh menu bên trái."
+                "example": "Định hướng: Xem mục lục bài học ở thanh menu bên trái."
             }
         ]
     },
     "đáp": {
         "keyword": "Đoạn bôi đen ngắn ('đáp')",
         "direct_answer": "Đoạn bôi đen chỉ gồm một từ rời rạc ('đáp'). Hãy bôi đen cả câu hoặc cụm từ chứa từ này để trợ giảng hiểu rõ bạn đang thắc mắc điều gì.",
-        "extra_example": "📌 Lời khuyên: Bôi đen trọn vẹn cụm 'Đáp án trắc nghiệm' hoặc 'Phương án đáp ứng' để nhận phân tích chi tiết.",
+        "extra_example": "Lời khuyên: Bôi đen trọn vẹn cụm 'Đáp án trắc nghiệm' hoặc 'Phương án đáp ứng' để nhận phân tích chi tiết.",
         "socratic_question": "Bạn muốn trợ giảng hỗ trợ tháo gỡ nội dung nào?",
         "chips": [
             {
                 "id": 1,
                 "label": "1. Giải thích đáp án và căn cứ lý thuyết của câu hỏi?",
                 "explanation": "Làm rõ tại sao một phương án lại được chọn là đáp án chính xác dựa trên giáo trình bài học.",
-                "example": "💡 Căn cứ: Trích dẫn slide bài giảng tương ứng làm bằng chứng."
+                "example": "Căn cứ: Trích dẫn slide bài giảng tương ứng làm bằng chứng."
             },
             {
                 "id": 2,
                 "label": "2. Phân tích các bẫy thường gặp trong câu hỏi trắc nghiệm?",
                 "explanation": "Chỉ ra những nhầm lẫn phổ biến giữa các đáp án gây nhiễu để bạn tránh mất điểm.",
-                "example": "⚠️ Phân biệt: Các từ khóa nhạy cảm như 'luôn luôn', 'không bao giờ'."
+                "example": "Phân biệt: Các từ khóa nhạy cảm như 'luôn luôn', 'không bao giờ'."
             },
             {
                 "id": 3,
                 "label": "3. Cách tra cứu nhanh tài liệu để tự kiểm chứng đáp án?",
                 "explanation": "Hướng dẫn phương pháp tìm kiếm từ khóa trong slide để tự tìm ra câu trả lời thuyết phục.",
-                "example": "🔍 Kỹ năng: Nhấn Ctrl+F trên slide để tìm định nghĩa gốc."
+                "example": "Kỹ năng: Nhấn Ctrl+F trên slide để tìm định nghĩa gốc."
             }
         ]
     }
@@ -837,9 +842,10 @@ def append_trace_log(entry):
 # 3. GEMINI 1.5 FLASH PROMPT & CALLER
 # =============================================================================
 def call_gemini_api(snippet, context_title, api_key):
-    """Gọi trực tiếp Google Gemini 1.5 Flash API qua urllib chuẩn."""
+    """Gọi trực tiếp Google Gemini 3.1 Flash Lite API qua urllib chuẩn."""
     start_time = time.perf_counter()
-    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    gemini_model = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite")
+    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{gemini_model}:generateContent?key={api_key}"
     
     system_instruction = (
         "Bạn là Trợ giảng Sư phạm VLearn cho khóa học AI khoá K4 (Day 03: Chatbot vs ReAct Agent).\n"
@@ -897,14 +903,14 @@ def call_gemini_api(snippet, context_title, api_key):
             "id": c.get("id", idx + 1),
             "label": label,
             "explanation": c.get("explanation", "Giải thích đang được cập nhật."),
-            "example": c.get("example", "💡 Xem ví dụ trong bài giảng Day 03.")
+            "example": c.get("example", "Xem ví dụ trong bài giảng Day 03.")
         })
 
     trace_entry = {
         "turn_id": int(time.time() * 1000),
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "step": "Socratic Probing Generation (Gemini Live API)",
-        "model": "gemini-1.5-flash",
+        "model": gemini_model,
         "selected_text": snippet[:45],
         "latency_ms": latency_ms,
         "tokens_used": tokens_used,
@@ -1033,7 +1039,7 @@ def call_openrouter_api(snippet, context_title, api_key, model="liquid/lfm-2.5-2
             "id": c.get("id", idx + 1),
             "label": label,
             "explanation": c.get("explanation", "Giải thích đang được cập nhật."),
-            "example": c.get("example", "💡 Xem ví dụ trong bài giảng Day 03.")
+            "example": c.get("example", "Xem ví dụ trong bài giảng Day 03.")
         })
 
     trace_entry = {
@@ -1235,23 +1241,23 @@ def resolve_socratic_probe(snippet, context_title="", api_key=None, mode="mock")
     if input_type == "CODE_SNIPPET":
         socratic_q = f"Bạn đang kiểm tra đoạn mã code '{trunc}'. Điểm nghẽn cú pháp hoặc logic nào bạn muốn tháo gỡ?"
         chips = [
-            {"id": 1, "label": "1. Cú pháp và tham số đầu vào của hàm?", "explanation": "Xem xét kiểu dữ liệu của các arguments truyền vào và giá trị mặc định.", "example": "💻 Code check: Kiểm tra type hints và dictionary parameters."},
-            {"id": 2, "label": "2. Khối try/except xử lý ngoại lệ runtime?", "explanation": "Bọc đoạn mã để bắt kịp thời các lỗi kết nối hoặc parse JSON.", "example": "🔄 Bẫy lỗi: try: ... except Exception as err: ..."},
-            {"id": 3, "label": "3. Vết thực thi trong docs/trace_waterfall.json?", "explanation": "Đối chiếu thời gian thực thi của hàm với nhật ký trace của hệ thống.", "example": "🔍 Trace log: Kiểm tra latency_ms của lời gọi này."}
+            {"id": 1, "label": "1. Cú pháp và tham số đầu vào của hàm?", "explanation": "Xem xét kiểu dữ liệu của các arguments truyền vào và giá trị mặc định.", "example": "Code check: Kiểm tra type hints và dictionary parameters."},
+            {"id": 2, "label": "2. Khối try/except xử lý ngoại lệ runtime?", "explanation": "Bọc đoạn mã để bắt kịp thời các lỗi kết nối hoặc parse JSON.", "example": "Bẫy lỗi: try: ... except Exception as err: ..."},
+            {"id": 3, "label": "3. Vết thực thi trong docs/trace_waterfall.json?", "explanation": "Đối chiếu thời gian thực thi của hàm với nhật ký trace của hệ thống.", "example": "Trace log: Kiểm tra latency_ms của lời gọi này."}
         ]
     elif input_type == "NUMBER_METRIC":
         socratic_q = f"Bạn đang xem chỉ số số liệu '{trunc}'. Bạn muốn đối soát khía cạnh nào của metric này?"
         chips = [
-            {"id": 1, "label": "1. Đơn vị đo và ý nghĩa trong bài Lab?", "explanation": "Xác định đây là thời gian trễ (ms), số token, hay điểm mAP phần trăm.", "example": "📊 Xem tiêu đề cột của bảng số liệu tương ứng."},
-            {"id": 2, "label": "2. Tiêu chuẩn nghiệm thu của bài tập?", "explanation": "Đối chiếu với ngưỡng cam kết Quality Bar trong Rubric.", "example": "🎯 Mục tiêu: Kiểm tra xem metric có đạt ngưỡng yêu cầu không."},
-            {"id": 3, "label": "3. Cách tối ưu hóa chỉ số này trong code?", "explanation": "Các giải pháp kỹ thuật giúp cải thiện chỉ số này trong vòng lặp tiếp theo.", "example": "⚡ Tối ưu: Giảm batch size hoặc áp dụng caching."}
+            {"id": 1, "label": "1. Đơn vị đo và ý nghĩa trong bài Lab?", "explanation": "Xác định đây là thời gian trễ (ms), số token, hay điểm mAP phần trăm.", "example": "Xem tiêu đề cột của bảng số liệu tương ứng."},
+            {"id": 2, "label": "2. Tiêu chuẩn nghiệm thu của bài tập?", "explanation": "Đối chiếu với ngưỡng cam kết Quality Bar trong Rubric.", "example": "Mục tiêu: Kiểm tra xem metric có đạt ngưỡng yêu cầu không."},
+            {"id": 3, "label": "3. Cách tối ưu hóa chỉ số này trong code?", "explanation": "Các giải pháp kỹ thuật giúp cải thiện chỉ số này trong vòng lặp tiếp theo.", "example": "Tối ưu: Giảm batch size hoặc áp dụng caching."}
         ]
     else:
         socratic_q = f"Bạn đang muốn làm rõ khía cạnh nào của đoạn: '{trunc}'?"
         chips = [
-            {"id": 1, "label": "1. Nguyên lý hoạt động và bản chất lý thuyết?", "explanation": f"Về mặt lý thuyết, '{trunc}' định hình cách LLM tương tác với môi trường.", "example": "📖 Xem chi tiết trong Slide bài giảng Day 03."},
-            {"id": 2, "label": "2. Cách triển khai thực tế trên mã nguồn bài Lab?", "explanation": f"Khi lập trình trong bài Lab, nội dung '{trunc}' nằm trong file src/react_agent.py.", "example": "💻 Kiểm tra cú pháp tại file Starter Repo của lớp."},
-            {"id": 3, "label": "3. Các lỗi runtime thường gặp và cách kiểm tra?", "explanation": "Các sự cố thường xoay quanh việc sai lệch schema JSON hoặc timeout API.", "example": "🔍 Đối soát vết lỗi tại file docs/trace_waterfall.json."}
+            {"id": 1, "label": "1. Nguyên lý hoạt động và bản chất lý thuyết?", "explanation": f"Về mặt lý thuyết, '{trunc}' định hình cách LLM tương tác với môi trường.", "example": "Xem chi tiết trong Slide bài giảng Day 03."},
+            {"id": 2, "label": "2. Cách triển khai thực tế trên mã nguồn bài Lab?", "explanation": f"Khi lập trình trong bài Lab, nội dung '{trunc}' nằm trong file src/react_agent.py.", "example": "Kiểm tra cú pháp tại file Starter Repo của lớp."},
+            {"id": 3, "label": "3. Các lỗi runtime thường gặp và cách kiểm tra?", "explanation": "Các sự cố thường xoay quanh việc sai lệch schema JSON hoặc timeout API.", "example": "Đối soát vết lỗi tại file docs/trace_waterfall.json."}
         ]
 
     trace_entry = {
@@ -1292,7 +1298,8 @@ def resolve_socratic_followup(snippet, selected_chip, mode="mock", api_key=None)
     # Thử gọi Live AI nếu bật chế độ Live
     if mode == "gemini" and active_key:
         try:
-            endpoint = "https://openrouter.ai/api/v1/chat/completions" if active_key.startswith("sk-or-") else f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={active_key}"
+            gemini_model = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite")
+            endpoint = "https://openrouter.ai/api/v1/chat/completions" if active_key.startswith("sk-or-") else f"https://generativelanguage.googleapis.com/v1beta/models/{gemini_model}:generateContent?key={active_key}"
             prompt_sys = (
                 "Bạn là Trợ giảng Sư phạm VLearn K4. Học viên đã xem giải thích ban đầu nhưng vẫn chưa hiểu rõ.\n"
                 "Nhiệm vụ của bạn là giải thích VÒNG 2 ĐÀO SÂU (Deep Socratic Round):\n"
@@ -1365,7 +1372,7 @@ def resolve_socratic_followup(snippet, selected_chip, mode="mock", api_key=None)
                 "everydayAnalogy": parsed.get("everyday_analogy", "Giống như người đầu bếp nếm canh: thử một muỗng -> nhận xét vị -> mới quyết định nêm thêm muối."),
                 "actionStep": parsed.get("action_step", "Mở file src/react_agent.py và đặt lệnh print(turn) ngay đầu vòng lặp."),
                 "isLiveAI": True,
-                "badge": "🤖 Live AI (Vòng 2)"
+                "badge": "Live AI (Vòng 2)"
             }
         except Exception as e:
             print(f"[WARN] Live Follow-up lỗi ({e}), chuyển sang RAG Follow-up.")
@@ -1390,7 +1397,7 @@ def resolve_socratic_followup(snippet, selected_chip, mode="mock", api_key=None)
         "everydayAnalogy": "Tưởng tượng bạn làm bài thi toán hình: Không ai nhảy bổ vào kết luận ngay. Bạn viết giả thiết ra nháp (Thought) -> Kẻ thêm đường phụ bằng thước kẻ (Action) -> Nhìn hình mới thấy hai tam giác bằng nhau (Observation) -> Lúc đó mới đặt bút viết lời giải chính thức!",
         "actionStep": "Hãy thử mở terminal và gõ lệnh chạy đơn lẻ: python -c 'import src.react_agent; print(dir(src.react_agent))' để nhìn tận mắt các hàm thành phần.",
         "isLiveAI": False,
-        "badge": "⚡ VLearn RAG (Vòng 2)"
+        "badge": "VLearn RAG (Vòng 2)"
     }
 
 # =============================================================================
@@ -1484,9 +1491,9 @@ class VLearnBackendHandler(SimpleHTTPRequestHandler):
                 self._send_json({
                     "success": True,
                     "resolution": {
-                        "header": "🎯 Giải thích đúng trọng tâm",
+                        "header": "Giải thích đúng trọng tâm",
                         "explanation": chip.get("explanation", "Nội dung giải thích chi tiết."),
-                        "example": chip.get("example", "💡 Ví dụ minh họa.")
+                        "example": chip.get("example", "Ví dụ minh họa.")
                     }
                 })
             except Exception as e:
@@ -1502,19 +1509,19 @@ def run_server():
     server_address = ("", PORT)
     httpd = HTTPServer(server_address, VLearnBackendHandler)
     print(f"=================================================================")
-    print(f"🚀 VLEARN SOCRATIC TUTOR — BACKEND SERVER RUNNING (v3.5)")
+    print(f"VLEARN SOCRATIC TUTOR — BACKEND SERVER RUNNING (v3.5)")
     print(f"=================================================================")
     print(f"🌐 Local URL:      http://localhost:{PORT}")
     print(f"🔌 Socratic API:   POST http://localhost:{PORT}/api/socratic-probe")
-    print(f"🔄 Follow-up API:  POST http://localhost:{PORT}/api/socratic-followup")
-    print(f"📄 Trace Log:      GET  http://localhost:{PORT}/api/traces")
+    print(f"Follow-up API:  POST http://localhost:{PORT}/api/socratic-followup")
+    print(f"Trace Log:      GET  http://localhost:{PORT}/api/traces")
     print(f"🩺 Health:         GET  http://localhost:{PORT}/api/health")
     print(f"📚 RAG KB Size:    {len(MOCK_KNOWLEDGE)} concepts indexed")
     print(f"=================================================================")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\n🛑 Dừng server.")
+        print("\nDừng server.")
         httpd.server_close()
 
 if __name__ == "__main__":
