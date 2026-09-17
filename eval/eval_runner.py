@@ -11,6 +11,11 @@ import re
 import sys
 import time
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
+
 GOLDEN_SET_PATH = os.path.join(os.path.dirname(__file__), "golden_set.json")
 RESULTS_PATH = os.path.join(os.path.dirname(__file__), "run_01_results.json")
 
@@ -75,18 +80,18 @@ def evaluate_response(case, response_json):
 
 def run_eval():
     print("=" * 65)
-    print("🚀 VLEARN SOCRATIC TUTOR — AUTOMATED EVAL RUNNER (RUBRIC R4)")
+    print("VLEARN SOCRATIC TUTOR — AUTOMATED EVAL RUNNER (RUBRIC R4)")
     print("=" * 65)
 
     if not os.path.exists(GOLDEN_SET_PATH):
-        print(f"❌ Không tìm thấy file: {GOLDEN_SET_PATH}")
+        print(f"[ERROR] Khong tim thay file: {GOLDEN_SET_PATH}")
         sys.exit(1)
 
     with open(GOLDEN_SET_PATH, "r", encoding="utf-8") as f:
         cases = json.load(f)
 
-    print(f"📦 Đã nạp {len(cases)} case thật từ Golden Set (K4 Chatlog Mining)")
-    print(f"🎯 Quality Bar cam kết: >= 80% case Đạt chuẩn\n")
+    print(f"Da nap {len(cases)} case that tu Golden Set (K4 Chatlog Mining)")
+    print(f"Quality Bar cam ket: >= 80% case Dat chuan\n")
 
     results = []
     passed_count = 0
@@ -114,9 +119,9 @@ def run_eval():
         eval_res = evaluate_response(case, mock_response)
         if eval_res["passed"]:
             passed_count += 1
-            status_icon = "✅ PASS"
+            status_icon = "[PASS]"
         else:
-            status_icon = "❌ FAIL"
+            status_icon = "[FAIL]"
 
         results.append({
             "case_id": cid,
@@ -131,14 +136,14 @@ def run_eval():
 
     pass_rate = (passed_count / len(cases)) * 100
     print("\n" + "=" * 65)
-    print(f"📊 KẾT QUẢ ĐO LƯỜNG TỔNG HỢP:")
-    print(f"   - Số case đạt (PASS): {passed_count}/{len(cases)} case")
-    print(f"   - Tỷ lệ đạt thực tế:  {pass_rate:.1f}%")
-    print(f"   - Quality Bar cam kết: >= 80.0%")
+    print(f"KET QUA DO LUONG TONG HOP:")
+    print(f"   - So case dat (PASS): {passed_count}/{len(cases)} case")
+    print(f"   - Ty le dat thuc te:  {pass_rate:.1f}%")
+    print(f"   - Quality Bar cam ket: >= 80.0%")
     if pass_rate >= 80.0:
-        print(f"   - Kết luận:           🎉 ĐẠT CHUẨN NGHIỆM THU CHECKPOINT 3")
+        print(f"   - Ket luan:           DAT CHUAN NGHIEM THU CHECKPOINT 3")
     else:
-        print(f"   - Kết luận:           ⚠️ CHƯA ĐẠT QUALITY BAR (Cần sửa prompt)")
+        print(f"   - Ket luan:           CHUA DAT QUALITY BAR")
     print("=" * 65)
 
     # Lưu kết quả JSON
@@ -152,7 +157,7 @@ def run_eval():
             "details": results
         }, f, ensure_ascii=False, indent=2)
 
-    print(f"💾 Đã lưu kết quả chi tiết vào: {RESULTS_PATH}\n")
+    print(f"Da luu ket qua chi tiet vao: {RESULTS_PATH}\n")
 
 if __name__ == "__main__":
     run_eval()
