@@ -777,20 +777,32 @@ mark.out-target {
 
 .state-pill {
   font-size: 11px;
-  font-weight: 700;
-  padding: 3px 9px;
+  font-weight: 600;
+  padding: 3px 10px;
   border-radius: var(--radius-pill);
   border: 1px solid transparent;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   transition: all 0.2s ease;
+}
+
+.state-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .state-ready {
   background-color: #f1f5f9;
   color: #475569;
   border-color: #e2e8f0;
+}
+.state-ready::before {
+  background-color: #94a3b8;
 }
 
 .state-analyzing {
@@ -799,17 +811,27 @@ mark.out-target {
   border-color: #fde047;
   animation: pulseState 1.5s infinite;
 }
+.state-analyzing::before {
+  background-color: #eab308;
+  box-shadow: 0 0 5px #eab308;
+}
 
 .state-socratic {
   background-color: #f3e8ff;
   color: #7e22ce;
   border-color: #d8b4fe;
 }
+.state-socratic::before {
+  background-color: #a855f7;
+}
 
 .state-answered {
   background-color: #dcfce7;
   color: #15803d;
   border-color: #86efac;
+}
+.state-answered::before {
+  background-color: #22c55e;
 }
 
 @keyframes pulseState {
@@ -1036,17 +1058,21 @@ mark.out-target {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #7c3aed;
   flex-shrink: 0;
-  background-color: #f3e8ff;
-  border: 1px solid #e9d5ff;
+  background-color: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  letter-spacing: -0.2px;
 }
 
 .user-avatar-msg {
-  background-color: #ccfbf1;
-  color: #0f766e;
+  background-color: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .msg-bubble {
