@@ -170,11 +170,17 @@ Loại: [x] Tối ưu tính năng có sẵn  [ ] Tính năng mới
   - *Phương án B (Kiến trúc 3 Chip Socratic: Lý thuyết · Code thực tế · Bẫy lỗi Runtime):* (Được chọn) Vì phân tách chính xác 3 trạng thái nhận thức của người học mà không gây quá tải trí nhớ ngắn hạn ($\le 3$ items).
 
 - **Tự khai phần chưa làm xong (Self-Declaration of Unfinished Scope — Theo yêu cầu Checkpoint 4):**
-  > *"Khai thiếu không bị trừ điểm — Giấu mới bị." (Quy định Hackathon CP4)*
-  1. **Bộ lọc Regex nhận diện URL và chuỗi vô nghĩa (✔️ ĐÃ HOÀN THÀNH tại CP4):** Đã triển khai regex `^(https?:\/\/|www\.)` cả phía Frontend (`codebase/app.js` — hàm `resolveKnowledge`) và Backend (`codebase/server.py` — hàm `check_intent_guardrails`). Case GS-02 ("bôi nhầm https") đã được xử lý chính xác với phản hồi hướng dẫn bôi đen lại từ khóa đúng.
-  2. **Validator cắt tỉa độ dài nhãn chip tự động ($\le 15$ từ) (✔️ ĐÃ HOÀN THÀNH tại CP4):** Đã cài đặt hàm JavaScript cắt tỉa tự động tại `codebase/app.js` (line ~820): nếu nhãn chip vượt 15 từ sẽ tự ngắt và thêm dấu "…". System Prompt Gemini cũng được siết lại yêu cầu $\le 15$ từ/nhãn. Đã kiểm chứng và pass case GS-20.
-  3. **Lưu trữ dữ liệu đồng bộ lên Database đám mây VLearn (Chưa xong):** Hiện tại toàn bộ trace log và ghi chú được lưu trữ cục bộ tại `localStorage` và bộ nhớ phiên làm việc, chưa kết nối trực tiếp vào tài khoản học viên chính khóa.
-  4. **Form thu thập phản hồi chi tiết 1-click (HAX G15 — Chưa xong):** Mới có nút đóng luồng `✓ Hiểu rồi, tiếp tục đọc`, chưa làm popup chi tiết *"Gợi ý này chưa đúng chỗ nào?"* khi học viên bấm nút không hài lòng.
+  > [!IMPORTANT]
+  > **Quy định Hackathon CP4:** *"Khai thiếu không bị trừ điểm — Giấu mới bị."* Dưới đây là các phần nhóm chủ động tự khai báo chưa hoàn thiện tại mốc 21:00 ngày 17/9:
+  
+  **A. Danh mục các phần CHƯA LÀM XONG (Chính thức tự khai báo):**
+  1. **Lưu trữ dữ liệu đồng bộ lên Database đám mây VLearn (Chưa xong):** Hiện tại toàn bộ trace log và ghi chú được lưu trữ cục bộ tại `localStorage` và file `codebase/trace_waterfall.json`, chưa kết nối trực tiếp qua API đồng bộ tài khoản học viên chính khóa VLearn.
+  2. **Form thu thập phản hồi chi tiết 1-click (HAX G15 — Chưa xong):** Mới có nút đóng luồng `✓ Hiểu rồi, tiếp tục đọc`, chưa làm popup chi tiết *"Gợi ý này chưa đúng chỗ nào?"* khi học viên bấm nút không hài lòng để gửi phản hồi cho TA.
+  3. **Cơ chế Cooldown / Chống Spam gọi API dồn dập (Chưa xong):** Chưa cài đặt rate-limit chặn người dùng cố tình click liên tục >10 lần/phút để spam request tới backend, hiện tại mới chặn ở mức debounce cơ bản phía frontend.
+
+  **B. Danh mục các phần ĐÃ HOÀN THÀNH VƯỢT TIẾN ĐỘ tại CP4:**
+  1. **Bộ lọc Layer 0 Intent Guardrail Regex (✔️ Đã hoàn thành):** Bắt và chặn triệt để URL `https` (GS-02), câu hỏi logistics điểm danh (KB-05b), và prompt injection làm thơ (KB-06).
+  2. **Bộ cắt tỉa tự động nhãn chip $\le 15$ từ (✔️ Đã hoàn thành):** Triển khai validator tự động cắt nhãn chip vượt quá 15 từ trên UI và siết prompt (pass case GS-20).
 
 ## §9. Changelog
 | Thời điểm | Đổi gì | Vì sao (trỏ về feedback / case kiểm thử) |
