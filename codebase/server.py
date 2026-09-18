@@ -960,10 +960,11 @@ def call_openrouter_api(snippet, context_title, api_key, model="liquid/lfm-2.5-2
 
     models_to_try = [
         model,
+        "google/gemini-2.5-flash",
+        "google/gemini-flash-1.5",
         "liquid/lfm-2.5-2.6b:free",
         "nvidia/nemotron-3.5-lightning:free",
-        "meta-llama/llama-3.2-3b-instruct:free",
-        "google/gemini-2.5-flash"
+        "meta-llama/llama-3.2-3b-instruct:free"
     ]
     unique_models = []
     for m in models_to_try:
@@ -982,7 +983,8 @@ def call_openrouter_api(snippet, context_title, api_key, model="liquid/lfm-2.5-2
                     {"role": "system", "content": system_instruction},
                     {"role": "user", "content": prompt_user}
                 ],
-                "temperature": 0.2
+                "temperature": 0.2,
+                "max_tokens": 1000
             }
             if ":free" not in m:
                 payload["response_format"] = {"type": "json_object"}
@@ -1317,12 +1319,13 @@ def resolve_socratic_followup(snippet, selected_chip, mode="mock", api_key=None)
 
             if active_key.startswith("sk-or-"):
                 payload = {
-                    "model": "liquid/lfm-2.5-2.6b:free",
+                    "model": os.environ.get("GEMINI_MODEL", "google/gemini-2.5-flash"),
                     "messages": [
                         {"role": "system", "content": prompt_sys},
                         {"role": "user", "content": prompt_usr}
                     ],
-                    "temperature": 0.2
+                    "temperature": 0.2,
+                    "max_tokens": 800
                 }
                 req = urllib.request.Request(
                     endpoint,

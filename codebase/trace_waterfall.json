@@ -1,5 +1,38 @@
 [
   {
+    "turn_id": 1789729496910,
+    "timestamp": "2026-09-18T11:04:56Z",
+    "step": "Socratic Probing Generation (OpenRouter: google/gemini-2.5-flash)",
+    "model": "google/gemini-2.5-flash",
+    "selected_text": "ReAct Agent",
+    "latency_ms": 4838,
+    "tokens_used": 958,
+    "layer_used": "Live-AI",
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789728931512,
+    "timestamp": "2026-09-18T10:55:31Z",
+    "step": "Dynamic Classifier Fallback: Thought: LLM suy luận bước giải ... (CODE_SNIPPET)",
+    "model": "rule-based-classifier",
+    "selected_text": "Thought: LLM suy luận bước giải quyết và quyế",
+    "latency_ms": 10,
+    "tokens_used": 0,
+    "layer_used": "Dynamic-Fallback",
+    "status": "PASS"
+  },
+  {
+    "turn_id": 1789728912622,
+    "timestamp": "2026-09-18T10:55:12Z",
+    "step": "Dynamic Classifier Fallback: ĐIỀU KIỆN DỪNG (CONCEPT)",
+    "model": "rule-based-classifier",
+    "selected_text": "ĐIỀU KIỆN DỪNG",
+    "latency_ms": 10,
+    "tokens_used": 0,
+    "layer_used": "Dynamic-Fallback",
+    "status": "PASS"
+  },
+  {
     "turn_id": 1789633957430,
     "timestamp": "2026-09-17T08:32:37Z",
     "step": "RAG Knowledge Retrieval (Key: Supervised Learning (Học có giám sát) · Score: 1.0)",
