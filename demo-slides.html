@@ -819,45 +819,53 @@
 
           <!-- Browser Viewport: Lecture + Active Socratic Card -->
           <div class="browser-body">
-            <!-- Article Highlight Slice -->
+            <!-- Article Highlight Slice (Bước 1: Kích hoạt) -->
             <div class="lecture-text-box">
               <div class="floating-tooltip-demo">
                 <span>🔍</span> Gợi mở Socratic (3-Chip)
               </div>
-              <span style="color: #94a3b8; font-size: 10px;">[Trang 14 · Mục 1.2]</span> "...Khi bài toán yêu cầu tương tác với môi trường bên ngoài, kiến trúc <mark class="lecture-mark">ReAct Agent</mark> vượt trội hơn Chatbot Cấp 2 nhờ khả năng kết hợp lập luận và hành động..."
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                <span style="font-size: 8.5px; background: rgba(139, 92, 246, 0.25); color: #c4b5fd; padding: 1px 5px; border-radius: 3px; font-weight: 700;">BƯỚC 1 · KÍCH HOẠT</span>
+                <span style="color: #64748b; font-size: 9px;">Bài 3 · Mục 1.2</span>
+              </div>
+              <span style="color: #cbd5e1; font-size: 10px;">"...Một trong những kiến trúc mạnh mẽ nhất là <mark class="lecture-mark">ReAct Agent</mark> vượt trội hơn Chatbot Cấp 2 nhờ kết hợp lập luận và hành động..."</span>
             </div>
 
-            <!-- Socratic Card Active State -->
+            <!-- Socratic Card Active State (Bước 2 & 3: Chẩn đoán & Giải quyết) -->
             <div class="socratic-card-demo">
               <div class="socratic-card-header">
-                <span style="font-size: 10.5px; font-weight: 700; color: #c4b5fd;">🎯 Socratic Tutor đang chẩn đoán:</span>
-                <span style="font-size: 8.5px; background: rgba(139, 92, 246, 0.2); color: #a78bfa; padding: 1px 6px; border-radius: 4px;">680ms</span>
+                <span style="font-size: 8.5px; background: rgba(139, 92, 246, 0.3); color: #e9d5ff; padding: 1px 5px; border-radius: 3px; font-weight: 700;">BƯỚC 2 · CHẨN ĐOÁN (3 CHIP)</span>
+                <span style="font-size: 8.5px; background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 1px 6px; border-radius: 4px; font-weight: 700;">~680ms Live AI</span>
               </div>
-              <div style="font-size: 10.5px; color: #f8fafc; font-weight: 600;">
+              <div style="font-size: 10px; color: #f8fafc; font-weight: 600;">
                 "Khía cạnh nào của ReAct Agent khiến bạn đang phân vân nhất?"
               </div>
 
               <!-- 3 Chips -->
-              <div class="chips-container" style="margin-top: 5px;">
-                <div class="chip-preview" style="font-size: 9.5px; padding: 4px 8px;">
-                  <span>1. Bản chất ReAct Agent khác gì mô hình LLM cơ bản?</span>
+              <div class="chips-container" style="margin-top: 4px;">
+                <div class="chip-preview" style="font-size: 9px; padding: 3px 7px;">
+                  <span>1. Bản chất ReAct Agent khác gì LLM cơ bản?</span>
                 </div>
-                <div class="chip-preview active" style="font-size: 9.5px; padding: 4px 8px;">
-                  <span>👉 2. Khác biệt giữa Chatbot Cấp 2 vs ReAct Agent Cấp 3?</span>
-                  <span style="background: #8b5cf6; color: #fff; font-size: 8px; padding: 1px 4px; border-radius: 3px;">CLICKED</span>
+                <div class="chip-preview active" style="font-size: 9px; padding: 3px 7px;">
+                  <span>👉 2. Khác biệt giữa Chatbot Cấp 2 vs ReAct Cấp 3?</span>
+                  <span style="background: #8b5cf6; color: #fff; font-size: 7.5px; padding: 1px 4px; border-radius: 3px;">CLICKED</span>
                 </div>
-                <div class="chip-preview" style="font-size: 9.5px; padding: 4px 8px;">
-                  <span>3. Cách xử lý lỗi vòng lặp vô tận (Infinite Loop) trong ReAct?</span>
+                <div class="chip-preview" style="font-size: 9px; padding: 3px 7px;">
+                  <span>3. Cách bẻ gãy bẫy vòng lặp vô tận (Infinite Loop)?</span>
                 </div>
               </div>
 
-              <!-- Resolve Response & Closure Button -->
-              <div class="resolve-box-demo">
-                <div style="font-size: 9.5px; color: #e2e8f0; line-height: 1.4;">
-                  <strong style="color: #34d399;">💡 Giải thích trúng đích:</strong> Chatbot thường chỉ trả lời chữ. ReAct Agent có thêm 'vũ khí' là <strong>Tools (Search, Code Executor)</strong> qua chu trình Thought ➔ Action ➔ Observation!
+              <!-- Resolve Response & Closure Button (Bước 3 & 4: Trúng đích & Dứt điểm) -->
+              <div class="resolve-box-demo" style="margin-top: 5px; padding: 6px 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                  <span style="font-size: 8px; background: rgba(16, 185, 129, 0.25); color: #6ee7b7; padding: 1px 4px; border-radius: 3px; font-weight: 700;">BƯỚC 3 · TRẢ LỜI TRÚNG ĐÍCH</span>
                 </div>
-                <div style="display: flex; justify-content: flex-end; margin-top: 5px;">
-                  <span style="background: #10b981; color: #ffffff; font-size: 9px; font-weight: 700; padding: 3px 10px; border-radius: 5px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);">
+                <div style="font-size: 9px; color: #e2e8f0; line-height: 1.35;">
+                  <strong style="color: #34d399;">💡 Giải thích:</strong> Chatbot thường chỉ sinh văn bản. ReAct Agent có thêm <strong>Tools (Search, Python Code)</strong> qua chu trình Thought ➔ Action ➔ Observation!
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 4px;">
+                  <span style="font-size: 8px; color: #a78bfa;">BƯỚC 4 · DỨT ĐIỂM (PAIR CLOSURE) ➔</span>
+                  <span style="background: #10b981; color: #ffffff; font-size: 8.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);">
                     ✓ Hiểu rồi, tiếp tục đọc
                   </span>
                 </div>
