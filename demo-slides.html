@@ -8,19 +8,19 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
 
     :root {
-      --bg-canvas: #060911;
-      --bg-slide: #0d1322;
-      --bg-card: rgba(23, 32, 54, 0.75);
-      --bg-card-elevated: rgba(30, 43, 73, 0.85);
-      --border-card: rgba(255, 255, 255, 0.09);
-      --border-accent: rgba(139, 92, 246, 0.35);
+      --bg-canvas: #050811;
+      --bg-slide: #0b1120;
+      --bg-card: rgba(18, 26, 45, 0.82);
+      --bg-card-elevated: rgba(26, 38, 66, 0.92);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(139, 92, 246, 0.4);
       --text-title: #f8fafc;
       --text-body: #94a3b8;
       --text-highlight: #e2e8f0;
       --primary: #8b5cf6;
-      --primary-glow: rgba(139, 92, 246, 0.2);
+      --primary-glow: rgba(139, 92, 246, 0.25);
       --accent-green: #10b981;
-      --accent-green-glow: rgba(16, 185, 129, 0.18);
+      --accent-green-glow: rgba(16, 185, 129, 0.2);
       --accent-amber: #f59e0b;
       --accent-rose: #f43f5e;
       --accent-cyan: #06b6d4;
@@ -50,21 +50,21 @@
       position: sticky;
       top: 16px;
       z-index: 1000;
-      background: rgba(15, 23, 42, 0.92);
-      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(16px);
       padding: 10px 24px;
       border-radius: 999px;
       display: flex;
       align-items: center;
       gap: 18px;
-      border: 1px solid rgba(139, 92, 246, 0.4);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(139, 92, 246, 0.45);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
     .print-btn {
       background: linear-gradient(135deg, #8b5cf6, #6d28d9);
       color: #ffffff;
       border: none;
-      padding: 8px 20px;
+      padding: 8px 22px;
       border-radius: 999px;
       font-weight: 700;
       font-size: 13px;
@@ -76,7 +76,7 @@
     }
     .print-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 0 16px var(--primary-glow);
+      box-shadow: 0 0 18px var(--primary-glow);
     }
     .print-hint {
       font-size: 12px;
@@ -86,12 +86,12 @@
     /* Slide Box */
     .slide {
       width: 1120px;
-      height: 630px; /* 16:9 Aspect Ratio */
+      height: 630px; /* Exact 16:9 Landscape Aspect Ratio */
       background: var(--bg-slide);
       border: 1px solid var(--border-card);
       border-radius: 16px;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 40px rgba(139, 92, 246, 0.05);
-      padding: 34px 44px 28px 44px;
+      padding: 28px 40px 22px 40px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -106,9 +106,9 @@
       position: absolute;
       top: -120px;
       right: -100px;
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.16) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -117,9 +117,9 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding-bottom: 12px;
+      padding-bottom: 10px;
     }
     .badge-rubric {
       display: inline-flex;
@@ -134,11 +134,11 @@
       text-transform: uppercase;
       padding: 3px 10px;
       border-radius: 6px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .slide-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 23px;
+      font-size: 22.5px;
       font-weight: 700;
       color: var(--text-title);
       letter-spacing: -0.02em;
@@ -151,7 +151,7 @@
     }
     .team-tag {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 10.5px;
       color: #a78bfa;
       background: rgba(15, 23, 42, 0.7);
       padding: 5px 12px;
@@ -166,31 +166,36 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     /* Cards & Grids */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 14px;
     }
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 12px;
     }
     .grid-split {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 18px;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 16px;
+    }
+    .grid-split-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
     }
 
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border-card);
       border-radius: 12px;
-      padding: 16px 18px;
+      padding: 14px 16px;
       position: relative;
     }
     .card-elevated {
@@ -199,21 +204,25 @@
     }
     .card-accent-green {
       border-left: 4px solid var(--accent-green);
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(23, 32, 54, 0.75));
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(18, 26, 45, 0.85));
     }
     .card-accent-rose {
       border-left: 4px solid var(--accent-rose);
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.08), rgba(23, 32, 54, 0.75));
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.08), rgba(18, 26, 45, 0.85));
     }
     .card-accent-purple {
       border-left: 4px solid var(--primary);
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(23, 32, 54, 0.75));
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(18, 26, 45, 0.85));
+    }
+    .card-accent-cyan {
+      border-left: 4px solid var(--accent-cyan);
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(18, 26, 45, 0.85));
     }
 
-    /* Typography & Metrics */
+    /* Metrics & Stats */
     .stat-hero {
       font-family: 'Outfit', sans-serif;
-      font-size: 40px;
+      font-size: 38px;
       font-weight: 800;
       line-height: 1;
       letter-spacing: -0.03em;
@@ -226,10 +235,10 @@
     .stat-hero.cyan { color: #38bdf8; }
 
     .stat-label {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
       color: var(--text-title);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .stat-desc {
       font-size: 11px;
@@ -241,31 +250,28 @@
     .callout-slice {
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.16), rgba(30, 41, 59, 0.8));
       border: 1px solid rgba(139, 92, 246, 0.4);
-      border-radius: 12px;
-      padding: 14px 18px;
-      font-size: 13px;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 12.5px;
       color: #f1f5f9;
-      line-height: 1.55;
-    }
-    .callout-slice strong {
-      color: #c4b5fd;
+      line-height: 1.5;
     }
 
     .quote-box {
       background: rgba(15, 23, 42, 0.65);
       border-left: 3px solid #818cf8;
-      padding: 10px 14px;
+      padding: 8px 12px;
       border-radius: 0 8px 8px 0;
-      margin-top: 6px;
+      margin-top: 5px;
     }
     .quote-text {
-      font-size: 11.5px;
+      font-size: 11px;
       font-style: italic;
       color: #cbd5e1;
       line-height: 1.45;
     }
     .quote-author {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 600;
       color: #a78bfa;
       margin-top: 4px;
@@ -277,32 +283,223 @@
     .chips-container {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      margin-top: 8px;
+      gap: 5px;
+      margin-top: 6px;
     }
     .chip-preview {
       background: rgba(30, 41, 59, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 7px 12px;
-      border-radius: 8px;
-      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 10.5px;
       color: #cbd5e1;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
     }
     .chip-preview.active {
-      background: rgba(139, 92, 246, 0.22);
+      background: rgba(139, 92, 246, 0.25);
       border-color: #8b5cf6;
       color: #ffffff;
       font-weight: 600;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
     }
     .chip-preview .tag {
-      font-size: 9px;
-      padding: 2px 6px;
+      font-size: 8.5px;
+      padding: 1px 5px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
       color: #94a3b8;
+    }
+
+    /* =========================================================
+       FLOWCHART & DIAGRAM COMPONENTS (LUỒNG ĐỒ CHUẨN CHỈNH)
+       ========================================================= */
+    .flow-step-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+    .flow-node {
+      flex: 1;
+      background: rgba(20, 29, 50, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 10px 12px;
+      position: relative;
+    }
+    .flow-node.active {
+      border-color: #8b5cf6;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(20, 29, 50, 0.95));
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.2);
+    }
+    .flow-node.success {
+      border-color: #10b981;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), rgba(20, 29, 50, 0.95));
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.2);
+    }
+    .flow-node-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flow-node-desc {
+      font-size: 9.5px;
+      color: #94a3b8;
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+    .flow-arrow {
+      color: #818cf8;
+      font-size: 14px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* Decision Branch Diagram */
+    .decision-container {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .decision-branch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+    }
+    .branch-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .tag-full { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .tag-cond { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.4); }
+
+    /* =========================================================
+       HIGH-FIDELITY PRODUCT SLICE MOCKUP (LÁT CẮT DEMO THẬT)
+       ========================================================= */
+    .browser-window {
+      background: #080d1a;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 25px rgba(139, 92, 246, 0.12);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .browser-titlebar {
+      background: #0d1426;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .window-dots {
+      display: flex;
+      gap: 5px;
+    }
+    .window-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .browser-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      color: #a78bfa;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 2px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(139, 92, 246, 0.25);
+    }
+
+    .browser-body {
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .lecture-text-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 11px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      position: relative;
+    }
+    .lecture-mark {
+      background: rgba(139, 92, 246, 0.35);
+      color: #ffffff;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      border-bottom: 2px solid #8b5cf6;
+    }
+
+    .floating-tooltip-demo {
+      position: absolute;
+      top: -14px;
+      right: 18px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.5);
+      animation: pulse-badge 2s infinite ease-in-out;
+    }
+
+    .socratic-card-demo {
+      background: rgba(22, 31, 56, 0.95);
+      border: 1.5px solid #8b5cf6;
+      border-radius: 10px;
+      padding: 10px 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    .socratic-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+    }
+
+    .resolve-box-demo {
+      background: rgba(13, 20, 36, 0.9);
+      border: 1px solid #10b981;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 6px;
     }
 
     /* Footer */
@@ -311,8 +508,8 @@
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 10px;
-      font-size: 10.5px;
+      padding-top: 8px;
+      font-size: 10px;
       color: #64748b;
     }
     .footer-rule {
@@ -338,7 +535,7 @@
         box-shadow: none;
         page-break-after: always;
         page-break-inside: avoid;
-        padding: 40px 50px;
+        padding: 36px 48px;
       }
       @page {
         size: landscape;
@@ -352,7 +549,7 @@
   <!-- Print Toolbar -->
   <div class="print-bar">
     <button class="print-btn" onclick="window.print()">🖨️ Xuất PDF Ngay (Cmd + P)</button>
-    <span class="print-hint">Khổ Landscape · Không viền (Margins: None) · Bật "Background graphics" để giữ đủ màu đen xịn</span>
+    <span class="print-hint">Khổ Landscape · Không viền (Margins: None) · Bật "Background graphics" để đủ màu xịn xò 100%</span>
   </div>
 
   <!-- =========================================================
@@ -370,8 +567,8 @@
 
     <div class="slide-body">
       <div class="grid-split">
-        <!-- Left: 3 Stat Cards -->
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Left: 3 Stat Cards + Visual Pain Pipeline -->
+        <div style="display: flex; flex-direction: column; gap: 8px;">
           <div class="grid-2">
             <div class="card card-accent-purple">
               <div class="stat-hero purple">17,5%</div>
@@ -384,6 +581,7 @@
               <div class="stat-desc">2.767 / 3.097 lượt phản hồi dài 780 – 1.019 chữ lặp lại nguyên văn slide bài giảng.</div>
             </div>
           </div>
+
           <div class="card card-accent-green" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), var(--bg-card));">
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <div>
@@ -391,13 +589,36 @@
                 <div class="stat-label" style="color: #34d399;">CHỈ ĐÚNG 6 LƯỢT HỎI GỢI MỞ TRÊN TOÀN KHÓA K4</div>
                 <div class="stat-desc">Hệ thống hoàn toàn thụ động độc thoại — không hề biết khơi gợi hay chẩn đoán người học kẹt ở đâu.</div>
               </div>
-              <div style="font-size: 32px; padding-right: 12px;">🚨</div>
+              <div style="font-size: 32px; padding-right: 10px;">🚨</div>
+            </div>
+          </div>
+
+          <!-- Flowchart: Bức tường chữ làm gãy động lực học -->
+          <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 8px; padding: 8px 12px;">
+            <div style="font-size: 10px; font-weight: 700; color: #fb7185; text-transform: uppercase; margin-bottom: 5px;">
+              ⚠️ Luồng bế tắc hiện tại (Tutor thụ động):
+            </div>
+            <div class="flow-step-container">
+              <div class="flow-node" style="padding: 6px 8px;">
+                <div class="flow-node-title" style="font-size: 10px;">1. Bôi đen từ khóa</div>
+                <div class="flow-node-desc">Học viên bế tắc chỗ khó</div>
+              </div>
+              <div class="flow-arrow" style="color: #f43f5e;">➔</div>
+              <div class="flow-node" style="padding: 6px 8px; border-color: #f43f5e; background: rgba(244, 63, 94, 0.15);">
+                <div class="flow-node-title" style="font-size: 10px; color: #fda4af;">2. Xả 1.000 chữ</div>
+                <div class="flow-node-desc">Lặp lại sách giáo khoa</div>
+              </div>
+              <div class="flow-arrow" style="color: #f43f5e;">➔</div>
+              <div class="flow-node" style="padding: 6px 8px; border-color: #ef4444; background: rgba(239, 68, 68, 0.2);">
+                <div class="flow-node-title" style="font-size: 10px; color: #fca5a5;">3. Đóng tab & Bỏ cuộc</div>
+                <div class="flow-node-desc">Ngợp thông tin, lười đọc</div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Right: 2 Real Cases from Data Pack -->
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
           <div class="card" style="height: 100%; display: flex; flex-direction: column; justify-content: space-around;">
             <div style="font-size: 11px; font-weight: 700; color: #a78bfa; text-transform: uppercase; letter-spacing: 0.05em;">
               📌 Hai ví dụ nguyên văn từ chatlog thật (K4):
@@ -409,6 +630,9 @@
             <div class="quote-box" style="border-color: #f59e0b;">
               <div class="quote-text">"Bôi đen từ viết tắt <strong>'CVAT'</strong> → Tutor xả bức tường chữ <strong>1.069 ký tự</strong> lặp lại định nghĩa slide bài giảng thay vì đưa ra các nhánh gợi mở."</div>
               <div class="quote-author"><span>Turn T10378 · Day 02</span><span style="color: #f59e0b;">Gây ngợp & nản lòng</span></div>
+            </div>
+            <div style="font-size: 10.5px; color: #cbd5e1; background: rgba(139, 92, 246, 0.12); padding: 7px 10px; border-radius: 6px; border: 1px solid rgba(139, 92, 246, 0.3);">
+              💡 <strong>Kết luận:</strong> Học viên không thiếu chữ. Học viên thiếu <em>định hướng để biết mình thực sự đang kẹt ở khâu nào</em>.
             </div>
           </div>
         </div>
@@ -422,53 +646,87 @@
   </div>
 
   <!-- =========================================================
-       SLIDE 2 · LÁT CẮT 1 CÂU & TỰ ĐỘNG HÓA CÓ ĐIỀU KIỆN (RUBRIC R2)
+       SLIDE 2 · LÁT CẮT 1 CÂU & SƠ ĐỒ LUỒNG TỰ ĐỘNG HÓA (RUBRIC R2)
        ========================================================= -->
   <div class="slide" id="slide-2">
     <div class="slide-header">
       <div>
-        <div class="badge-rubric">Rubric R2 · Lát Cắt & Tự Động Hóa (12 Điểm)</div>
+        <div class="badge-rubric">Rubric R2 · Lát Cắt & Tự Động Hóa Có Điều Kiện (12 Điểm)</div>
         <h1 class="slide-title">Lát cắt Socratic: Chẩn đoán trước khi kê đơn</h1>
-        <p class="slide-subtitle">Lựa chọn mức tự động hóa Conditional dựa trên phân tích chi phí lỗi (Cost-of-error)</p>
+        <p class="slide-subtitle">Sơ đồ luồng rẽ nhánh điều kiện dựa trên phân tích chi phí lỗi (Cost-of-error)</p>
       </div>
       <div class="team-tag">Phòng E403 · Lớp 3A · Nhóm Chungtoidongtinh</div>
     </div>
 
     <div class="slide-body">
-      <!-- Callout Lát cắt 1 câu -->
-      <div class="callout-slice">
-        <span style="background: #7c3aed; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 6px;">LÁT CẮT 1 CÂU CHUẨN</span>
+      <!-- Callout Lát cắt 1 câu chuẩn -->
+      <div class="callout-slice" style="padding: 9px 14px;">
+        <span style="background: #7c3aed; color: #fff; font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-right: 6px;">LÁT CẮT 1 CÂU CHUẨN</span>
         "Một học viên bôi đen bài giảng và bấm câu hỏi mẫu → <strong>AI phản hồi bằng 1 câu hỏi gợi mở ngắn kèm 3 chip lựa chọn trọng tâm</strong> thay vì xả lý thuyết dài → Học viên click chip → <strong>AI giải thích đúng trúng đích điểm nghẽn nhận thức.</strong>"
       </div>
 
-      <div class="grid-2" style="margin-top: 4px;">
-        <!-- Left: Why Conditional -->
-        <div class="card card-accent-purple">
-          <div class="stat-label" style="color: #c4b5fd; display: flex; align-items: center; gap: 8px;">
-            <span>⚖️ TẠI SAO CHỌN CONDITIONAL AUTOMATION?</span>
+      <!-- VISUAL FLOWCHART: CONDITIONAL AUTOMATION PIPELINE -->
+      <div class="decision-container">
+        <div style="font-size: 10.5px; font-weight: 700; color: #c4b5fd; display: flex; justify-content: space-between; align-items: center;">
+          <span>🔀 SƠ ĐỒ LUỒNG RẼ NHÁNH TỰ ĐỘNG HÓA CÓ ĐIỀU KIỆN (CONDITIONAL AUTOMATION PIPELINE)</span>
+          <span style="font-size: 9.5px; color: #94a3b8;">Phân loại theo Chi phí lỗi (Cost-of-Error)</span>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: stretch; margin-top: 2px;">
+          <!-- Node 1: Input -->
+          <div class="flow-node" style="flex: 0.8; border-color: rgba(139, 92, 246, 0.5);">
+            <div class="flow-node-title"><span style="color: #a78bfa;">①</span> Học viên thao tác</div>
+            <div class="flow-node-desc">Bôi đen đoạn văn bài lab Day 03 + Chọn nút thao tác</div>
           </div>
-          <div class="stat-desc" style="margin-top: 6px; font-size: 11.5px;">
-            <p><strong>• Chi phí lỗi (Cost-of-error):</strong> RẤT CAO nếu AI tự động đoán mò ý đồ người học. Đoán sai = sinh ra cả trang rác, làm ngắt quãng mạch tư duy.</p>
-            <p style="margin-top: 6px;"><strong>• Phân loại đầu vào thông minh:</strong></p>
-            <div style="background: rgba(15, 23, 42, 0.7); padding: 6px 10px; border-radius: 6px; margin-top: 4px; font-size: 11px;">
-              - Câu hỏi chi tiết, rõ nghĩa → <em>Trả lời ngay kèm citation [trang N]</em><br>
-              - Câu hỏi mẫu / bôi đen cụt → <em>Kích hoạt Socratic Probing 3-Chip</em>
+
+          <!-- Connector -->
+          <div style="display: flex; align-items: center; color: #818cf8; font-weight: bold;">➔</div>
+
+          <!-- Branches Split -->
+          <div style="flex: 2.2; display: flex; flex-direction: column; gap: 6px;">
+            <!-- Branch A: Full Auto -->
+            <div class="decision-branch" style="background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.3);">
+              <span class="branch-tag tag-full">FULL AUTO</span>
+              <div style="font-size: 10px; color: #cbd5e1; flex: 1;">
+                <strong>Câu hỏi chi tiết & cụ thể:</strong> (Ví dụ: <em>"Hàm tool_executor dòng 42 trả về lỗi gì?"</em>)<br>
+                <span style="color: #93c5fd;">➔ Trả lời thẳng ngay lập tức kèm Citation [Trang N] · Chi phí lỗi THẤP vì ý đồ đã rõ.</span>
+              </div>
+            </div>
+
+            <!-- Branch B: Conditional Socratic -->
+            <div class="decision-branch" style="background: rgba(139, 92, 246, 0.12); border-color: #8b5cf6;">
+              <span class="branch-tag tag-cond">CONDITIONAL AUTO (LÁT CẮT CHỌN)</span>
+              <div style="font-size: 10px; color: #cbd5e1; flex: 1;">
+                <strong>Bấm câu hỏi mẫu / Khái niệm rộng:</strong> (Ví dụ: bôi <em>"ReAct Agent"</em> bấm <em>"Giải thích"</em>)<br>
+                <span style="color: #c4b5fd;">➔ BẬT SOCRATIC PROBING: Hỏi ngược 1 câu + 3 Chip chẩn đoán · Chi phí đoán mò CỰC CAO nếu xả bừa!</span>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Right: Multi-prototype 3-Chip -->
-        <div class="card card-accent-green">
-          <div class="stat-label" style="color: #6ee7b7; display: flex; align-items: center; gap: 8px;">
-            <span>🧩 MULTI-PROTOTYPE: VÌ SAO CHỌN 3 CHIP?</span>
+      <!-- BOTTOM COMPARISON: WHY 3 CHIPS? -->
+      <div class="grid-2" style="margin-top: 2px;">
+        <div class="card card-accent-purple" style="padding: 10px 14px;">
+          <div class="stat-label" style="color: #c4b5fd; font-size: 11.5px;">⚖️ TẠI SAO CHỌN CONDITIONAL AUTOMATION?</div>
+          <div class="stat-desc" style="font-size: 10.5px; margin-top: 3px;">
+            • <strong>Full Auto</strong> (tự đoán): Đoán sai = sinh ra 1.000 từ rác, làm đứt mạch tư duy học viên.<br>
+            • <strong>Manual</strong> (bắt học viên tự gõ giải thích mình kẹt ở đâu): Học viên đang kẹt nên <em>không biết phải gõ gì</em>!<br>
+            • <strong>Conditional</strong> (khung đỡ Socratic): Cung cấp 3 phao cứu sinh để học viên click chọn trong 1 giây.
           </div>
-          <div class="stat-desc" style="margin-top: 6px; font-size: 11.5px;">
-            <p><strong>• Phương án A (2 lựa chọn A/B):</strong> <em>Bị loại</em> vì quá hẹp, không bao quát được nhóm học viên thực chiến cần sửa lỗi code bài lab.</p>
-            <p style="margin-top: 4px;"><strong>• Phương án B (3 Chip Socratic — ĐƯỢC CHỌN):</strong></p>
-            <div class="chips-container" style="margin-top: 4px;">
-              <div class="chip-preview active"><span>🎯 1. Bản chất lý thuyết & nguyên lý cốt lõi</span><span class="tag">Concept</span></div>
-              <div class="chip-preview"><span>💻 2. Cách triển khai thực tế trên mã nguồn</span><span class="tag">Code</span></div>
-              <div class="chip-preview"><span>⚡ 3. Các lỗi runtime & bẫy thường gặp</span><span class="tag">Debug</span></div>
+        </div>
+
+        <div class="card card-accent-green" style="padding: 10px 14px;">
+          <div class="stat-label" style="color: #6ee7b7; font-size: 11.5px;">🧩 MULTI-PROTOTYPE: VÌ SAO CHỌN 3 CHIP?</div>
+          <div class="chips-container" style="gap: 4px; margin-top: 4px;">
+            <div class="chip-preview active" style="padding: 4px 8px; font-size: 10px;">
+              <span>🎯 1. Bản chất lý thuyết & nguyên lý cốt lõi</span><span class="tag">Concept</span>
+            </div>
+            <div class="chip-preview" style="padding: 4px 8px; font-size: 10px;">
+              <span>💻 2. Cách triển khai thực tế trên mã nguồn</span><span class="tag">Code</span>
+            </div>
+            <div class="chip-preview" style="padding: 4px 8px; font-size: 10px;">
+              <span>⚡ 3. Các lỗi runtime & bẫy thường gặp</span><span class="tag">Debug</span>
             </div>
           </div>
         </div>
@@ -482,69 +740,126 @@
   </div>
 
   <!-- =========================================================
-       SLIDE 3 · KIẾN TRÚC & DEMO TƯƠNG TÁC (RUBRIC R5)
+       SLIDE 3 · KIẾN TRÚC 3 TẦNG & LÁT CẮT DEMO THẬT (RUBRIC R5)
        ========================================================= -->
   <div class="slide" id="slide-3">
     <div class="slide-header">
       <div>
         <div class="badge-rubric">Rubric R5 · Working Prototype & Real AI Call (10 Điểm)</div>
-        <h1 class="slide-title">Kiến trúc 3-Layer Router & Luồng Socratic Chạy Thật</h1>
+        <h1 class="slide-title">Kiến trúc 3-Layer Router & Lát Cắt Giao Diện Demo Thật</h1>
         <p class="slide-subtitle">Gọi Live Google Gemini 1.5 Flash API (680ms) · Minh bạch phần Thật vs Mock</p>
       </div>
       <div class="team-tag">Phòng E403 · Lớp 3A · Nhóm Chungtoidongtinh</div>
     </div>
 
     <div class="slide-body">
-      <div class="grid-split">
-        <!-- Left: 3-Layer Architecture -->
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div class="card" style="padding: 10px 14px; border-left: 3px solid #f43f5e; background: rgba(244, 63, 94, 0.08);">
-            <div style="font-size: 11px; font-weight: 700; color: #fda4af;">TẦNG 0 · INTENT GUARDRAILS (REGEX & HEURISTICS)</div>
-            <div style="font-size: 10.5px; color: #cbd5e1; margin-top: 2px;">Chặn URL `https`, từ chối giải hộ full code lab, từ chối điểm danh phòng học, chặn prompt injection.</div>
+      <div class="grid-split-equal">
+        <!-- LEFT: 3-LAYER ARCHITECTURE FLOWCHART -->
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          <div style="font-size: 11px; font-weight: 700; color: #c4b5fd; text-transform: uppercase; letter-spacing: 0.05em;">
+            ⚙️ LUỒNG ĐIỀU PHỐI 3 TẦNG (ROUTING PIPELINE):
           </div>
-          <div class="card" style="padding: 10px 14px; border-left: 3px solid #06b6d4; background: rgba(6, 182, 212, 0.08);">
-            <div style="font-size: 11px; font-weight: 700; color: #67e8f9;">TẦNG 1 · RAG-LITE KB (33 CONCEPTS DAY 03)</div>
-            <div style="font-size: 10.5px; color: #cbd5e1; margin-top: 2px;">Tra cứu siêu tốc &le; 10ms các thuật ngữ bài học; đóng vai trò fallback khi rớt mạng trên sân khấu.</div>
-          </div>
-          <div class="card card-elevated" style="padding: 12px 14px; border-left: 4px solid #8b5cf6; background: rgba(139, 92, 246, 0.16);">
+
+          <!-- Layer 0 -->
+          <div class="card" style="padding: 8px 12px; border-left: 4px solid #f43f5e; background: rgba(244, 63, 94, 0.08);">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-size: 11.5px; font-weight: 800; color: #c4b5fd;">TẦNG 2 · LIVE LLM ENGINE (QUYẾT ĐỊNH TRUNG TÂM)</div>
-              <span style="background: #10b981; color: #fff; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">~680ms · Real API</span>
+              <span style="font-size: 10.5px; font-weight: 700; color: #fda4af;">TẦNG 0 · INTENT GUARDRAILS</span>
+              <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: #f43f5e; background: rgba(244,63,94,0.15); padding: 1px 6px; border-radius: 4px;">&lt; 1ms</span>
             </div>
-            <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 3px;">
-              Gọi <strong>Gemini 1.5 Flash</strong> qua Windowed Context 150 từ + Structured JSON Schema. Ép trả về đúng 1 câu hỏi và 3 chip &le; 15 từ.
+            <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">
+              Chặn URL <code>https?://</code> (vụ Slido), chặn spam click dồn dập, từ chối giải hộ full code lab, từ chối câu hỏi ngoài môn (quét mã điểm danh).
             </div>
+          </div>
+
+          <!-- Arrow -->
+          <div style="text-align: center; color: #818cf8; font-size: 11px; margin: -4px 0;">▼ (Passed Guardrail)</div>
+
+          <!-- Layer 1 -->
+          <div class="card" style="padding: 8px 12px; border-left: 4px solid #06b6d4; background: rgba(6, 182, 212, 0.08);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 10.5px; font-weight: 700; color: #67e8f9;">TẦNG 1 · RAG-LITE KB ENGINE (33 CONCEPTS)</span>
+              <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: #06b6d4; background: rgba(6,182,212,0.15); padding: 1px 6px; border-radius: 4px;">&lt; 10ms</span>
+            </div>
+            <div style="font-size: 10px; color: #cbd5e1; margin-top: 2px;">
+              Tra cứu nhanh 33 khái niệm chuẩn Day 03 (Thought-Action-Loop, Tools...). Đóng vai trò <em>Offline Fallback an toàn</em> khi sân khấu rớt mạng!
+            </div>
+          </div>
+
+          <!-- Arrow -->
+          <div style="text-align: center; color: #818cf8; font-size: 11px; margin: -4px 0;">▼ (Cần chẩn đoán gợi mở sâu)</div>
+
+          <!-- Layer 2 -->
+          <div class="card card-elevated" style="padding: 9px 12px; border-left: 4px solid #8b5cf6; background: rgba(139, 92, 246, 0.16);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 11px; font-weight: 800; color: #c4b5fd;">TẦNG 2 · LIVE GEMINI 1.5 FLASH ENGINE</span>
+              <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: #34d399; background: rgba(16,185,129,0.2); padding: 1px 6px; border-radius: 4px;">~680ms · REAL API</span>
+            </div>
+            <div style="font-size: 10px; color: #e2e8f0; margin-top: 2px;">
+              Nhận Windowed Context 150 từ + Socratic System Prompt. Ép trả về đúng <strong>1 câu hỏi chẩn đoán và 3 chip &le; 15 từ</strong> qua Structured JSON Schema.
+            </div>
+          </div>
+
+          <div style="font-size: 9.5px; color: #94a3b8; background: rgba(15, 23, 42, 0.6); padding: 5px 8px; border-radius: 6px;">
+            🔍 <strong>Minh bạch Thật vs Mock:</strong> Giao diện web VLearn là mockup tái hiện · Bộ não điều phối, gọi Gemini LLM và sinh 3 Chip là <strong>100% CODE THẬT CHẠY LIVE</strong>.
           </div>
         </div>
 
-        <!-- Right: UI Flow Simulator -->
-        <div class="card" style="background: #090e1a; border: 1px solid rgba(139, 92, 246, 0.4); padding: 14px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">
-            <div style="display: flex; gap: 6px;">
-              <span style="width: 9px; height: 9px; border-radius: 50%; background: #ef4444;"></span>
-              <span style="width: 9px; height: 9px; border-radius: 50%; background: #f59e0b;"></span>
-              <span style="width: 9px; height: 9px; border-radius: 50%; background: #10b981;"></span>
+        <!-- RIGHT: HIGH-FIDELITY PRODUCT SLICE MOCKUP -->
+        <div class="browser-window">
+          <!-- Titlebar -->
+          <div class="browser-titlebar">
+            <div class="window-dots">
+              <span class="window-dot dot-red"></span>
+              <span class="window-dot dot-yellow"></span>
+              <span class="window-dot dot-green"></span>
             </div>
-            <span style="font-size: 10px; color: #a78bfa; font-family: 'JetBrains Mono', monospace;">localhost:8088 (VLearn Reader)</span>
+            <span class="browser-url">localhost:8088 · VLearn K4 Day 03 Reader</span>
+            <span style="font-size: 9px; color: #34d399; font-weight: 700;">● Live AI Online</span>
           </div>
 
-          <div style="margin-top: 10px;">
-            <div style="font-size: 11px; color: #94a3b8;">Học viên bôi đen: <span style="background: rgba(139, 92, 246, 0.3); color: #fff; padding: 1px 6px; border-radius: 4px;">"ReAct Agent"</span></div>
-            
-            <!-- Socratic Card -->
-            <div style="background: rgba(30, 41, 59, 0.85); border: 1px solid #8b5cf6; border-radius: 8px; padding: 10px; margin-top: 8px;">
-              <div style="font-size: 11px; font-weight: 700; color: #c4b5fd;">🎯 Socratic Tutor hỏi ngược:</div>
-              <div style="font-size: 10.5px; color: #f1f5f9; margin-top: 2px;">"Khía cạnh nào của ReAct Agent khiến bạn đang phân vân nhất?"</div>
-              
-              <div class="chips-container" style="margin-top: 6px;">
-                <div class="chip-preview active" style="font-size: 10px; padding: 4px 8px;">👉 2. Khác biệt Chatbot Cấp 2 vs ReAct Cấp 3?</div>
+          <!-- Browser Viewport: Lecture + Active Socratic Card -->
+          <div class="browser-body">
+            <!-- Article Highlight Slice -->
+            <div class="lecture-text-box">
+              <div class="floating-tooltip-demo">
+                <span>🔍</span> Gợi mở Socratic (3-Chip)
+              </div>
+              <span style="color: #94a3b8; font-size: 10px;">[Trang 14 · Mục 1.2]</span> "...Khi bài toán yêu cầu tương tác với môi trường bên ngoài, kiến trúc <mark class="lecture-mark">ReAct Agent</mark> vượt trội hơn Chatbot Cấp 2 nhờ khả năng kết hợp lập luận và hành động..."
+            </div>
+
+            <!-- Socratic Card Active State -->
+            <div class="socratic-card-demo">
+              <div class="socratic-card-header">
+                <span style="font-size: 10.5px; font-weight: 700; color: #c4b5fd;">🎯 Socratic Tutor đang chẩn đoán:</span>
+                <span style="font-size: 8.5px; background: rgba(139, 92, 246, 0.2); color: #a78bfa; padding: 1px 6px; border-radius: 4px;">680ms</span>
+              </div>
+              <div style="font-size: 10.5px; color: #f8fafc; font-weight: 600;">
+                "Khía cạnh nào của ReAct Agent khiến bạn đang phân vân nhất?"
               </div>
 
-              <!-- Resolve Card -->
-              <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid #10b981; border-radius: 6px; padding: 8px; margin-top: 6px; font-size: 10px; color: #cbd5e1;">
-                <strong style="color: #34d399;">💡 Giải thích đúng trọng tâm:</strong> Chatbot thường chỉ trả lời chữ. ReAct Agent có thêm 'vũ khí' là Tools (tìm kiếm, chạy code) qua vòng lặp Thought-Action-Observation.
-                <div style="margin-top: 6px; text-align: right;">
-                  <span style="background: #10b981; color: #fff; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 9.5px;">✓ Hiểu rồi, tiếp tục đọc</span>
+              <!-- 3 Chips -->
+              <div class="chips-container" style="margin-top: 5px;">
+                <div class="chip-preview" style="font-size: 9.5px; padding: 4px 8px;">
+                  <span>1. Bản chất ReAct Agent khác gì mô hình LLM cơ bản?</span>
+                </div>
+                <div class="chip-preview active" style="font-size: 9.5px; padding: 4px 8px;">
+                  <span>👉 2. Khác biệt giữa Chatbot Cấp 2 vs ReAct Agent Cấp 3?</span>
+                  <span style="background: #8b5cf6; color: #fff; font-size: 8px; padding: 1px 4px; border-radius: 3px;">CLICKED</span>
+                </div>
+                <div class="chip-preview" style="font-size: 9.5px; padding: 4px 8px;">
+                  <span>3. Cách xử lý lỗi vòng lặp vô tận (Infinite Loop) trong ReAct?</span>
+                </div>
+              </div>
+
+              <!-- Resolve Response & Closure Button -->
+              <div class="resolve-box-demo">
+                <div style="font-size: 9.5px; color: #e2e8f0; line-height: 1.4;">
+                  <strong style="color: #34d399;">💡 Giải thích trúng đích:</strong> Chatbot thường chỉ trả lời chữ. ReAct Agent có thêm 'vũ khí' là <strong>Tools (Search, Code Executor)</strong> qua chu trình Thought ➔ Action ➔ Observation!
+                </div>
+                <div style="display: flex; justify-content: flex-end; margin-top: 5px;">
+                  <span style="background: #10b981; color: #ffffff; font-size: 9px; font-weight: 700; padding: 3px 10px; border-radius: 5px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);">
+                    ✓ Hiểu rồi, tiếp tục đọc
+                  </span>
                 </div>
               </div>
             </div>
@@ -554,7 +869,7 @@
     </div>
 
     <div class="slide-footer">
-      <span>Rubric R5: Minh bạch Thật vs Mock (Giao diện bài đọc là Mock · Quyết định gợi mở 3-Chip là Live LLM thật lưu vết waterfall)</span>
+      <span>Rubric R5: Live AI Call ghi nhận đầy đủ trace waterfall · Demo lát cắt sắc bén giải quyết trúng đích</span>
       <span class="footer-rule">Speaker: Nguyễn Phi Nhật (Tech Demo · 60s)</span>
     </div>
   </div>
@@ -566,48 +881,71 @@
     <div class="slide-header">
       <div>
         <div class="badge-rubric">Rubric R4 · Kiểm Thử Thực Chứng & Mổ Xẻ Thất Bại (15 Điểm)</div>
-        <h1 class="slide-title">Từ 80% lên 100% trên 20 Case thật K4 & Bài học Ca Thất bại</h1>
+        <h1 class="slide-title">Từ 80% lên 100% trên 20 Case thật K4 & Bài học Ca Thất Bại</h1>
         <p class="slide-subtitle">Chạy tự động bằng eval/eval_runner.py · Khóa Quality Bar &ge; 90% tại CP4</p>
       </div>
       <div class="team-tag">Phòng E403 · Lớp 3A · Nhóm Chungtoidongtinh</div>
     </div>
 
     <div class="slide-body">
+      <!-- Top Stat Metric Cards -->
       <div class="grid-3">
-        <div class="card card-accent-green" style="text-align: center;">
-          <div class="stat-hero green">80% → 100%</div>
+        <div class="card card-accent-green" style="text-align: center; padding: 10px 14px;">
+          <div class="stat-hero green" style="font-size: 34px;">80% → 100%</div>
           <div class="stat-label">Tiến bộ qua 2 lượt đo</div>
           <div class="stat-desc">Lượt 1: 16/20 PASS → Khắc phục lỗi → Lượt 2: <strong>20/20 case PASS chuẩn 3 chiều</strong>.</div>
         </div>
-        <div class="card card-accent-purple" style="text-align: center;">
-          <div class="stat-hero purple">&ge; 90.0%</div>
+        <div class="card card-accent-purple" style="text-align: center; padding: 10px 14px;">
+          <div class="stat-hero purple" style="font-size: 34px;">&ge; 90.0%</div>
           <div class="stat-label">Quality Bar Khóa CP4</div>
           <div class="stat-desc">Khóa cố định tại mốc CP4 ngày 17/9; kết quả đo thực tế vượt ngưỡng cam kết.</div>
         </div>
-        <div class="card" style="text-align: center; border-left: 4px solid #0284c7; background: rgba(2, 132, 199, 0.08);">
-          <div class="stat-hero cyan">100%</div>
+        <div class="card card-accent-cyan" style="text-align: center; padding: 10px 14px;">
+          <div class="stat-hero cyan" style="font-size: 34px;">100%</div>
           <div class="stat-label">Grounding (Không bịa)</div>
           <div class="stat-desc">100% câu hỏi và phản hồi bám sát tài liệu Day 03, không ảo giác ra nguồn ngoài.</div>
         </div>
       </div>
 
-      <!-- Failure Analysis Card -->
-      <div class="card card-accent-rose" style="margin-top: 4px; padding: 12px 18px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <strong style="color: #fb7185; font-size: 12.5px;">🚨 MỔ XẺ CA THẤT BẠI ĐẮT GIÁ NHẤT: Case GS-02 ("https")</strong>
-          <span style="font-size: 10px; background: rgba(244, 63, 94, 0.2); color: #f43f5e; padding: 2px 8px; border-radius: 4px; font-weight: 700;">FAIL Ở LƯỢT 1</span>
+      <!-- VISUAL 4-LAYER TAXONOMY DIAGRAM -->
+      <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 9px 14px;">
+        <div style="font-size: 10.5px; font-weight: 700; color: #cbd5e1; margin-bottom: 6px; display: flex; justify-content: space-between;">
+          <span>📊 BỘ GOLDEN SET 20 CA ĐƯỢC PHÂN BỔ THEO 4 LỚP ĐỘ KHÓ (EVAL TAXONOMY):</span>
+          <span style="color: #34d399; font-weight: 800;">100% PASS (20/20)</span>
         </div>
-        <p style="font-size: 11.5px; color: #cbd5e1; margin-top: 5px; line-height: 1.5;">
-          <strong>• Hiện tượng:</strong> Học viên bôi nhầm chữ "https" trong link Slido → AI tưởng hỏi về an ninh mạng và đặt câu hỏi về chứng chỉ SSL/TLS.<br>
-          <strong>• Nguyên nhân gốc rễ:</strong> Hệ thống thiếu tầng tiền xử lý kiểm tra chuỗi URL trước khi gửi context tới LLM.<br>
-          <strong>• Khắc phục tại CP4:</strong> Cài đặt <em>Layer 0 Regex Guardrail</em> chặn URL `https?://` ngay lập tức, hướng dẫn bôi đen lại từ khóa đúng → <strong>Đạt 100% ở Lượt 2</strong>.
-        </p>
+        <div class="grid-2" style="gap: 8px;">
+          <div style="background: rgba(20, 29, 50, 0.8); padding: 6px 10px; border-radius: 6px; font-size: 10px; border-left: 3px solid #8b5cf6;">
+            <strong style="color: #c4b5fd;">Lớp 1: Khái niệm cơ bản (6 case):</strong> Thought, Action, Tools... ➔ <em>Pass 6/6</em>
+          </div>
+          <div style="background: rgba(20, 29, 50, 0.8); padding: 6px 10px; border-radius: 6px; font-size: 10px; border-left: 3px solid #06b6d4;">
+            <strong style="color: #67e8f9;">Lớp 2: So sánh & Phân biệt (6 case):</strong> Chatbot vs ReAct, Tool Schema... ➔ <em>Pass 6/6</em>
+          </div>
+          <div style="background: rgba(20, 29, 50, 0.8); padding: 6px 10px; border-radius: 6px; font-size: 10px; border-left: 3px solid #f59e0b;">
+            <strong style="color: #fbbf24;">Lớp 3: Bẫy suy luận & Debug (5 case):</strong> Rate Limit 429, OOM GPU... ➔ <em>Pass 5/5</em>
+          </div>
+          <div style="background: rgba(20, 29, 50, 0.8); padding: 6px 10px; border-radius: 6px; font-size: 10px; border-left: 3px solid #f43f5e;">
+            <strong style="color: #fda4af;">Lớp 4: Nhiễu & Biên lạ (3 case):</strong> Link URL rác, từ viết tắt cụt... ➔ <em>Pass 3/3</em>
+          </div>
+        </div>
       </div>
 
-      <!-- Spam & Edge Case Badge -->
-      <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 7px 14px; font-size: 11px; color: #6ee7b7; display: flex; justify-content: space-between; align-items: center;">
-        <span>🛡️ <strong>Kiểm thử chống Spam & Input rác:</strong> Đạt 7 / 7 case (100% PASS) — Chặn triệt để link URL rác, từ cụt ngủn, prompt injection làm thơ và spam click dồn dập.</span>
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px;">eval/README.md §4</span>
+      <!-- Failure Analysis Card: Case GS-02 -->
+      <div class="card card-accent-rose" style="padding: 10px 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="color: #fb7185; font-size: 11.5px;">🚨 MỔ XẺ CA THẤT BẠI ĐẮT GIÁ NHẤT: Case GS-02 ("https")</strong>
+          <span style="font-size: 9.5px; background: rgba(244, 63, 94, 0.2); color: #f43f5e; padding: 2px 7px; border-radius: 4px; font-weight: 700;">FAIL Ở LƯỢT 1 ➔ PASS Ở LƯỢT 2</span>
+        </div>
+        <div style="font-size: 10.5px; color: #cbd5e1; margin-top: 4px; line-height: 1.45;">
+          • <strong>Hiện tượng:</strong> Học viên bôi nhầm link Slido chữ "https" ➔ AI tưởng hỏi về an ninh mạng và đặt câu hỏi về chứng chỉ SSL/TLS.<br>
+          • <strong>Nguyên nhân gốc rễ:</strong> Hệ thống thiếu tầng tiền xử lý kiểm tra chuỗi URL trước khi gửi context tới LLM.<br>
+          • <strong>Khắc phục tại CP4:</strong> Cài đặt <em>Layer 0 Regex Guardrail</em> chặn URL <code>https?://</code> ngay lập tức, hướng dẫn bôi đen lại từ khóa đúng ➔ <strong>Đạt 100% ở Lượt 2</strong>.
+        </div>
+      </div>
+
+      <!-- Spam Badge -->
+      <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px; padding: 6px 12px; font-size: 10.5px; color: #6ee7b7; display: flex; justify-content: space-between; align-items: center;">
+        <span>🛡️ <strong>Kiểm thử chống Spam & Input rác:</strong> Đạt 7 / 7 case (100% PASS) — Chặn triệt để link URL rác, prompt injection và spam click.</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px;">eval/README.md §4</span>
       </div>
     </div>
 
@@ -618,7 +956,7 @@
   </div>
 
   <!-- =========================================================
-       SLIDE 5 · NGƯỜI DÙNG THẬT NÓI GÌ & CHỈ SỐ SEAN ELLIS (KHỐI R6)
+       SLIDE 5 · NGƯỜI DÙNG THẬT NÓI GÌ & VÒNG LẶP PAIR (KHỐI R6)
        ========================================================= -->
   <div class="slide" id="slide-5">
     <div class="slide-header">
@@ -632,35 +970,55 @@
 
     <div class="slide-body">
       <div class="grid-split">
-        <!-- Left: Sean Ellis Metric -->
-        <div class="card card-accent-green" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-          <div class="stat-hero green" style="font-size: 50px;">80,0%</div>
-          <div class="stat-label" style="font-size: 14px; color: #6ee7b7;">RẤT TIẾC (VERY DISAPPOINTED)</div>
-          <div class="stat-desc" style="margin-top: 6px; font-size: 11.5px;">
-            4 / 5 học viên K4 ngoài nhóm trả lời sẽ <strong>RẤT TIẾC</strong> nếu tính năng này không được tích hợp vào VLearn.
+        <!-- Left: Sean Ellis Metric & PMF Validation -->
+        <div class="card card-accent-green" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 16px;">
+          <div class="stat-hero green" style="font-size: 48px;">80,0%</div>
+          <div class="stat-label" style="font-size: 13.5px; color: #6ee7b7;">RẤT TIẾC (VERY DISAPPOINTED)</div>
+          <div class="stat-desc" style="margin-top: 5px; font-size: 11px;">
+            4 / 5 học viên K4 ngoài nhóm trả lời sẽ <strong>RẤT TIẾC</strong> nếu tính năng Socratic Probing này không được tích hợp vào VLearn.
           </div>
-          <div style="margin-top: 12px; font-size: 10.5px; background: rgba(16, 185, 129, 0.15); color: #34d399; padding: 4px 10px; border-radius: 999px; font-weight: 700;">
+          <div style="margin-top: 12px; font-size: 10px; background: rgba(16, 185, 129, 0.18); color: #34d399; padding: 4px 12px; border-radius: 999px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.35);">
             🏆 VƯỢT GẤP ĐÔI CHUẨN PMF 40% CỦA SEAN ELLIS
+          </div>
+          <div style="margin-top: 12px; font-size: 10px; color: #94a3b8; line-height: 1.35;">
+            Thực hiện trên 5 học viên thật K4: Quốc Cường, Thu Hiền, Bảo Ngọc, Anh Tuấn, Minh Duy (MSSV ghi đầy đủ trong báo cáo).
           </div>
         </div>
 
-        <!-- Right: Real Quotes & PAIR changes -->
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Right: Quotes & Google PAIR Loop Diagram -->
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Quote 1 -->
           <div class="quote-box" style="border-color: #10b981;">
             <div class="quote-text">"Bình thường bôi đen bấm câu mẫu bot xả một đống lý thuyết lười đọc lắm. Cái này hiện 3 cái lựa chọn đúng cái mình đang kẹt, <strong>bấm vào đọc 3 dòng là hiểu luôn.</strong>"</div>
             <div class="quote-author"><span>Đặng Quốc Cường · MSSV: 2A202602466</span><span style="color: #34d399;">Insight tích cực</span></div>
           </div>
 
+          <!-- Quote 2 -->
           <div class="quote-box" style="border-color: #f59e0b;">
             <div class="quote-text">"Mình đọc xong hiểu rồi nhưng muốn quay lại đọc tiếp bài giảng thì <strong>cái khung chat nó che mất màn hình</strong>, không biết bấm nút nào để nó biết mình xong rồi?"</div>
             <div class="quote-author"><span>Trần Thị Thu Hiền · MSSV: 2A202602737</span><span style="color: #fbbf24;">Gãy flow tương tác</span></div>
           </div>
 
-          <!-- Action Taken -->
-          <div class="card" style="padding: 10px 14px; background: rgba(139, 92, 246, 0.12); border: 1px solid rgba(139, 92, 246, 0.35);">
-            <strong style="color: #c4b5fd; font-size: 11px;">🔧 THAY ĐỔI ĐÃ CODE NGAY TRONG ĐÊM (PAIR LOOP):</strong>
-            <div style="font-size: 10.5px; color: #e2e8f0; margin-top: 2px;">
-              Bổ sung nút dứt điểm <strong>`✓ Hiểu rồi, tiếp tục đọc`</strong> dưới Resolve Card để học viên đóng thẻ, reset state và trao quyền kiểm soát (Closure) trọn vẹn cho người học.
+          <!-- VISUAL PAIR LOOP FLOWCHART -->
+          <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 8px; padding: 8px 12px;">
+            <div style="font-size: 10px; font-weight: 700; color: #c4b5fd; text-transform: uppercase; margin-bottom: 5px;">
+              🔄 VÒNG LẶP CẢI TIẾN SẢN PHẨM (GOOGLE PAIR LOOP):
+            </div>
+            <div class="flow-step-container">
+              <div class="flow-node" style="padding: 6px 8px;">
+                <div class="flow-node-title" style="font-size: 9.5px;">1. Feedback Thu Hiền</div>
+                <div class="flow-node-desc">Khung chat che màn hình</div>
+              </div>
+              <div class="flow-arrow">➔</div>
+              <div class="flow-node" style="padding: 6px 8px; border-color: #f59e0b;">
+                <div class="flow-node-title" style="font-size: 9.5px; color: #fbbf24;">2. Insight PAIR</div>
+                <div class="flow-node-desc">Thiếu cảm giác Closure</div>
+              </div>
+              <div class="flow-arrow">➔</div>
+              <div class="flow-node success" style="padding: 6px 8px;">
+                <div class="flow-node-title" style="font-size: 9.5px; color: #34d399;">3. Code Nút Mới</div>
+                <div class="flow-node-desc">"✓ Hiểu rồi, tiếp tục đọc"</div>
+              </div>
             </div>
           </div>
         </div>
@@ -689,39 +1047,39 @@
     <div class="slide-body">
       <div class="grid-2">
         <!-- Left: 1-Week Backlog -->
-        <div class="card card-accent-purple">
-          <div class="stat-label" style="color: #c4b5fd;">🚀 NẾU CÓ THÊM 1 TUẦN (DATA-DRIVEN BACKLOG)</div>
-          <div style="margin-top: 8px; font-size: 11px; color: #cbd5e1; display: flex; flex-direction: column; gap: 8px;">
-            <div style="background: rgba(15, 23, 42, 0.7); padding: 8px 10px; border-radius: 6px;">
+        <div class="card card-accent-purple" style="padding: 12px 14px;">
+          <div class="stat-label" style="color: #c4b5fd; font-size: 11.5px;">🚀 NẾU CÓ THÊM 1 TUẦN (DATA-DRIVEN BACKLOG)</div>
+          <div style="margin-top: 6px; font-size: 10.5px; color: #cbd5e1; display: flex; flex-direction: column; gap: 7px;">
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 7px 10px; border-radius: 6px;">
               <strong style="color: #38bdf8;">1. Sổ tay Flashcard Tự động (Học viên):</strong><br>
-              Tự động lưu các Chip học viên đã chọn vào Sơ đồ Tri thức (Knowledge Graph) để sinh bộ câu hỏi trắc nghiệm ôn thi cuối khóa (dựa trên feedback bạn Quốc Cường).
+              Tự động gom các Chip học viên đã chọn vào Sơ đồ Tri thức (Knowledge Graph) để sinh bộ câu hỏi trắc nghiệm ôn thi cuối khóa (dựa trên insight bạn Quốc Cường).
             </div>
-            <div style="background: rgba(15, 23, 42, 0.7); padding: 8px 10px; border-radius: 6px;">
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 7px 10px; border-radius: 6px;">
               <strong style="color: #f43f5e;">2. Bản đồ Lỗ hổng Bài giảng (Giảng viên):</strong><br>
-              Tận dụng chính log click Chip trong `trace_waterfall.json`. Nếu 80% lớp cùng bấm Chip 2 ở trang 15 → Cảnh báo đỏ cho Giảng viên biết slide viết khó hiểu để giảng lại.
+              Tận dụng chính log click Chip trong <code>trace_waterfall.json</code>. Nếu 80% lớp cùng bấm Chip 2 ở trang 15 ➔ Cảnh báo đỏ cho Giảng viên biết slide viết khó hiểu để bổ sung ví dụ.
             </div>
           </div>
         </div>
 
         <!-- Right: Unfinished Scope CP4 -->
-        <div class="card card-accent-rose">
-          <div class="stat-label" style="color: #fda4af;">📋 TỰ KHAI PHẦN CHƯA XONG (LUẬT CP4)</div>
-          <div style="margin-top: 8px; font-size: 11px; color: #cbd5e1; display: flex; flex-direction: column; gap: 6px;">
+        <div class="card card-accent-rose" style="padding: 12px 14px;">
+          <div class="stat-label" style="color: #fda4af; font-size: 11.5px;">📋 TỰ KHAI PHẦN CHƯA XONG (LUẬT CP4)</div>
+          <div style="margin-top: 6px; font-size: 10.5px; color: #cbd5e1; display: flex; flex-direction: column; gap: 5px;">
             <div>• <strong>Cloud Database Sync:</strong> Chưa đồng bộ đám mây VLearn (hiện lưu cục bộ tại máy).</div>
             <div>• <strong>Phạm vi tài liệu:</strong> Mới nạp sâu bài Lab Day 03, chưa ingest toàn bộ 10 bài học còn lại.</div>
             <div>• <strong>Nghiệp vụ sư phạm:</strong> Chưa có Micro-quiz 10 giây để kiểm tra hiểu thật sau khi bấm "Hiểu rồi".</div>
           </div>
 
-          <div style="margin-top: 10px; padding: 6px 10px; background: rgba(244, 63, 94, 0.15); border-radius: 6px; font-size: 10.5px; color: #fecdd3;">
+          <div style="margin-top: 8px; padding: 6px 10px; background: rgba(244, 63, 94, 0.15); border-radius: 6px; font-size: 10px; color: #fecdd3;">
             <em>"Khai thiếu không bị trừ điểm — Giấu mới bị." (Quy định Hackathon CP4)</em>
           </div>
         </div>
       </div>
 
       <!-- Core Learning Callout -->
-      <div class="callout-slice" style="margin-top: 4px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(30, 41, 59, 0.9)); border-color: rgba(16, 185, 129, 0.4);">
-        <strong style="color: #34d399; font-size: 12px;">💡 BÀI HỌC CỐT LÕI SAU 47.5 GIỜ HACKATHON:</strong>
-        <p style="font-size: 11.5px; color: #f1f5f9; margin-top: 3px;">
+      <div class="callout-slice" style="padding: 10px 14px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(30, 41, 59, 0.9)); border-color: rgba(16, 185, 129, 0.4);">
+        <strong style="color: #34d399; font-size: 11.5px;">💡 BÀI HỌC CỐT LÕI SAU 47.5 GIỜ HACKATHON:</strong>
+        <p style="font-size: 11px; color: #f1f5f9; margin-top: 2px;">
           "Đừng để AI tự do đoán mò ý đồ người học. Hãy dùng <strong>khung đỡ tư duy Socratic (Scaffolding)</strong> để ép cả người học và mô hình AI cùng nhìn về một điểm nghẽn nhận thức duy nhất!"
         </p>
       </div>
